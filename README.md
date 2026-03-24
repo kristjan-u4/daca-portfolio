@@ -1,7 +1,7 @@
 # DACA Portfoolio -- Kristjan
 
 ## Minust
-[Olen aastaid töötanud tarkvaraarendajana (Ruby, Java), kuid nüüd soovin teha karjääripööret andmeanalüüsi valdkonda]
+Olen aastaid töötanud tarkvaraarendajana (Ruby, Java), kuid nüüd soovin teha karjääripööret andmeanalüüsi valdkonda
 
 ## Eesmärk
 Õppida andmeanalüüsi -- SQL, Python, visualiseerimine -- ja ehitada professionaalne portfoolio.
