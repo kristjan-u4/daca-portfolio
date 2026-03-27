@@ -9,7 +9,7 @@ Olen aastaid töötanud tarkvaraarendajana (Ruby, Java), kuid nüüd soovin teha
 ## Nädala kaupa
 | Nädal | Teema | Staatus |
 |-------|-------|---------|
-| 0 | Onboarding | Käimas |
+| 0 | Onboarding | Lõpetatud |
 | 1 | SQL Basics | Tulemas |
 | 2 | SQL Cleaning | Tulemas |
 | 3 | SQL JOINs | Tulemas |
