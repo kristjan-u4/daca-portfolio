@@ -10,6 +10,7 @@
 * Python installitud, VS Code terminali abil seadistatud virtuaalkeskkond (venv) ja testitud teekide installimist etteantud failist (requirements.in). Installitud teekide versioonid külmutatud (pip freeze) ja salvestatud requirements.txt faili.
 * NotebookLM keskkonnas CORE RAG failid üles laetud, heliülevaade genereeritud ja sellega tutvutud. Lisatud ka muid faile, nt. N0_2_1_P_GT_Onboarding_v2.1, et grupitöö nõuetest paremini aru saada tehisintellektile küsimuste esitamise teel.
 * Grupitöös osaletud, Team Charter Koostaja rollis.
+* Boonussammuna käesolev repositoorium ühendatud Verceliga ja deploy edukalt testitud.
 
 ## Meeskonna portfoolio link
 
