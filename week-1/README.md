@@ -1,4 +1,3 @@
-# Nädal 1: SQL Basics
 # Nädal 1: SQL Basics -- UrbanStyle'i andmete uurimine
 
 ## Mida ma tegin
@@ -6,11 +5,11 @@
 Uurisin sales tabelit SQL päringutega, keskendudes müügiandmetele. Uurimise käigus ilmnesid järgmised detailid:
 
 * Tabelis on kokku 15234 rida ja 12 veergu.
-* Veergude nimetused on: id, sale_id, invoice_id, sale_date, customer_id, product_id, quantity, unit_price, total_price, channel, store_location, payment_method.
+* Veergude nimetused on: `id`, `sale_id`, `invoice_id`, `sale_date`, `customer_id`, `product_id`, `quantity`, `unit_price`, `total_price`, `channel`, `store_location`, `payment_method`.
 * Tabelis on vähemalt 15 Tallinna kaupluse tehingut, millest uusim on tulevikus aset leidev tehing, mis on ajastatud 28.06.2026 peale.
 * Suurim tehingusumma kõikide andmete peale kokku on 2170.40 €
 * Väikseim tehingusumma kõikide andmete peale kokku on -1405.32 € ehk negatiivne.
-* Tabelis sales on 1487 rida, kus puudub kliendi info ehk kus customer_id väli on tühi.
+* Tabelis sales on 1487 rida, kus puudub kliendi info ehk kus `customer_id` väli on tühi.
 
 Pärast sales tabeli uurimist, osalesin meeskonna andmemaastiku koostamisel, kus kirjeldasin kokkuvõtlikult enda leitud olulisemaid detaile. Lisaks panustasin omalt poolt 2 tehnilist laadi soovitusega IT-direktor Toomasele:
 
