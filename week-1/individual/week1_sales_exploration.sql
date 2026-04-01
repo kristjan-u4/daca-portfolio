@@ -1,40 +1,50 @@
--- Päring sales tabelis, kus veerud on piiritletud:
-SELECT
-sale_id, customer_id, sale_date, total_price, store_location
-FROM sales
-limit 5;
+-- Tabeli sales kõikide ridade arv.
+SELECT COUNT(*) AS ridade_arv FROM sales;
+
+-- 10 esimest rida tabelist sales.
+SELECT * FROM sales
+LIMIT 10;
 
 /*
-Leia 10 esimest Tartu müüki,
-kus summa on mitte suurem, kui 200
- */
-select *
-from sales
-where store_location = 'Tartu'
-and total_price <= 200
-order by sale_date asc -- kronoloogiliselt esimesed enne
-limit 10;
-
--- store_location veerus esinevad erinevad väärtused:
-select
-distinct store_location
-from sales
---where store_location is not null
-order by store_location asc
-limit 10;
-
--- store_location veerus esinevate erinevate linnade arv:
-select
-count(distinct store_location) as "linnade arv"
-from sales;
-
-/*
-Duplikaatide uurimine sales tabelis.
+15 kõige hiljutisemat Tallinna tehingut tabelist sales,
+alustades uuimast.
 */
-select
-count(*) as "ridade arv",
-count(distinct invoice_id) as "unikaalsete arvete arv",
-count(*) - count(distinct invoice_id) as "duplikaat-arvete arv",
-count(distinct sale_id) as "unikaalsete müükide arv",
-count(*) - count(distinct sale_id) as "duplikaat-müükide arv"
-from sales
+SELECT * FROM sales
+WHERE store_location = 'Tallinn'
+ORDER BY sale_date DESC
+LIMIT 15;
+
+-- 10 suurimat tehingut tabelist sales, alustades suurimast.
+SELECT * FROM sales
+ORDER BY total_price DESC
+LIMIT 10;
+
+-- 10 vähimat tehingut tabelist sales, alustades väikseimast.
+SELECT * FROM sales
+ORDER BY total_price ASC
+LIMIT 10;
+
+-- Ridade arv, kus puudub info kliendi kohta.
+SELECT
+COUNT(*) - COUNT(customer_id) AS puuduv_klient
+FROM sales;
+
+-- Kõik erinevad müügikanalid sales tabelis.
+SELECT DISTINCT channel FROM sales;
+
+-- Tehingute arv iga poe asukoha kohta.
+SELECT
+store_location,
+COUNT(*) AS tehinguid
+FROM sales
+GROUP BY store_location
+ORDER BY tehinguid DESC;
+
+/*
+Kõik Tallinna müügitehingud, mille väärtus on suurem kui 100 €.
+Suurimad tehingud on näidatud kõigepealt.
+*/
+SELECT * FROM sales
+WHERE total_price > 100
+AND store_location = 'Tallinn'
+ORDER BY total_price DESC;
