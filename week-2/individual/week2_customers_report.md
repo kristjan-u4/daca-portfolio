@@ -13,7 +13,6 @@ Vastavalt IT-direktor Toomas Kase nõuetele viidi analüüs läbi **testkoopia**
 
 | Kategooria | Leitud probleeme | Kirjeldus |
 | :--- | :--- | :--- |
-| **Puuduvad e-mailid** | `380` | Kliendi email puudub või on tühi väli. |
 | **Duplikaatsed e-mailid** | `128` | Sama e-mail on seotud mitme erineva kliendikirjega. |
 | **NULL eesnimi** | `0` | Kliendi eesnimi puudub või on tühi väli. |
 | **NULL perenimi** | `0` | Kliendi perenimi puudub või on tühi väli. |
