@@ -1,60 +1,85 @@
-# Nädala 2 meeskondlik andmekvaliteedi koondraport
+# MEESKOND: Turundusanalüüsi osakond | NÄDAL: 2 | TEGELANE: Toomas Kask
 
-**Meeskond:** Turundusanalüüsi osakond  
-**Nädal:** 2  
-**Adressaat:** Toomas Kask (IT-direktor)
+## ANDMEKVALITEEDI KOONDRAPORT
 
-## 1. Ülevaade leitud probleemidest
-Oleme läbi viinud UrbanStyle'i nelja peamise andmedomeeni esmase diagnostika ja puhastamise. Kokku tuvastasime märkimisväärse hulga andmekvaliteedi probleeme, mis mõjutavad otseselt ärianalüüsi usaldusväärsust.
+### PEAMISED LEIUD:
 
-| Domeen | Probleemsete ridade arv | Peamine murekoht |
+#### 1. Müügiandmed
+Leitud **5509** probleemset rida — see tähendab äriliselt, et leitud on 3 tüüpi andmekvaliteedi probleemi - duplikaadid, puuduvad väärtused, loogikaviga ajas, mis vajavad täpsemat kontrollimist!
+
+| **Kategooria** | **Leitud probleeme** | **Kirjeldus** |
 | :--- | :--- | :--- |
-| **Müügiandmed** | 5509 | Suur duplikaatide hulk ja puuduvad seosed klientidega. |
-| **Kliendiandmed** | 562 | Anonüümsed kliendid (puuduvad kontaktid) ja duplikaadid. |
-| **Tooteandmed** | 12 | Tootenimede dubleerimine. |
-| **Kvaliteedikontroll** | 1268 | Hinna ebakõlad ja mitteaktiivsed kliendid. |
+| Duplikaadid | 4013 | Korduvad saleid väärtused |
+| NULL customerid | 1487 | Puuduv kliendi viide |
+| NULL saledate | 0 | Puuduv kuupäev |
+| NULL totalprice | 0 | Puuduv summa |
+| Tuleviku kuupäevad | 9 | Kuupäev > tänane |
+| **KOKKU probleeme** | **5509** | Korduvad kirjed, puuduvad väärtused ja ebaloogilised kuupäevad. |
+
+**Prioriteetide järjekord:**
+1. **customer_id puudumine** - ei saa siduda klienti müügiga -> ei saa teha kliendianalüüsi -> **ÄRIMÕJU -> kõrge**
+2. **duplikaadid** - topeltmüügid -> ebausaldusväärne kogukäive -> **ÄRIMÕJU -> keskmine kuni kõrge**
+3. **tuleviku kuupäevad** - väike arv -> lihtne parandada -> ei mõjuta suurt pilti -> **ÄRIMÕJU -> madal**
+
+**Peamine järeldus:**
+* andmekvaliteedi probleemid, mis mõjutavad nii analüüsi täpsust kui ka andmete usaldusväärsust!
+* enne andmete kasutamist aruandluses või otsuste tegemisel tuleb järgmiseks läbi viia andmete puhastamine ja valideerimine, et tagada korrektne ja usaldusväärne analüüsi baas.
 
 ---
 
-## 2. Detailne domeenide analüüs
+#### 2. Kliendiandmed
+Leitud **562** probleemset rida — Puuduvate emailidega kliendid on sisuliselt anonüümsed kliendid, kelle puhul pole selge, kui paljud neist on erinevad inimesed ning kellele ei saa muuhulgas ka e-posti teel teateid saata. Duplikaatsete e-mailidega kliendid moonutavad statistilisi andmeid oste sooritanud klientide arvu kohta ning näiteks ka seda, kui palju kliente erinevates linnades tegelikult on.
 
-### 2.1. Müügiandmed
-Müügiandmete tabelis tuvastasime kolm kriitilist tüüpi vigu: duplikaadid, puuduvad väärtused ja loogikavead ajas.
-
-| Kategooria | Leitud probleeme | Kirjeldus |
+| **Kategooria** | **Leitud probleeme** | **Kirjeldus** |
 | :--- | :--- | :--- |
-| Duplikaadid | 4013 | Korduvad sale_id väärtused (topeltmüügid). |
-| NULL customer_id | 1487 | Puuduv kliendi viide (ei saa siduda müüki kliendiga). |
-| NULL sale_date | 0 | Kõik müügikuupäevad on täidetud. |
-| NULL total_price | 0 | Kõik summad on täidetud. |
-| Tuleviku kuupäevad | 9 | Ebaloogilised kuupäevad (hilisemad kui tänane). |
-
-**Ärimõju:** Kõrge. Puuduvate kliendi-IDde tõttu on võimatu teha täpset kliendianalüüsi ning duplikaadid muudavad kogukäibe numbri ebausaldusväärseks.
-
-### 2.2. Kliendiandmed
-Puuduvate kontaktandmetega kliendid on süsteemis sisuliselt anonüümsed, mis takistab turundustegevust.
-
-| Kategooria | Leitud probleeme | Kirjeldus |
-| :--- | :--- | :--- |
-| Duplikaatsed e-mailid | 128 | Sama e-mail on seotud mitme kliendiga. |
-| NULL nimed | 0 | Ees- ja perenimed on kõigil olemas. |
-| Ebajärjekindlad linnanimed | 54 | Erinevad nimekujud (nt "tallinn" vs "Tallinn"). |
-| NULL telefon/e-mail | 380 | Puuduvad kontaktandmed turunduse jaoks. |
-
-### 2.3. Tooteandmed ja Kvaliteedikontroll
-Tooteanalüüsi suurimaks takistuseks on tootenimede duplikaadid. Ristvalideerimise käigus ilmnesid aga veelgi tõsisemad probleemid tabelite vahel.
-
-| Kategooria | Leitud probleeme | Kirjeldus |
-| :--- | :--- | :--- |
-| Duplikaatsed tootenimed | 12 | Sama tootenimi esineb mitu korda. |
-| Hinna ebakõlad | 664 | Müügihind ei klapi tootehinnaga. |
-| Vaimkliendid | 592 | Kliendid, kes on süsteemis, aga pole kunagi ostnud. |
-| Vaimtooted | 12 | Tooted, mida pole kordagi müüdud. |
+| Duplikaatsed e-mailid | 128 | Sama e-mail mitmel kliendil |
+| NULL eesnimi | 0 | Puuduv kliendi eesnimi |
+| NULL perenimi | 0 | Puuduv kliendi perenimi |
+| Ebajärjekindlad linnanimed | 54 | Erinevad nimekujud (nt tallinn vs Tallinn) |
+| NULL telefon/e-mail | 380 | Puuduvad kontaktandmed |
+| **KOKKU probleeme** | **562** | |
 
 ---
 
-## 3. Süntees ja järeldused
+#### 3. Tooteandmed
+Leitud **12** probleemset rida — Tooteanalüüsi mõjutab kõige rohkem tootenimede dublikaadid.
 
-*   **Suurim üllatus:** Kvaliteedikontrolli käigus tuvastatud **664 hinnaerinevust** müügi- ja tootetabeli vahel ning fakt, et müügiandmete duplikaadid moonutavad oluliselt UrbanStyle'i kogukäivet.
-*   **Puuduvad andmed:** Meil puudub kindlus, kas õige on tootehind või müügihind. Samuti on puudu kriitiline hulk kliendi-ID-sid ja kontaktandmeid.
-*   **Soovitus Toomasele:** Hetkel ei saa andmeid äriotsuste tegemiseks usaldada. Prioriteediks peab olema **müügi- ja tooteandmete tabelite puhastamine**, alustades duplikaatide eemaldamisest ning hindade ebakõla põhjuse leidmisest.
+| **Kategooria** | **Leitud probleeme** | **Kirjeldus** |
+| :--- | :--- | :--- |
+| Duplikaatsed nimed | 12 | Sama tootenimi mitu korda |
+| NULL nimi/hind | 0 | Puuduvad kriitilised väljad |
+| Loogilised vead | 0 | Negatiivne või äärmuslik hind |
+| Ebajärjekindlad kategooriad | 0 | Erinevad nimekujud (Shoes vs shoes) |
+| NULL kategooria | 0 | Puuduv klassifitseerimine |
+| **KOKKU probleeme** | **12** | |
+
+---
+
+#### 4. Kvaliteedikontroll
+Leitud **1268** probleemset rida — Kõige kriitilisem on 664 hinnaerinevust, 592 klienti, kes pole kunagi ostnud.
+
+| **Kategooria** | **Leitud probleeme** | **Kirjeldus** |
+| :--- | :--- | :--- |
+| Orbid kliendid | 0 | Müük viitab olematule kliendile |
+| Orbid tooted | 0 | Müük viitab olematule tootele |
+| Hinna ebakõlad | 664 | Müügihind ei klapi tootehinnaga |
+| Vaimkliendid | 592 | Klient ei ole kunagi ostnud |
+| Vaimtooted | 12 | Toodet pole kunagi müüdud |
+| **KOKKU probleeme** | **1268** | |
+
+---
+
+### SUURIM ÜLLATUS:
+* Kvaliteedikontrolli tulem - 664 hinnaerinevust.
+* Müügiandmete dublikaadid mõjutavad oluliselt UrbanStyle kogukäivet.
+
+### SOOVITUS TOOMASELE:
+* Andmeid ei saa praegu usaldada!
+* Kõige kriitilisemad on müügi- ja tooteandmete tabelid.
+* Leida hindade ebakõla põhjus.
+* Alustada tuleks dublikaatide puhastamisega.
+
+### PUUDUVAD ANDMED:
+* Hinnaebakõlad - kas tootehind või müügihind on õige?
+* Customer_id
+* telefon/email
