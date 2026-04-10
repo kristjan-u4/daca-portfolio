@@ -1,3 +1,10 @@
+-- Kustuta customers tabeli koopia juhul, kui see on juba olemas:
+DROP TABLE IF EXISTS customers_test;
+
+-- Kopeeri customers tabel:
+CREATE TABLE customers_test AS SELECT * FROM customers;
+SELECT COUNT(*) AS ridade_arv FROM customers_test;
+
 -- Duplikaatsed emailid.
 SELECT
   lower(trim(email)) as normaliseeritud_email,
