@@ -6,12 +6,12 @@ CREATE TABLE customers_test AS SELECT * FROM customers;
 SELECT COUNT(*) AS ridade_arv FROM customers_test;
 
 -- Duplikaatsed emailid.
-SELECT
-  lower(trim(email)) as normaliseeritud_email,
+SELECT 
+  NULLIF(lower(trim(email)), '') as normaliseeritud_email, 
   COUNT(*) AS koopiate_arv
 FROM customers_test
-WHERE email IS NOT NULL
-GROUP BY email
+--WHERE email IS NOT NULL
+GROUP BY NULLIF(lower(trim(email)), '')  -- Grupeeri normaliseeritud kuju järgi
 HAVING COUNT(*) > 1
 ORDER BY koopiate_arv DESC;
 
