@@ -64,17 +64,17 @@ Tuvastasin, et suurima kogumüügiga tootekategooria on jalanõud ja väikseima 
 
 *   **Tooted, mille laoseisu kohta info puudub:** 12 toodet, mille puhul selgus ka, et kõikide nende nimed on dublikaadid.
 *   **Täiendamist vajav laoseis:** 231 laoseisu kirjet 1400-st ehk 16,5% on staatuses "TELLI JUURDE".
-*   **Kõige kriitilisem laoseis:** **Õhuline polüester cargo püksid** meeste_riided kategoorias, mille laoseis kesklaos on negatiivne (-46 ühikut). Negatiivne laoseis võib viidata ettemüügile.
+*   **Kõige kriitilisem laoseis:** **Õhuline polüester cargo püksid** meeste_riided kategoorias, mille laoseis kesklaos on negatiivne (-46 ühikut). Negatiivne laoseis võib viidata ettemüügile, kuid tegu võib olla ka andmeveaga.
 *   **Kõige suurema ülejäägiga laoseis:** **Kerge satiinne jakk** naiste_riided kategoorias, mida on Tartu laos 9985 ühikut, mis ületab rohkem kui 250 kordselt kriitilise piiri.
 
-Allpoololev tabel demonstreerib, et kui ühte toodet on ühes laos palju, võib seda teistes ladudes olla vähem.
+Alljärgnev tabel demonstreerib, et ühte toodet võib ühes laos olla kümnetes kordades üle kriitilise piiri, aga samal ajal teistes ladudes olla langenud alla selle.
 
 | Toote nimi | Kategooria | Asukoht | Saadaval kogus | Tellimispunkt | Staatus | Jrk nr |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Kerge satiinne jakk | naiste_riided | pärnu | 90 | 32 | OK | 1 |
-| Kerge satiinne jakk | naiste_riided | tallinn | 139 | 12 | OK | 1 |
-| Kerge satiinne jakk | naiste_riided | ladu | 160 | 25 | OK | 1 |
-| Kerge satiinne jakk | naiste_riided | tartu | 9985 | 39 | OK | 1 |
+| Sportlik merino villane ülikond | meeste_riided | ladu | 19 | 32 | **TELLI JUURDE** | 1 |
+| Sportlik merino villane ülikond | meeste_riided | tartu | 26 | 35 | **TELLI JUURDE** | 1 |
+| Sportlik merino villane ülikond | meeste_riided | tallinn | 41 | 37 | OK | 1 |
+| Sportlik merino villane ülikond | meeste_riided | pärnu | **9850** | 50 | OK | 1 |
 
 ## 3. Edasijõudnute analüüs: Kinni olev kapital
 Uurisin toodete, mida kunagi pole müüdud, laoseisu. Selgus, et kõigil 12-l mitte kunagi müüdud tootel puudub info ka laoseisu kohta ning et tegu on dubleeritud nimega toodetega. Müümata kauba väärtus on kokku seega 0€.
@@ -83,7 +83,7 @@ Uurisin toodete, mida kunagi pole müüdud, laoseisu. Selgus, et kõigil 12-l mi
 
 1.  **Likvideerimine:** Dubleeritud nimedega tooted tuleks andmebaasist eemaldada.
 2.  **Turundusfookus:** Ökotooted, sest nende osakaal TOP 10 müüdud toodete hulgas on tagasihoidlik. Suure laovaru ülejäägiga tooted.
-3.  **Laovarude juhtimine:** Osadel toodetel on laovarude puudujäägid, kuid väga paljudel on suured ülejäägid. Probleemiks võib olla võimalik tehniliste lahenduste puudumine, mis võimaldaks laovarude olukorda paremini jälgida. Kui toote, mille puhul esineb laovarude puudujääke, transportimisel ühest laost teise ei õnnestuks puudujääke ülejääkide arvelt kõrvaldada, siis tuleks antud toodet puudujäägiga ladudesse juurde tellida. Suure ülejäägiga toodete puhul panna rohkem rõhku turundusele.
+3.  **Laovarude juhtimine:** Ühel ja samal tootel võib ühes laos olla väga suur ülejääk ja samal ajal teistes ladudes puudujääk. See viitab olulistele puudujääkidele laovarude juhtimisel. Otsustamine, millistesse ladudesse kui palju mingit toodet transportida, peaks toimuma andmepõhiselt, lähtudes lisaks laoseisule ka müügiandmetest.
 
 ## 5. Meeskonnatöö viide
 
