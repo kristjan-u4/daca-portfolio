@@ -64,8 +64,17 @@ Tuvastasin, et suurima kogumüügiga tootekategooria on jalanõud ja väikseima 
 
 *   **Tooted, mille laoseisu kohta info puudub:** 12 toodet, mille puhul selgus ka, et kõikide nende nimed on dublikaadid.
 *   **Täiendamist vajav laoseis:** 231 laoseisu kirjet 1400-st ehk 16,5% on staatuses "TELLI JUURDE".
-*   **Kõige kriitilisem laoseis:** **Õhuline polüester cargo püksid** meeste_riided kategoorias, mille laoseis kesklaos on negatiivne (-46 ühikut).
+*   **Kõige kriitilisem laoseis:** **Õhuline polüester cargo püksid** meeste_riided kategoorias, mille laoseis kesklaos on negatiivne (-46 ühikut). Negatiivne laoseis võib viidata ettemüügile.
 *   **Kõige suurema ülejäägiga laoseis:** **Kerge satiinne jakk** naiste_riided kategoorias, mida on Tartu laos 9985 ühikut, mis ületab rohkem kui 250 kordselt kriitilise piiri.
+
+Allpoololev tabel demonstreerib, et kui ühte toodet on ühes laos palju, võib seda teistes ladudes olla vähem.
+
+| Toote nimi | Kategooria | Asukoht | Saadaval kogus | Tellimispunkt | Staatus | Jrk nr |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Kerge satiinne jakk | naiste_riided | pärnu | 90 | 32 | OK | 1 |
+| Kerge satiinne jakk | naiste_riided | tallinn | 139 | 12 | OK | 1 |
+| Kerge satiinne jakk | naiste_riided | ladu | 160 | 25 | OK | 1 |
+| Kerge satiinne jakk | naiste_riided | tartu | 9985 | 39 | OK | 1 |
 
 ## 3. Edasijõudnute analüüs: Kinni olev kapital
 Uurisin toodete, mida kunagi pole müüdud, laoseisu. Selgus, et kõigil 12-l mitte kunagi müüdud tootel puudub info ka laoseisu kohta ning et tegu on dubleeritud nimega toodetega. Müümata kauba väärtus on kokku seega 0€.
@@ -74,4 +83,4 @@ Uurisin toodete, mida kunagi pole müüdud, laoseisu. Selgus, et kõigil 12-l mi
 
 1.  **Likvideerimine:** Dubleeritud nimedega tooted tuleks andmebaasist eemaldada.
 2.  **Turundusfookus:** Ökotooted, sest nende osakaal TOP 10 müüdud toodete hulgas on tagasihoidlik. Suure laovaru ülejäägiga tooted.
-3.  **Laovarude juhtimine:** Osadel toodetel on laovarude puudujäägid, kuid väga paljudel on suured ülejäägid. Probleemiks võib olla võimalik tarkvaralahenduste puudumine, mis võimaldaks laovarude olukorda paremini jälgida. Laovarude puudujääkidega tooteid tuleb juurde tellida. Ülejäägiga toodete puhul panna rõhku turundusele.
+3.  **Laovarude juhtimine:** Osadel toodetel on laovarude puudujäägid, kuid väga paljudel on suured ülejäägid. Probleemiks võib olla võimalik tarkvaralahenduste puudumine, mis võimaldaks laovarude olukorda paremini jälgida. Laovarude puudujääkidega tooteid tuleb juurde tellida. Ülejäägiga toodete puhul panna rõhku turundusele ja kaaluda juurdetellimise peatamist. Kui ühes laos on ühte toodet palju, aga teistes ladudes sama toodet vähe, siis kaaluda ülejäägiga laost toote transportimist teistesse ladudesse.
