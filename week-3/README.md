@@ -84,3 +84,7 @@ Uurisin toodete, mida kunagi pole müüdud, laoseisu. Selgus, et kõigil 12-l mi
 1.  **Likvideerimine:** Dubleeritud nimedega tooted tuleks andmebaasist eemaldada.
 2.  **Turundusfookus:** Ökotooted, sest nende osakaal TOP 10 müüdud toodete hulgas on tagasihoidlik. Suure laovaru ülejäägiga tooted.
 3.  **Laovarude juhtimine:** Osadel toodetel on laovarude puudujäägid, kuid väga paljudel on suured ülejäägid. Probleemiks võib olla võimalik tehniliste lahenduste puudumine, mis võimaldaks laovarude olukorda paremini jälgida. Kui toote, mille puhul esineb laovarude puudujääke, transportimisel ühest laost teise ei õnnestuks puudujääke ülejääkide arvelt kõrvaldada, siis tuleks antud toodet puudujäägiga ladudesse juurde tellida. Suure ülejäägiga toodete puhul panna rohkem rõhku turundusele.
+
+## 5. Meeskonnatöö viide
+
+https://docs.google.com/document/d/1qGOioIUVrGnW9Agh-j3Dd9A8UvVJInbfLx43OtV-rqI/edit?tab=t.0
