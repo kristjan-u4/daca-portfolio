@@ -9,3 +9,14 @@
 | google organic | 14 094 |
 | direct | 9 522 |
 | facebook ads | 7 240 |
+
+* 40 585 veebikülastust ehk üle 80% on sellised, kus klient on teada. Ülejäänud 9415 on anonüümsetelt kasutajatelt.
+* Turunduskanalid, mille kaudu UrbanStyle veebisaiti külastanud unikaalsete klientide arv on üle 1000:
+
+| Turunduskanal | Unikaalsete klientide arv |
+| :--- | :--- |
+| google organic | 1 884 |
+| direct | 1 373 |
+| facebook ads | 1 186 |
+
+Võrdluseks: registreeritud kliente on UrbanStyle'is kokku 3000, mis on väiksem, kui ülalpooltoodud tabelis klientide arvu kokkuliitmisel saadav arv. Siit järeldub, et kliendid külastavad UrbanStyle'i veebisaiti läbi mitme turunduskanali. Kui üle kõikide turunduskanalite unikaalsete klientide arvud kokku liita, siis tuleb summaks 8766.
