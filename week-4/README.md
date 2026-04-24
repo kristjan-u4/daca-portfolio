@@ -7,10 +7,16 @@
   * Supabase'ist eksporditud andmete pealt lasin genereerida MD-formaadis tabeleid käesoleva README jaoks.
 * Gemini:
   * Sain vastuseks, et nt. fb ja facebook on samad turunduskanalid, kuid nt. facebook ja facebook-ads on veidi erinevad.
-  * Uurisin, kuidas luua testtabel nii, et kopeeritaks lisaks andmetele ka skeem:
+  * Uurisin, kuidas luua testtabel nii, et kopeeritaks lisaks andmetele ka skeem. Testtabeli loomise uus töövoog oleks seega järgmine:
     ```sql
-    CREATE TABLE test_web_logs (LIKE web_logs INCLUDING ALL); -- loo identne struktuur
-    INSERT INTO test_web_logs SELECT * FROM web_logs; -- kopeeri andmed
+    -- Kustutame vana tabeli, kui see on olemas
+    DROP TABLE IF EXISTS test_web_logs;
+    
+    -- Loome uue tabeli koos kogu skeemiga (indeksid, piirangud jne)
+    CREATE TABLE test_web_logs (LIKE web_logs INCLUDING ALL);
+    
+    -- Kopeerime andmed algsest tabelist
+    INSERT INTO test_web_logs SELECT * FROM web_logs;
     ```
 
 ## Meeskonnatöö
