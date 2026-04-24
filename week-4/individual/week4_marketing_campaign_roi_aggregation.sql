@@ -258,7 +258,7 @@ SELECT
   count(DISTINCT c.customer_id) AS klientide_arv
 FROM customers c
 LEFT JOIN sales s ON c.customer_id = s.customer_id
-INNER JOIN web_logs w ON c.customer_id = w.customer_id
+INNER JOIN test_web_logs w ON c.customer_id = w.customer_id
 WHERE s.sale_id IS NULL
 GROUP BY w.source
 ORDER BY klientide_arv DESC;
