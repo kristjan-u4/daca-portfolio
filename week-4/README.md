@@ -21,7 +21,8 @@
 
 ## Meeskonnatöö
 
-Viide: https://docs.google.com/document/d/1R7yLGLHO6CHmOL75oUjyiKYUK_8N7ghAnALVK6LZufA/edit?tab=t.0
+* Koondraport: https://docs.google.com/document/d/1R7yLGLHO6CHmOL75oUjyiKYUK_8N7ghAnALVK6LZufA/edit?tab=t.0
+* SQL päringud: [week4_marketing_campaign_roi_aggregation.sql](https://github.com/kristjan-u4/daca-portfolio/blob/main/week-4/individual/week4_marketing_campaign_roi_aggregation.sql)
 
 ### Turunduskanalite koondandmed
 
