@@ -67,4 +67,14 @@ Analüüs koondab andmed unikaalsete klientide, tellimuste mahu ja rahalise panu
 
 ### Kampaaniate kuised trendid
 
+Uurisin **Facebook Ads** kui kõige efektiivsema turunduskanaliga kokku puutunud ja tellimuse teinud klientide arvu trende täpsemalt, kuude lõikes.
+
 ![Facebook Ads kliendid](individual/facebook_ads_monthly_customers_chart.png)
+
+* Kõige rohkem tellimuse teinud kliente **juunis 2024**: **172**
+* Kõige vähem tellimuse teinud kliente **veebruaris 2023**: **86**
+* Kõige rohkem kasvas tellimuse teinud klientide arv **detsembris 2024**: **+56**.
+* Kõige rohkem kahanes tellimuse teinud klientide arv **jaanuaris 2025**: **-68**.
+
+Lisaks selgus, et **158** **Facebook Ads** turunduskanaliga kokku puutunud klienti pole mitte kunagi ostnud.
+
