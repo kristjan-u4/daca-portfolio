@@ -1,4 +1,23 @@
-## Turunduskanalite koondandmed
+# Nädal 4: SQL agregatsioon
+
+## AI kasutamine
+
+* NotebookLM:
+  * Eksportisin Supabase'ist päringutulemusi JSON formaadis ja andsin AI-le sisendiks, et arvutada arvandmete pealt summasid, mida ma saaks võrrelda erinevate count() päringute tulemustega.
+  * Supabase'ist eksporditud andmete pealt lasin genereerida MD-formaadis tabeleid käesoleva README jaoks.
+* Gemini:
+  * Sain vastuseks, et nt. fb ja facebook on samad turunduskanalid, kuid nt. facebook ja facebook-ads on veidi erinevad.
+  * Uurisin, kuidas luua testtabel nii, et kopeeritaks lisaks andmetele ka skeem:
+    ```sql
+    CREATE TABLE test_web_logs (LIKE web_logs INCLUDING ALL); -- loo identne struktuur
+    INSERT INTO test_web_logs SELECT * FROM web_logs; -- kopeeri andmed
+    ```
+
+## Meeskonnatöö
+
+Viide: https://docs.google.com/document/d/1R7yLGLHO6CHmOL75oUjyiKYUK_8N7ghAnALVK6LZufA/edit?tab=t.0
+
+### Turunduskanalite koondandmed
 
 * Kokku on 50 000 veebikülastust.
 * Turunduskanalite nimed on ühtlustamata. Ühtlustamiseks ei piisa lihtsatest tekstioperatsioonidest, nagu lower(), trim() ja replace(), sest esinevad nimekujud, nagu nt. "fb" ja "facebook", mis sisuliselt on üks ja seesama turunduskanal. Esineb ka turunduskanaleid, mille puhul pole hetkel veel selge, kas need on sisuliselt samad või erinevad, näiteks "google", "google organic" ja "google ads". Viimatimainitud juhtumeid käsitleme praegu erinevate turunduskanalitena. Kokku on 19 erinevat nimekuju, millest peale puhastamist jääb järgi 10.
@@ -21,7 +40,7 @@
 
 Võrdluseks: registreeritud kliente on UrbanStyle'is kokku 3000, mis on väiksem, kui ülalpooltoodud tabelis klientide arvu kokkuliitmisel saadav arv. Siit järeldub, et kliendid külastavad UrbanStyle'i veebisaiti läbi mitme turunduskanali. Kui üle kõikide turunduskanalite unikaalsete klientide arvud kokku liita, siis tuleb summaks 8766.
 
-## Turunduskanalite efektiivsus
+### Turunduskanalite efektiivsus
 
 Alljärgnevas tabelis on näidatud turunduskanalid, milles tellimuste arv on üle 3000. Kuigi facebook_ads kanalis on neist kolmest kõige vähem kliente, on keskmine tellimus kliendi kohta ehk turunduskanali efektiivsus kõige suurem.
 
