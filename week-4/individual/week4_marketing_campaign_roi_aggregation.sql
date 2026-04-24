@@ -47,7 +47,9 @@ ORDER BY turunduskanal, veebikülastuste_arv DESC;
 */
 
 -- 1. Teeme testtabeli.
-CREATE TABLE test_web_logs AS SELECT * FROM web_logs;
+DROP TABLE IF EXISTS test_web_logs;
+CREATE TABLE test_web_logs (LIKE web_logs INCLUDING ALL); -- loo identne struktuur
+INSERT INTO test_web_logs SELECT * FROM web_logs; -- kopeeri andmed
 
 -- 2. Lihtsamad tekstioperatsioonid.
 UPDATE test_web_logs
@@ -77,38 +79,24 @@ FROM test_web_logs
 GROUP BY source
 ORDER BY veebikülastuste_arv DESC;
 
--- 5. Kui kõik on õige, teeme sammud 2-4 läbi ka esialgse tabeli peal.
-UPDATE web_logs
-SET source = lower(trim(replace(source, '_', ' ')))
-WHERE source <> lower(trim(replace(source, '_', ' ')));
+/*
+Esialgse tabeli peal me UPDATE päringuid veel läbi ei vii,
+sest vajalik võib olla põhjalikum analüüs. Erinevalt klientide tabeli linnanimedest,
+ei sisestata tõenäoliselt turunduskanaleid inimeste poolt käsitsi, vaid seda teevad
+automaatsed klikimõõtjad. Erinevustel, nagu facebook vs fb võib olla sügavam põhjus, näiteks
+tarkvaraversioonierinevused. Ei saa välistada, et tulevikus võib vaja minna detailsemat analüüsi,
+kus nimekujude erinevused on olulised. UPDATE päringuid esialgse tabeli peal tehes põhjustaksime
+püsiva andmekao, mis muudaks sellist laadi analüüsi võimatuks.
 
-UPDATE web_logs
-SET source = (
-  CASE
-    WHEN source IN ('fb') THEN 'facebook'
-    WHEN source IN ('fb ads') THEN 'facebook ads'
-    WHEN source IN ('ig') THEN 'instagram'
-    WHEN source IN ('ig ads') THEN 'instagram ads'
-    ELSE source
-  END
-);
-
-SELECT
-  source AS turunduskanal,
-  count(*) AS veebikülastuste_arv
-FROM web_logs
-GROUP BY source
-ORDER BY veebikülastuste_arv DESC;
-
--- 6. Vabaneme testtabelist:
-DROP TABLE test_web_logs;
+Alljärgnevad SQL päringud teostame kõik test_web_logs tabeli peal, kus on puhastatud andmed
+*/
 
 -- Anonüümsed ja mitteanonüümsed külastajad.
 WITH web_logs_with_anonymity AS (
   SELECT
     *,
     (CASE WHEN customer_id IS NULL THEN 'JAH' ELSE 'EI' END) AS anonymous
-  FROM web_logs
+  FROM test_web_logs
 )
 SELECT
   w.anonymous AS anonüümne,
@@ -117,21 +105,35 @@ FROM web_logs_with_anonymity w
 GROUP BY w.anonymous
 ORDER BY veebikülastuste_arv DESC;
 
+-- Veebikülastuste arv turunduskanali lõikes.
+SELECT
+  w.source AS turunduskanal,
+  count(*) AS veebikülastuste_arv
+FROM test_web_logs w
+GROUP BY w.source
+ORDER BY veebikülastuste_arv DESC;
+
 -- Turunduskanalid, kus unikaalsete klientide arv on üle 1000.
 SELECT
   w.source AS turunduskanal,
   count(DISTINCT w.customer_id) AS klientide_arv
-FROM web_logs w
+FROM test_web_logs w
 GROUP BY w.source
---HAVING count(DISTINCT w.customer_id) > 1000
+HAVING count(DISTINCT w.customer_id) > 1000
 ORDER BY klientide_arv DESC;
 
--- Võrdluseks: UrbanStyle registreeritud klientide koguarv.
+/*
+Võrdluseks: UrbanStyle registreeritud klientide koguarv.
+See on väiksem, kui klientide arvult TOP 3 turunduskanali klientide
+arvu summa. Siit järeldub, et üks klient puutub üldjuhul kokku mitme erineva turunduskanaliga.
+*/
 SELECT count(*) FROM customers;
 
--- Klientide arv ja müük turunduskanali lõikes.
--- Grupitöö juhendist võetud päring.
--- Päringus esineb müükide topeltsummeerimise probleem.
+/*
+Klientide arv ja müük turunduskanali lõikes.
+Grupitöö juhendist võetud päring. puhastatud andmete peal.
+Päringus esineb müükide topeltsummeerimise probleem.
+*/
 SELECT
   w.source AS turunduskanal,
   COUNT(DISTINCT c.customer_id) AS kliente,
@@ -140,7 +142,7 @@ SELECT
   ROUND(AVG(o.total_price), 2) AS keskmine_tellimus
 FROM sales o
 JOIN customers c ON o.customer_id = c.customer_id
-LEFT JOIN web_logs w ON c.customer_id = w.customer_id
+LEFT JOIN test_web_logs w ON c.customer_id = w.customer_id
 GROUP BY w.source
 ORDER BY kogukäive DESC;
 
@@ -170,7 +172,7 @@ web_logs_with_unique_sources AS (
     wl.source,
     wl.customer_id,
     count(*) AS veebikülastuste_arv
-  FROM web_logs wl
+  FROM test_web_logs wl
   GROUP BY wl.source, wl.customer_id
 ),
 web_logs_with_customer_aggregations AS (
@@ -220,7 +222,7 @@ web_logs_with_unique_sources AS (
     wl.source,
     wl.customer_id,
     count(*) AS veebikülastuste_arv
-  FROM web_logs wl
+  FROM test_web_logs wl
   GROUP BY wl.source, wl.customer_id
 ),
 web_logs_with_customer_aggregations AS (
