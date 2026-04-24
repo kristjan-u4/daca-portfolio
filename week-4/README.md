@@ -18,11 +18,12 @@
     -- Kopeerime andmed algsest tabelist
     INSERT INTO test_web_logs SELECT * FROM web_logs;
     ```
+  * Katsetasin Facebook Ads turunduskanali trendide visualiseerimist graafikuna, paludes selleks AI-l genereerida Pythoni skript [facebook_ads_monthly_customers_chart.py](individual/facebook_ads_monthly_customers_chart.py). Jooksutasin skripti VS Code'i arenduskeskkonna abil ning salvestasin saadud graafiku PDF failina.
 
 ## Meeskonnatöö
 
 * Koondraport: https://docs.google.com/document/d/1R7yLGLHO6CHmOL75oUjyiKYUK_8N7ghAnALVK6LZufA/edit?tab=t.0
-* SQL päringud: [week4_marketing_campaign_roi_aggregation.sql](https://github.com/kristjan-u4/daca-portfolio/blob/main/week-4/individual/week4_marketing_campaign_roi_aggregation.sql)
+* SQL päringud: [week4_marketing_campaign_roi_aggregation.sql](individual/week4_marketing_campaign_roi_aggregation.sql)
 
 ### Turunduskanalite koondandmed
 
@@ -63,3 +64,7 @@ Analüüs koondab andmed unikaalsete klientide, tellimuste mahu ja rahalise panu
 | 8 | instagram | 958 | 2 765 | 792 065,22 | 826,79 | 2,89 |
 | 9 | instagram ads | 271 | 767 | 216 661,17 | 799,49 | 2,83 |
 | 10 | direct | 1 373 | 3 864 | 1 078 910,51 | 785,81 | 2,81 |
+
+### Kampaaniate kuised trendid
+
+![Facebook Ads kliendid](individual/facebook_ads_monthly_customers_chart.png)
