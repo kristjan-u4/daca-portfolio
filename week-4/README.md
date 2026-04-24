@@ -48,10 +48,17 @@ Võrdluseks: registreeritud kliente on UrbanStyle'is kokku 3000, mis on väiksem
 
 ### Turunduskanalite efektiivsus
 
-Alljärgnevas tabelis on näidatud turunduskanalid, milles tellimuste arv on üle 3000. Kuigi facebook_ads kanalis on neist kolmest kõige vähem kliente, on keskmine tellimus kliendi kohta ehk turunduskanali efektiivsus kõige suurem.
+Analüüs koondab andmed unikaalsete klientide, tellimuste mahu ja rahalise panuse kohta, reastatuna kliendi kohta saavutatud keskmise käibe (efektiivsuse) alusel.
 
-| Turunduskanal | Klientide arv | Tellimusi | Kogukäive | Kanali efektiivsus |
-| :--- | :---: | :---: | :---: | :---: |
-| google organic | 1884 | 5484 | 1 579 100.68 | 838.16 |
-| facebook ads | 1186 | 3908 | 1 119 519.42 | 943.95 |
-| direct | 1373 | 3864 | 1 078 910.51 | 785.81 |
+| Koht | Turunduskanal | Klientide arv | Tellimusi | Kogukäive (€) | Keskmine käive kliendi kohta (€) | Keskmine tellimuste arv kliendi kohta |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | facebook ads | 1 186 | 3 908 | 1 119 519,42 | 943,95 | 3,30 |
+| 2 | email campaign | 878 | 2 787 | 812 084,61 | 924,93 | 3,17 |
+| 3 | facebook | 371 | 1 177 | 340 486,11 | 917,75 | 3,17 |
+| 4 | tiktok | 460 | 1 415 | 401 222,90 | 872,22 | 3,08 |
+| 5 | google | 692 | 2 067 | 598 583,95 | 865,01 | 2,99 |
+| 6 | google ads | 693 | 2 050 | 587 892,65 | 848,33 | 2,96 |
+| 7 | google organic | 1 884 | 5 484 | 1 579 100,68 | 838,16 | 2,91 |
+| 8 | instagram | 958 | 2 765 | 792 065,22 | 826,79 | 2,89 |
+| 9 | instagram ads | 271 | 767 | 216 661,17 | 799,49 | 2,83 |
+| 10 | direct | 1 373 | 3 864 | 1 078 910,51 | 785,81 | 2,81 |
