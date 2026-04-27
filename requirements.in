@@ -7,3 +7,4 @@ supabase
 streamlit
 ipykernel
 jupyter
+python-dotenv

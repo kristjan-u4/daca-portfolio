@@ -1,2 +1,12 @@
+# VS Code IDE managed files:
 .vscode
+
+# Python virtual environment:
 .venv
+
+# Environment settings:
+.env
+
+# Python cache:
+__pycache__/
+*.pyc
