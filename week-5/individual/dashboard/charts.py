@@ -18,12 +18,18 @@ def create_revenue_trend(df):
         df, # agregeeritud andmed
         x="perioodi_algus",                    # x-telg: kuupäev
         y="käive",                             # y-telg: müügitulu
-        title="UrbanStyle müügitulu trend" # diagrammi pealkiri
+        title="UrbanStyle müügitulu trend", # diagrammi pealkiri
+        labels={                              # telgede sildid
+            "perioodi_algus": "Kuu",
+            "käive": "Müügitulu (EUR)"
+        }
     )
 
     # X-telje seaded.
     fig.update_xaxes(
         title_text=None,
+        tickformat="%m.%Y",
+        dtick="M1",
         tickfont_size=12,
         tickfont_color="#1A1A2E"
     )
