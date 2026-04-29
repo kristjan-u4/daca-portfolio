@@ -6,23 +6,6 @@ Kolm põhidiagrammi: müügitrend, top tooted, müük linnade kaupa.
 
 import pandas as pd
 import plotly.express as px
-import data_loader as db
-
-def prepare_filters():
-    """Valmista ette vaikefiltrid"""
-    return {
-        "time_from": db.fetch_earliest_sale_date(),
-        "time_to": db.fetch_latest_sale_date(),
-        "interval": "month"
-    }
-
-def prepare_data(filters):
-    """Laadi ja ettevalmista andmed diagrammide jaoks."""
-
-    return {
-        "aggregated_sales": db.aggregate_sales_by_period(filters),
-        "total_customers": db.count_unique_customers(filters)
-    }
 
 def create_revenue_trend(df):
     """

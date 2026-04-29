@@ -43,34 +43,10 @@ def count_unique_customers(filter):
     df = pd.read_sql(query, supabase, params=filter)
     return df["unique_customers"].iloc[0]
 
-def fetch_earliest_sale_date():
-    """
-    Leiab andmebaasist kõige varasema müügikuupäeva.
-
-    Returns:
-        pd.Timestamp: Kõige varasem kuupäev. 
-        Tagastab None, kui tabel on tühi.
-    """
-    query = sa.text("SELECT min(sale_date) AS earliest_sale FROM sales;")
+def fetch_min_and_max_sale_date():
+    query = sa.text("SELECT min(sale_date) AS min_date, max(sale_date) AS max_date FROM sales;")
     df = pd.read_sql(query, supabase)
-    
-    # Võtame esimese rea väärtuse. Kui tabel on tühi, tagastame None.
-    val = df['earliest_sale'].iloc[0]
-    return pd.to_datetime(val) if pd.notnull(val) else None
-
-def fetch_latest_sale_date():
-    """
-    Leiab andmebaasist kõige hilisema müügikuupäeva.
-
-    Returns:
-        pd.Timestamp: Kõige hilisem kuupäev. 
-        Tagastab None, kui tabel on tühi.
-    """
-    query = sa.text("SELECT max(sale_date) AS latest_sale FROM sales;")
-    df = pd.read_sql(query, supabase)
-    
-    val = df['latest_sale'].iloc[0]
-    return pd.to_datetime(val) if pd.notnull(val) else None
+    return df["min_date"].iloc[0], df["max_date"].iloc[0]
 
 def _load_query_template(filename):
     """
