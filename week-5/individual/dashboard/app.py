@@ -1,9 +1,9 @@
-# Running this script: streamlit run dashboard/app.py
+# Running this script: streamlit run week-5/individual/dashboard/app.py
 
 """
-UrbanStyle Investor Dashboard
+UrbanStyle CEO Dashboard
 ===============================
-Interaktiivne dashboard investoritele — Plotly + Streamlit.
+Interaktiivne dashboard UrbanStyle CEO jaoks — Plotly + Streamlit.
 DACA Programm, Nädal 5: Visualiseerimise Disain, Track B.
 """
  
@@ -26,9 +26,6 @@ def main():
     fill_main_chart_section(main_chart_section, data)
     render_footer(data)
 
-# ============================================================
-# 1. LEHE SEADISTAMINE
-# ============================================================
 def setup_page():
     st.set_page_config(
         page_title="UrbanStyle Dashboard", # brauseri vahekaardi pealkiri
@@ -59,13 +56,12 @@ def build_default_filter_settings():
 def prepare_filters(default_filter_settings):
     st.header("🔍 Filtrid")
     col1, _, _, _ = st.columns(4)
-    date_range = prepare_date_range_filter(col1, default_filter_settings)
+    filters = {}
+    add_date_range_filter(filters, col1, default_filter_settings)
     st.divider()
-    return {
-        "date_range": date_range
-    }
+    return filters
 
-def prepare_date_range_filter(container, default_filter_settings):
+def add_date_range_filter(filters, container, default_filter_settings):
     min_date = default_filter_settings["min_date"]
     max_date = default_filter_settings["max_date"]
     
@@ -85,7 +81,9 @@ def prepare_date_range_filter(container, default_filter_settings):
     date_from = date_range[0] or default_filter_settings["min_date"]
     date_to = date_range[1] or default_filter_settings["max_date"]
 
-    return (date_from, date_to)
+    filters["date_range"] = (date_from, date_to)
+    # Defineerime lisaks veel avatud ülempiiriga ajavahemiku, mida kasutatakse SQL päringutes:
+    filters["open_date_range"] = (date_from, date_to + datetime.timedelta(days=1))
 
 def compose_sql_params(filters, default_filter_settings):
     params = {}
@@ -94,11 +92,9 @@ def compose_sql_params(filters, default_filter_settings):
     return params
 
 def add_date_range_sql_params(params, filters, default_filter_settings):
-    date_range = filters["date_range"]
+    date_range = filters["open_date_range"]
     params["time_from"] = date_range[0]
-    # Lisame ühe päeva juurde, sest SQL päringus on ülemine piir lahtine,
-    # kuid kasutaja poolt etteantud filtrina on ajavahemiku ülemine piir kaasa arvatud.
-    params["time_to"] = date_range[1] + datetime.timedelta(days=1)
+    params["time_to"] = date_range[1]
 
 def add_interval_sql_params(params, default_filter_settings):
     delta = params["time_to"] - params["time_from"]
@@ -167,7 +163,7 @@ def fill_main_chart_section(main_chart_section, data):
 def render_footer(data):
     orders_text = f"{data['aggregated_sales']['orders'].sum():,}".replace(",", " ")
     st.caption(
-        "UrbanStyle.ltd — Investor Dashboard | "
+        "UrbanStyle.ltd — CEO Dashboard | "
         "DACA Programm, Nädal 5 | "
         f"Andmeid: {orders_text} rida"
     )
@@ -198,7 +194,7 @@ def get_sale_date_boundaries():
  
 @st.cache_data(ttl=300)
 def load_aggregated_sales_data(params):
-    """Laadi agregeeritud müügiandmed Supabase'ist ja cache'i need."""
+    """Laadi agregeeritud müügiandmed Supabase'ist."""
     return data_loader.aggregate_sales_by_interval(params)
 
 @st.cache_data(ttl=300)
