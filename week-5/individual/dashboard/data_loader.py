@@ -43,6 +43,11 @@ def count_unique_customers(filter):
     df = pd.read_sql(query, supabase, params=filter)
     return df["unique_customers"].iloc[0]
 
+def calculate_total_revenue(filter):
+    query = sa.text(_load_query_template("total_revenue.sql"))
+    df = pd.read_sql(query, supabase, params=filter)
+    return df["total_revenue"].iloc[0]
+
 def fetch_min_and_max_sale_date():
     query = sa.text("SELECT min(sale_date) AS min_date, max(sale_date) AS max_date FROM sales;")
     df = pd.read_sql(query, supabase)

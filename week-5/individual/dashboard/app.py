@@ -12,6 +12,7 @@ import pandas as pd
 import data_loader
 import charts
 import datetime
+import math
 
 def main():
     setup_page()
@@ -126,7 +127,7 @@ def fill_kpis_section(kpis_section, data):
         total_customers = data["total_customers"]
         
         # KPI kaardid
-        col1, col2 = st.columns(2)
+        col1, col2, col3 = st.columns(3)
         
         col1.metric(
             label="Müügitulu",
@@ -139,6 +140,20 @@ def fill_kpis_section(kpis_section, data):
             value=f"{total_customers:,}".replace(",", " "),
             help="Erinevate klientide arv valitud perioodil"
         )
+
+        kpi3_year = 2024
+        kpi3_comparison_year = kpi3_year - 1
+        total_revenue_delta = calculate_yearly_total_revenue_change_percentage(kpi3_year)
+
+        # Kas muutuse jaoks eraldi KPI kaart on ikka õige? Alternatiiv oleks kuvada muutus delta= parameetrina esimesel KPI-l.
+        # Praegune eraldi KPI, kus on võrdlus fikseeritud aastate vahel, on vaid grupitöö jaoks.
+        if total_revenue_delta and not math.isnan(total_revenue_delta) and not math.isinf(total_revenue_delta):
+            value_text = f"{total_revenue_delta:,.0f} %".replace(",", " ")
+            col3.metric(
+                label=f"Müügitulu muutus {kpi3_year} vs {kpi3_comparison_year}",
+                value=value_text,
+                help=f"{kpi3_year} võrdluses {kpi3_comparison_year}. aastaga"
+            )
 
 def fill_main_chart_section(main_chart_section, data):
     with main_chart_section.container():
@@ -155,12 +170,23 @@ def render_footer(data):
         f"Andmeid: {orders_text} rida"
     )
 
+def calculate_yearly_total_revenue_change_percentage(year):
+    try:
+        period_start = datetime.date(year, 1, 1)
+        period_end = datetime.date(year + 1, 1, 1)
+        previous_period_start = datetime.date(year - 1, 1, 1)
+        total_revenue_current = calculate_total_revenue({ "time_from": period_start, "time_to": period_end })
+        total_revenue_previous = calculate_total_revenue({ "time_from": previous_period_start, "time_to": period_start })
+        return (total_revenue_current - total_revenue_previous) * 100 / total_revenue_previous
+    except ZeroDivisionError:
+        return None
+
 # Eesti formaat kuupäevadele.
 def format_date(date):
     return date.strftime('%d.%m.%Y')
 
 # ============================================================
-# 2. ANDMETE LAADIMINE (cache'iga)
+# ANDMETE LAADIMINE ja mälus puhverdamine (cache)
 # ============================================================
 
 # First and last sale date as default date range filters.
@@ -176,6 +202,10 @@ def load_aggregated_sales_data(params):
 @st.cache_data(ttl=300)
 def count_total_customers(params):
     return data_loader.count_unique_customers(params)
+
+@st.cache_data(ttl=300)
+def calculate_total_revenue(params):
+    return data_loader.calculate_total_revenue(params)
 
 if __name__ == "__main__":
     main()
