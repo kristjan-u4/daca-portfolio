@@ -8,11 +8,11 @@ DACA Programm, Nädal 5: Visualiseerimise Disain, Track B.
 """
  
 import streamlit as st
-import pandas as pd
-import data_loader
 import charts
 import datetime
-import math
+
+import data_loader
+import utils
 
 def main():
     setup_page()
@@ -22,7 +22,7 @@ def main():
     fill_header_section(header_section, filters)
     params = compose_sql_params(filters, default_filter_settings)
     data = get_data(params)
-    fill_kpis_section(kpis_section, data)
+    fill_kpis_section(kpis_section, filters)
     fill_main_chart_section(main_chart_section, data)
     render_footer(data)
 
@@ -114,39 +114,48 @@ def fill_header_section(header_section, filters):
         st.title("📊 CEO Dashboard")
         st.markdown(
             f"*Müügitulu, klientide arv ja kasvutrend ajavahemikus "
-            f"{format_date(filters['date_range'][0])} - {format_date(filters['date_range'][1])}*"
+            f"{utils.format_date(filters['date_range'][0])} - {utils.format_date(filters['date_range'][1])}*"
         )
 
-def fill_kpis_section(kpis_section, data):
+def fill_kpis_section(kpis_section, filters):
     with kpis_section.container():
-        df = data["aggregated_sales"]
-        # Arvuta KPI-d
-        total_revenue = df["total_revenue"].sum()
-        total_customers = data["total_customers"]
-        
         # KPI kaardid
         col1, col2, col3 = st.columns(3)
         
+        # Arvuta müügikäive koos muutusega eelneva perioodiga võrreldes.
+        total_revenue_with_delta = calculate_total_revenue_with_delta(filters["open_date_range"])
+        total_revenue = total_revenue_with_delta[0]
+        total_revenue_delta = total_revenue_with_delta[1]
+
         col1.metric(
             label="Müügitulu",
             value=f"€{total_revenue:,.0f}".replace(",", " "),
+            delta=utils.format_metric_delta_as_percentage(total_revenue_delta),
             help="Valitud perioodi kogu müügitulu"
         )
+
+        # Arvuta klientide arv koos muutusega eelneva perioodiga võrreldes.
+        total_customers_with_delta = calculate_total_customers_with_delta(filters["open_date_range"])
+        total_customers = total_customers_with_delta[0]
+        total_customers_delta = total_customers_with_delta[1]
         
         col2.metric(
             label="Klientide arv",
             value=f"{total_customers:,}".replace(",", " "),
+            delta=utils.format_metric_delta_as_percentage(total_customers_delta),
             help="Erinevate klientide arv valitud perioodil"
         )
 
+        # Kas muutuse jaoks eraldi KPI kaart on ikka õige?
+        # Praegune eraldi KPI, kus on võrdlus fikseeritud aastate vahel, on vaid grupitöö jaoks.
         kpi3_year = 2024
         kpi3_comparison_year = kpi3_year - 1
-        total_revenue_delta = calculate_yearly_total_revenue_change_percentage(kpi3_year)
+        kpi3_date_range = (datetime.date(kpi3_year, 1, 1), datetime.date(kpi3_year + 1, 1, 1))
+        kpi3_total_revenue_with_change = calculate_total_revenue_with_delta(kpi3_date_range)
+        kpi3_total_revenue_delta = kpi3_total_revenue_with_change[1]
 
-        # Kas muutuse jaoks eraldi KPI kaart on ikka õige? Alternatiiv oleks kuvada muutus delta= parameetrina esimesel KPI-l.
-        # Praegune eraldi KPI, kus on võrdlus fikseeritud aastate vahel, on vaid grupitöö jaoks.
-        if total_revenue_delta and not math.isnan(total_revenue_delta) and not math.isinf(total_revenue_delta):
-            value_text = f"{total_revenue_delta:,.0f} %".replace(",", " ")
+        if kpi3_total_revenue_delta:
+            value_text = f"{kpi3_total_revenue_delta:,.0f} %".replace(",", " ")
             col3.metric(
                 label=f"Müügitulu muutus {kpi3_year} vs {kpi3_comparison_year}",
                 value=value_text,
@@ -168,20 +177,19 @@ def render_footer(data):
         f"Andmeid: {orders_text} rida"
     )
 
-def calculate_yearly_total_revenue_change_percentage(year):
-    try:
-        period_start = datetime.date(year, 1, 1)
-        period_end = datetime.date(year + 1, 1, 1)
-        previous_period_start = datetime.date(year - 1, 1, 1)
-        total_revenue_current = calculate_total_revenue({ "time_from": period_start, "time_to": period_end })
-        total_revenue_previous = calculate_total_revenue({ "time_from": previous_period_start, "time_to": period_start })
-        return (total_revenue_current - total_revenue_previous) * 100 / total_revenue_previous
-    except ZeroDivisionError:
-        return None
+def calculate_total_revenue_with_delta(date_range):
+    comparison_date_range = utils.calculate_previous_open_date_range(date_range)
+    total_revenue_current = calculate_total_revenue({ "time_from": date_range[0], "time_to": date_range[1] })
+    total_revenue_previous = calculate_total_revenue({ "time_from": comparison_date_range[0], "time_to": comparison_date_range[1] })
+    delta = utils.calculate_delta_in_percents(total_revenue_current, total_revenue_previous)
+    return (total_revenue_current, delta)
 
-# Eesti formaat kuupäevadele.
-def format_date(date):
-    return date.strftime('%d.%m.%Y')
+def calculate_total_customers_with_delta(date_range):
+    comparison_date_range = utils.calculate_previous_open_date_range(date_range)
+    total_customers_current = count_total_customers({ "time_from": date_range[0], "time_to": date_range[1] })
+    total_customers_previous = count_total_customers({ "time_from": comparison_date_range[0], "time_to": comparison_date_range[1] })
+    delta = utils.calculate_delta_in_percents(total_customers_current, total_customers_previous)
+    return (total_customers_current, delta)
 
 # ============================================================
 # ANDMETE LAADIMINE ja mälus puhverdamine (cache)
