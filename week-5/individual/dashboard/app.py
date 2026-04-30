@@ -58,18 +58,20 @@ def build_default_filter_settings():
 
 def prepare_filters(default_filter_settings):
     st.header("🔍 Filtrid")
-    date_range = prepare_date_range_filter(default_filter_settings)
+    col1, _, _, _ = st.columns(4)
+    date_range = prepare_date_range_filter(col1, default_filter_settings)
     st.divider()
     return {
         "date_range": date_range
     }
 
-def prepare_date_range_filter(default_filter_settings):
+def prepare_date_range_filter(container, default_filter_settings):
     min_date = default_filter_settings["min_date"]
     max_date = default_filter_settings["max_date"]
     
-    date_range = st.date_input(
+    date_range = container.date_input(
         "Ajavahemik",
+        format="DD.MM.YYYY",
         value=(min_date, max_date),
         min_value=min_date,
         max_value=max_date,
@@ -123,7 +125,7 @@ def fill_kpis_section(kpis_section, data):
     with kpis_section.container():
         df = data["aggregated_sales"]
         # Arvuta KPI-d
-        total_revenue = df["käive"].sum()
+        total_revenue = df["total_revenue"].sum()
         total_customers = data["total_customers"]
         
         # KPI kaardid
@@ -163,7 +165,7 @@ def fill_main_chart_section(main_chart_section, data):
         st.plotly_chart(fig_trend, use_container_width=True)
 
 def render_footer(data):
-    orders_text = f"{data['aggregated_sales']['tellimusi'].sum():,}".replace(",", " ")
+    orders_text = f"{data['aggregated_sales']['orders'].sum():,}".replace(",", " ")
     st.caption(
         "UrbanStyle.ltd — Investor Dashboard | "
         "DACA Programm, Nädal 5 | "
@@ -197,7 +199,7 @@ def get_sale_date_boundaries():
 @st.cache_data(ttl=300)
 def load_aggregated_sales_data(params):
     """Laadi agregeeritud müügiandmed Supabase'ist ja cache'i need."""
-    return data_loader.aggregate_sales_by_period(params)
+    return data_loader.aggregate_sales_by_interval(params)
 
 @st.cache_data(ttl=300)
 def count_total_customers(params):

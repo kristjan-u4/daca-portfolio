@@ -16,26 +16,8 @@ load_dotenv(override=True)
 # Loo Supabase klient SQL päringute tegemiseks:
 supabase = sa.create_engine(os.getenv("SUPABASE_CONNECTION_STRING"))
 
-def aggregate_sales_by_period(filter):
-    """
-    Laeb agregeeritud müügiandmed Supabase'ist.
-
-    Kasutab SQL malli 'aggregated_sales_by_period.sql', et pärida agregeeritud müügiandmed valitud ajaperioodil.
-
-    Args:
-        filter_params (dict): Sõnastik SQL parameetritega. 
-            Oodatavad võtmed:
-            - 'time_from': Alguskuupäev (datetime.date).
-            - 'time_to': Lõpukuupäev (datetime.date).
-            - 'interval': Grupeerimise alus ('day', 'week', 'month', 'quarter').
-
-    Returns:
-        pd.DataFrame: Andmetabel veergudega ['perioodi_algus', 'käive', 'tellimusi', 'kliente'].
-        
-    Raises:
-        SQLAlchemyError: Kui andmebaasipäring ebaõnnestub.
-    """
-    query = sa.text(_load_query_template("aggregated_sales_by_period.sql"))
+def aggregate_sales_by_interval(filter):
+    query = sa.text(_load_query_template("aggregated_sales_by_interval.sql"))
     return pd.read_sql(query, supabase, params=filter)
 
 def count_unique_customers(filter):

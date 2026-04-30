@@ -16,20 +16,20 @@ def create_revenue_trend(df):
     # Samm 1: Loo joondiagramm
     fig = px.line(
         df, # agregeeritud andmed
-        x="perioodi_algus",                    # x-telg: kuupäev
-        y="käive",                             # y-telg: müügitulu
+        x="interval_start", # x-telg: Kuu
+        y="total_revenue", # y-telg: müügitulu
         title="UrbanStyle müügitulu trend", # diagrammi pealkiri
-        labels={                              # telgede sildid
-            "perioodi_algus": "Kuu",
-            "käive": "Müügitulu (EUR)"
+        labels={ # telgede sildid
+            "interval_start": "Kuu",
+            "total_revenue": "Müügitulu (EUR)"
         }
     )
 
     # X-telje seaded.
     fig.update_xaxes(
         title_text=None,
-        tickformat="%m.%Y",
-        dtick="M1",
+        tickformat="%b %Y",
+        dtick=None, # punktide intervall (nt."M1" tähendab 1 kuu)
         tickfont_size=12,
         tickfont_color="#1A1A2E"
     )
@@ -56,7 +56,7 @@ def create_revenue_trend(df):
     fig.update_traces(line_color="#009B8D", line_width=3)
  
     # Samm 4: Lisa joon, mis näitab keskmist
-    avg_revenue = df["käive"].mean()
+    avg_revenue = df["total_revenue"].mean()
     fig.add_hline(
         y=avg_revenue,
         line_dash="dash",
