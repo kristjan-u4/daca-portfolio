@@ -54,7 +54,7 @@ def build_default_filter_settings():
     }
 
 def prepare_filters(default_filter_settings):
-    st.header("🔍 Filtrid")
+    st.header("Filtrid")
     col1, _, _, _ = st.columns(4)
     filters = {}
     add_date_range_filter(filters, col1, default_filter_settings)
@@ -111,7 +111,7 @@ def get_data(params):
 
 def fill_header_section(header_section, filters):
     with header_section.container():
-        st.title("📊 CEO Dashboard")
+        st.title("CEO Dashboard")
         st.markdown(
             f"*Müügitulu, klientide arv ja kasvutrend ajavahemikus "
             f"{utils.format_date(filters['date_range'][0])} - {utils.format_date(filters['date_range'][1])}*"
@@ -165,7 +165,7 @@ def fill_kpis_section(kpis_section, filters):
 def fill_main_chart_section(main_chart_section, data):
     with main_chart_section.container():
         df = data["aggregated_sales"]
-        st.header("📈 Müügitrendid")
+        st.header("Müügitrendid")
         fig_trend = charts.create_revenue_trend(df)
         st.plotly_chart(fig_trend, use_container_width=True)
 
