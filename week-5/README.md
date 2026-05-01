@@ -34,7 +34,7 @@ Analüüsides UrbanStyle'i koondandmeid, tuvastasin järgmised olulised punktid 
 * **Disainipõhimõtted:** Järgisin **Tufte** põhimõtteid (kõrge data-ink ratio) ja **Knaflici** disainerimõtlemist. Asetasin kõige olulisemad KPI kaardid ekraani ülaossa (F-muster), et Kristi saaks olukorrast aru 10 sekundiga. Kasutasin UrbanStyle brändivärvi (#009B8D teal) trendide rõhutamiseks.
 
 ## Meeskonna koondraport
-Meie meeskonna ühine investorite koondvaade, mis sünteesib CEO, turunduse ja operatsioonide vaated, asub [siin](https://docs.google.com/presentation/d/1xLmbXssHMxNhEsh4dl6HjVJakhiVlHHW/edit?slide=id.p1#slide=id.p1).
+Meie meeskonna ühine investorite koondvaade, mis sünteesib CEO, turunduse ja operatsioonide vaated, asub [siin](https://github.com/sille-pragi/urbanstyle-marketing-data/blob/main/week_5/investor_dashboard.png).
 
 ## Kuidas rakendust käivitada (Ubuntu Linux näitel)
 1. Veendu, et sul on Python installitud
