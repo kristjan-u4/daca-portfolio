@@ -4,7 +4,7 @@
 Sel nädalal oli fookuses andmete visualiseerimine ja dashboardi disain UrbanStyle.ltd sidusrühmadele. Mina täitsin grupitöös **Roll A (Tegevjuht Kristi Tamme vaade)** ülesandeid. Minu eesmärk oli luua kõrgtaseme ülevaade ettevõtte käekäigust, vastates Kristi peamisele küsimusele: "Kas me kasvame?". Kuna andmete visualiseerimistööriistade valikul olen otsustanud minna **Track B** teed, siis kasutasin dashboardi loomisel programmeerimiskeelt **Python** ning selle teeke **Plotly** ja **Streamlit**.
 
 ## Dashboardi eelvaade
-![CEO Dashboardi ekraanipilt](week-5/individual/week_5_ceo_dashboard_screenshot.png)
+![CEO Dashboardi ekraanipilt](./individual/week_5_ceo_dashboard_screenshot.png)
 *Märkus: Ülaltoodud pilt on vaade valmis Streamliti rakendusest, mis on suunatud tegevjuhile.*
 
 ## AI kasutamine
@@ -45,6 +45,6 @@ Meie meeskonna ühine investorite koondvaade, mis sünteesib CEO, turunduse ja o
 
 ## Lähtekood
 
-* Streamlit rakendus: [app.py](week-5/individual/dashboard/app.py)
+* Streamlit rakendus: [app.py](./individual/dashboard/app.py)
 * Abiskriptid, millest app.py sõltub, asuvad samas kataloogis.
 * SQL päringute mallid, mida Pythoni kood kasutab, asuvad sql alamkataloogis. **NB!** Päringutes tuleb dünaamilised parameetrid asendada, kui on vajalik neid Supabase'is käsitsi jooksutada.
