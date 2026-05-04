@@ -1,165 +1,217 @@
-# Running this script: streamlit run dashboard/app.py
+# Running this script: streamlit run week-5/individual/dashboard/app.py
 
 """
-UrbanStyle Investor Dashboard
+UrbanStyle CEO Dashboard
 ===============================
-Interaktiivne dashboard investoritele — Plotly + Streamlit.
+Interaktiivne dashboard UrbanStyle CEO jaoks — Plotly + Streamlit.
 DACA Programm, Nädal 5: Visualiseerimise Disain, Track B.
 """
  
 import streamlit as st
-import pandas as pd
-from data_loader import load_sales_with_details
-from charts import (
-    create_revenue_trend,
-    create_top_products,
-    create_sales_by_city
-)
- 
+import charts
+import datetime
+
+import data_loader
+import utils
+
+def main():
+    setup_page()
+    header_section, kpis_section, main_chart_section = prepare_placeholders()
+    default_filter_settings = build_default_filter_settings()
+    filters = prepare_filters(default_filter_settings)
+    fill_header_section(header_section, filters)
+    params = compose_sql_params(filters, default_filter_settings)
+    data = get_data(params)
+    fill_kpis_section(kpis_section, filters)
+    fill_main_chart_section(main_chart_section, data)
+    render_footer(data)
+
+def setup_page():
+    st.set_page_config(
+        page_title="UrbanStyle Dashboard", # brauseri vahekaardi pealkiri
+        page_icon="📊", # brauseri vahekaardi ikoon
+        layout="wide" # kasuta kogu laiust
+    )
+
+def prepare_placeholders():
+    header_section = st.empty()
+    st.divider()
+
+    kpis_section = st.empty()
+    st.divider()
+
+    main_chart_section = st.empty()
+    st.divider()
+
+    return header_section, kpis_section, main_chart_section
+
+def build_default_filter_settings():
+    min_date, max_date = get_sale_date_boundaries()
+    return {
+        "min_date": min_date,
+        "max_date": max_date,
+        "interval": "month"
+    }
+
+def prepare_filters(default_filter_settings):
+    st.header("Filtrid")
+    col1, _, _, _ = st.columns(4)
+    filters = {}
+    add_date_range_filter(filters, col1, default_filter_settings)
+    st.divider()
+    return filters
+
+def add_date_range_filter(filters, container, default_filter_settings):
+    min_date = default_filter_settings["min_date"]
+    max_date = default_filter_settings["max_date"]
+    
+    date_range = container.date_input(
+        "Ajavahemik",
+        format="DD.MM.YYYY",
+        value=(min_date, max_date),
+        min_value=min_date,
+        max_value=max_date,
+        help="Vali algus- ja lõppkuupäev"
+    )
+    if len(date_range) < 2:
+        st.info("Palun vali kalendris ka lõppkuupäev.")
+        st.stop() # programmikoodi täitmine lõpetatakse
+
+   # Kasutame vaikeväärtusi, kui mingil põhjusel väärtused puuduvad:
+    date_from = date_range[0] or default_filter_settings["min_date"]
+    date_to = date_range[1] or default_filter_settings["max_date"]
+
+    filters["date_range"] = (date_from, date_to)
+    # Defineerime lisaks veel avatud ülempiiriga ajavahemiku, mida kasutatakse SQL päringutes:
+    filters["open_date_range"] = (date_from, date_to + datetime.timedelta(days=1))
+
+def compose_sql_params(filters, default_filter_settings):
+    params = {}
+    add_date_range_sql_params(params, filters, default_filter_settings)
+    add_interval_sql_params(params, default_filter_settings)
+    return params
+
+def add_date_range_sql_params(params, filters, default_filter_settings):
+    date_range = filters["open_date_range"]
+    params["time_from"] = date_range[0]
+    params["time_to"] = date_range[1]
+
+def add_interval_sql_params(params, default_filter_settings):
+    delta = params["time_to"] - params["time_from"]
+    if delta.days < 60:
+        params["interval"] = "day"
+    else:
+        params["interval"] = default_filter_settings["interval"]
+
+def get_data(params):
+    return {
+        "aggregated_sales": load_aggregated_sales_data(params),
+        "total_customers": count_total_customers(params)
+    }
+
+def fill_header_section(header_section, filters):
+    with header_section.container():
+        st.title("CEO Dashboard")
+        st.markdown(
+            f"*Müügitulu, klientide arv ja kasvutrend ajavahemikus "
+            f"{utils.format_date(filters['date_range'][0])} - {utils.format_date(filters['date_range'][1])}*"
+        )
+
+def fill_kpis_section(kpis_section, filters):
+    with kpis_section.container():
+        # KPI kaardid
+        col1, col2, col3 = st.columns(3)
+        
+        # Arvuta müügikäive koos muutusega eelneva perioodiga võrreldes.
+        total_revenue_with_delta = calculate_total_revenue_with_delta(filters["open_date_range"])
+        total_revenue = total_revenue_with_delta[0]
+        total_revenue_delta = total_revenue_with_delta[1]
+
+        col1.metric(
+            label="Müügitulu",
+            value=f"€{total_revenue:,.0f}".replace(",", " "),
+            delta=utils.format_metric_delta_as_percentage(total_revenue_delta),
+            help="Valitud perioodi kogu müügitulu"
+        )
+
+        # Arvuta klientide arv koos muutusega eelneva perioodiga võrreldes.
+        total_customers_with_delta = calculate_total_customers_with_delta(filters["open_date_range"])
+        total_customers = total_customers_with_delta[0]
+        total_customers_delta = total_customers_with_delta[1]
+        
+        col2.metric(
+            label="Klientide arv",
+            value=f"{total_customers:,}".replace(",", " "),
+            delta=utils.format_metric_delta_as_percentage(total_customers_delta),
+            help="Erinevate klientide arv valitud perioodil"
+        )
+
+        # Kas muutuse jaoks eraldi KPI kaart on ikka õige?
+        # Praegune eraldi KPI, kus on võrdlus fikseeritud aastate vahel, on vaid grupitöö jaoks.
+        kpi3_year = 2024
+        kpi3_comparison_year = kpi3_year - 1
+        kpi3_date_range = (datetime.date(kpi3_year, 1, 1), datetime.date(kpi3_year + 1, 1, 1))
+        kpi3_total_revenue_with_change = calculate_total_revenue_with_delta(kpi3_date_range)
+        kpi3_total_revenue_delta = kpi3_total_revenue_with_change[1]
+
+        if kpi3_total_revenue_delta:
+            value_text = f"{kpi3_total_revenue_delta:,.0f} %".replace(",", " ")
+            col3.metric(
+                label=f"Müügitulu muutus {kpi3_year} vs {kpi3_comparison_year}",
+                value=value_text,
+                help=f"{kpi3_year} võrdluses {kpi3_comparison_year}. aastaga"
+            )
+
+def fill_main_chart_section(main_chart_section, data):
+    with main_chart_section.container():
+        df = data["aggregated_sales"]
+        st.header("Müügitrendid")
+        fig_trend = charts.create_revenue_trend(df)
+        st.plotly_chart(fig_trend, use_container_width=True)
+
+def render_footer(data):
+    orders_text = f"{data['aggregated_sales']['orders'].sum():,}".replace(",", " ")
+    st.caption(
+        "UrbanStyle.ltd — CEO Dashboard | "
+        "DACA Programm, Nädal 5 | "
+        f"Andmeid: {orders_text} rida"
+    )
+
+def calculate_total_revenue_with_delta(date_range):
+    comparison_date_range = utils.calculate_previous_open_date_range(date_range)
+    total_revenue_current = calculate_total_revenue({ "time_from": date_range[0], "time_to": date_range[1] })
+    total_revenue_previous = calculate_total_revenue({ "time_from": comparison_date_range[0], "time_to": comparison_date_range[1] })
+    delta = utils.calculate_delta_in_percents(total_revenue_current, total_revenue_previous)
+    return (total_revenue_current, delta)
+
+def calculate_total_customers_with_delta(date_range):
+    comparison_date_range = utils.calculate_previous_open_date_range(date_range)
+    total_customers_current = count_total_customers({ "time_from": date_range[0], "time_to": date_range[1] })
+    total_customers_previous = count_total_customers({ "time_from": comparison_date_range[0], "time_to": comparison_date_range[1] })
+    delta = utils.calculate_delta_in_percents(total_customers_current, total_customers_previous)
+    return (total_customers_current, delta)
+
 # ============================================================
-# 1. LEHE SEADISTAMINE
+# ANDMETE LAADIMINE ja mälus puhverdamine (cache)
 # ============================================================
- 
-st.set_page_config(
-    page_title="UrbanStyle Dashboard",     # brauseri vahekaardi pealkiri
-    page_icon="📊",                         # brauseri vahekaardi ikoon
-    layout="wide"                           # kasuta kogu laiust
-)
- 
-# ============================================================
-# 2. ANDMETE LAADIMINE (cache'iga)
-# ============================================================
- 
+
+# First and last sale date as default date range filters.
 @st.cache_data(ttl=300)  # Cache 5 minutiks (300 sekundit)
-def get_data():
-    """Laadi andmed Supabase'ist ja cache'i need."""
-    return load_sales_with_details()
+def get_sale_date_boundaries():
+    return data_loader.fetch_min_and_max_sale_date()
  
-# Laadi andmed
-df = get_data()
- 
-# Teisenda kuupäev
-df["sale_date"] = pd.to_datetime(df["sale_date"])
- 
-# ============================================================
-# 3. KÜLGPANEEL (FILTRID)
-# ============================================================
- 
-st.sidebar.header("🔍 Filtrid")
- 
-# Linnade filter
-all_cities = sorted(df["city"].dropna().unique())
-selected_cities = st.sidebar.multiselect(
-    "Linnad",
-    options=all_cities,
-    default=all_cities,                     # vaikimisi kõik valitud
-    help="Vali linnad, mille andmeid tahad näha"
-)
- 
-# Kuupäeva filter
-min_date = df["sale_date"].min().date()
-max_date = df["sale_date"].max().date()
-date_range = st.sidebar.date_input(
-    "Ajavahemik",
-    value=(min_date, max_date),
-    min_value=min_date,
-    max_value=max_date,
-    help="Vali algus- ja lõppkuupäev"
-)
- 
-# Kanalite filter
-all_channels = sorted(df["channel"].dropna().unique())
-selected_channels = st.sidebar.multiselect(
-    "Müügikanalid",
-    options=all_channels,
-    default=all_channels,
-    help="online = e-pood, pood = füüsiline kauplus"
-)
- 
-# ============================================================
-# 4. ANDMETE FILTREERIMINE
-# ============================================================
- 
-# Rakenda filtrid
-df_filtered = df[
-    (df["city"].isin(selected_cities)) &
-    (df["sale_date"].dt.date >= date_range[0]) &
-    (df["sale_date"].dt.date <= date_range[1]) &
-    (df["channel"].isin(selected_channels))
-].copy()
- 
-# ============================================================
-# 5. PÄIS JA KPI KAARDID
-# ============================================================
- 
-st.title("📊 UrbanStyle Investor Dashboard")
-st.markdown("*Reaalajas müügiandmed investorkoosoleku ettevalmistuseks*")
-st.divider()
- 
-# Arvuta KPI-d
-total_revenue = df_filtered["total_price"].sum()
-total_orders = len(df_filtered)
-unique_customers = df_filtered["customer_id"].nunique()
-avg_order_value = df_filtered["total_price"].mean() if len(df_filtered) > 0 else 0
- 
-# KPI kaardid kolmes veerus
-col1, col2, col3, col4 = st.columns(4)
- 
-col1.metric(
-    label="Kogumüügitulu",
-    value=f"€{total_revenue:,.0f}",
-    help="Valitud perioodi kogu müügitulu"
-)
- 
-col2.metric(
-    label="Tellimusi",
-    value=f"{total_orders:,}",
-    help="Valitud perioodi tellimuste arv"
-)
- 
-col3.metric(
-    label="Unikaalseid kliente",
-    value=f"{unique_customers:,}",
-    help="Erinevate klientide arv valitud perioodil"
-)
- 
-col4.metric(
-    label="Keskmine tellimus",
-    value=f"€{avg_order_value:,.2f}",
-    help="Keskmine tellimuse summa"
-)
- 
-st.divider()
- 
-# ============================================================
-# 6. DIAGRAMMID
-# ============================================================
- 
-# Esimene rida: müügitrend (täislaiuses)
-st.header("📈 Müügitrendid")
-fig_trend = create_revenue_trend(df_filtered)
-st.plotly_chart(fig_trend, use_container_width=True)
- 
-# Teine rida: top tooted ja linnade jaotus kõrvuti
-col_left, col_right = st.columns(2)
- 
-with col_left:
-    st.header("🏆 Top Tooted")
-    fig_products = create_top_products(df_filtered)
-    st.plotly_chart(fig_products, use_container_width=True)
- 
-with col_right:
-    st.header("🏙️ Müük Linnade Kaupa")
-    fig_cities = create_sales_by_city(df_filtered)
-    st.plotly_chart(fig_cities, use_container_width=True)
- 
-# ============================================================
-# 7. JALUS
-# ============================================================
- 
-st.divider()
-st.caption(
-    "UrbanStyle.ltd — Investor Dashboard | "
-    "DACA Programm, Nädal 5 | "
-    f"Andmeid: {len(df_filtered):,} rida"
-)
+@st.cache_data(ttl=300)
+def load_aggregated_sales_data(params):
+    """Laadi agregeeritud müügiandmed Supabase'ist."""
+    return data_loader.aggregate_sales_by_interval(params)
+
+@st.cache_data(ttl=300)
+def count_total_customers(params):
+    return data_loader.count_unique_customers(params)
+
+@st.cache_data(ttl=300)
+def calculate_total_revenue(params):
+    return data_loader.calculate_total_revenue(params)
+
+if __name__ == "__main__":
+    main()

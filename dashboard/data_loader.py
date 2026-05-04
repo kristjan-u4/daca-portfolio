@@ -1,79 +1,45 @@
 """
-UrbanStyle Dashboard — Andmelaadimine Supabase'ist
+Roll A — UrbanStyle CEO Dashboard
 ===================================================
-See moodul laadib UrbanStyle andmed Supabase'ist
-ja tagastab need pandas DataFrame'idena.
+Andmete laadimine andmebaasist.
 """
  
 import os
 from dotenv import load_dotenv
-from supabase import create_client
+import sqlalchemy as sa
 import pandas as pd
+from pathlib import Path
  
 # Laadi keskkonna muutujad .env failist
 load_dotenv(override=True)
  
-# Loo Supabase klient
-supabase = create_client(
-    os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_KEY")
-)
+# Loo Supabase klient SQL päringute tegemiseks:
+supabase = sa.create_engine(os.getenv("SUPABASE_CONNECTION_STRING"))
 
-def load_sales():
-    """
-    Laadi müügitabel (sales) Supabase'ist.
-    Tagastab: pandas DataFrame müügiandmetega.
-    Veerud: sale_id, invoice_id, sale_date, customer_id,
-            product_id, quantity, unit_price, total_price,
-            channel, store_location, payment_method
-    """
-    response = supabase.table("sales").select("*").execute()
-    return pd.DataFrame(response.data)
+def aggregate_sales_by_interval(filter):
+    query = sa.text(_load_query_template("aggregated_sales_by_interval.sql"))
+    return pd.read_sql(query, supabase, params=filter)
 
-def load_customers():
+def count_unique_customers(filter):
+    query = sa.text(_load_query_template("unique_customers_count.sql"))
+    df = pd.read_sql(query, supabase, params=filter)
+    return df["unique_customers"].iloc[0]
+
+def calculate_total_revenue(filter):
+    query = sa.text(_load_query_template("total_revenue.sql"))
+    df = pd.read_sql(query, supabase, params=filter)
+    return df["total_revenue"].iloc[0]
+
+def fetch_min_and_max_sale_date():
+    query = sa.text("SELECT min(sale_date) AS min_date, max(sale_date) AS max_date FROM sales;")
+    df = pd.read_sql(query, supabase)
+    return df["min_date"].iloc[0], df["max_date"].iloc[0]
+
+def _load_query_template(filename):
     """
-    Laadi klienditabel (customers) Supabase'ist.
-    Tagastab: pandas DataFrame kliendiandmetega.
-    Veerud: customer_id, first_name, last_name, email,
-            phone, city, registration_date, loyalty_tier, birth_year
+    SQL päringu malli laadimine etteantud failist.
     """
-    response = supabase.table("customers").select("*").execute()
-    return pd.DataFrame(response.data)
- 
- 
-def load_products():
-    """
-    Laadi tootetabel (products) Supabase'ist.
-    Tagastab: pandas DataFrame tooteteandmetega.
-    Veerud: product_id, product_name, category, subcategory,
-            unit_price, supplier, ...
-    """
-    response = supabase.table("products").select("*").execute()
-    return pd.DataFrame(response.data)
- 
- 
-def load_sales_with_details():
-    """
-    Laadi müügiandmed koos toote- ja kliendiinfoga.
-    Ühendab sales, products ja customers tabelid
-    (sarnaselt SQL JOIN-ile, mille sa õppisid nädalal 3).
-    """
-    df_sales = load_sales()
-    df_products = load_products()
-    df_customers = load_customers()
- 
-    # JOIN: lisa tootenimi müügitabelile (nagu SQL LEFT JOIN)
-    df = df_sales.merge(
-        df_products[["product_id", "product_name", "category"]],
-        on="product_id",
-        how="left"
-    )
- 
-    # JOIN: lisa kliendi linn müügitabelile
-    df = df.merge(
-        df_customers[["customer_id", "city", "first_name", "last_name"]],
-        on="customer_id",
-        how="left"
-    )
- 
-    return df
+    current_dir = Path(__file__).resolve().parent
+    file_path = current_dir / "sql" / filename
+    with open(file_path, "r") as f:
+        return f.read()
