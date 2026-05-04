@@ -3,7 +3,6 @@ numpy
 plotly
 matplotlib
 seaborn
-supabase
 psycopg2-binary
 sqlalchemy
 streamlit
