@@ -8,18 +8,21 @@ import pandas as pd
 import plotly.express as px
 import utils
 
-def create_revenue_trend(df):
+def create_revenue_trend(data):
     """
     Joondiagramm: igakuine müügitulu.
     Näitab UrbanStyle müügitrendi ajas.
     """
+
+    df = data["aggregated_sales"]
+    store_location_comparison_df = data["comparison_store_location_aggregated_sales"]
  
     # Samm 1: Loo joondiagramm
     fig = px.line(
         df, # agregeeritud andmed
         x="interval_start", # x-telg: Kuu
         y="total_revenue", # y-telg: müügitulu
-        title="UrbanStyle müügitulu trend", # diagrammi pealkiri
+        title="Kogukäive kuude lõikes", # diagrammi pealkiri
         labels={ # telgede sildid
             "interval_start": "Kuu",
             "total_revenue": "Müügitulu (EUR)"
@@ -49,7 +52,7 @@ def create_revenue_trend(df):
         fig.add_annotation(
             x=max_row["interval_start"],
             y=max_row["total_revenue"],
-            text=f"MAX: {utils.format_eur_amount(max_row['total_revenue'])} ({utils.format_date_as_text(max_row["interval_start"])})",
+            text=f"Suurim: {utils.format_eur_amount(max_row['total_revenue'])} ({utils.format_date_as_text(max_row["interval_start"])})",
             showarrow=True,
             arrowhead=2,
             ax=0, # Arrow rotation
@@ -64,7 +67,7 @@ def create_revenue_trend(df):
         fig.add_annotation(
             x=min_row["interval_start"],
             y=min_row["total_revenue"],
-            text=f"MIN: {utils.format_eur_amount(min_row['total_revenue'])} ({utils.format_date_as_text(min_row["interval_start"])})",
+            text=f"Väikseim: {utils.format_eur_amount(min_row['total_revenue'])} ({utils.format_date_as_text(min_row["interval_start"])})",
             showarrow=True,
             arrowhead=2,
             ax=0, # Arrow rotation
@@ -87,13 +90,14 @@ def create_revenue_trend(df):
     # Samm 3: Muudame joone värvi ja  paksust
     fig.update_traces(line_color="#009B8D", line_width=3)
  
-    # Samm 4: Lisa joon, mis näitab keskmist
-    avg_revenue = df["total_revenue"].mean()
+    # Samm 4: Lisa joon, mis näitab võrdluseks Tallinna keskmist.
+
+    avg_revenue = store_location_comparison_df["total_revenue"].mean()
     fig.add_hline(
         y=avg_revenue,
         line_dash="dash",
         line_color="gray",
-        annotation_text=f"Keskmine: {utils.format_eur_amount(avg_revenue)}",
+        annotation_text=f"Tallinna keskmine: {utils.format_eur_amount(avg_revenue)}",
         annotation_position="top right"
     )
  
@@ -113,12 +117,20 @@ def create_top_products(df, top_n=5):
         y="product_name",
         orientation="h",
         title=f"Top {top_n} toodet",
+        text="total_revenue",
         labels={
-            "total_revenue": "Käive (€)",
+            "total_revenue": "Kogumüük (€)",
             "product_name": "Toode"
         },
         color="total_revenue",
         color_continuous_scale="Teal"
+    )
+
+    # 1. Samm: Seadista tekstide vormindus tulpade peal
+    fig.update_traces(
+        texttemplate="€%{text:,.0f}", # Vormindab tulba peal oleva teksti
+        textposition="inside", # Paneb teksti tulbast välja (paremale)
+        hovertemplate="<b>%{y}</b><br>Kogumüük: €%{x:,.0f}<extra></extra>"
     )
  
     # Adjust appearance.
@@ -129,7 +141,8 @@ def create_top_products(df, top_n=5):
         xaxis_tickformat=",.0f",
         xaxis_tickprefix="€",
         coloraxis_showscale=False,
-        separators=", "
+        separators=", ", # Comma separates decimal part, whitespace separates thousands
+        yaxis={'categoryorder':'total ascending'} # The bigger the higher
     )
  
     return fig

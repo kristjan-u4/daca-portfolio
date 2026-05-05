@@ -20,7 +20,7 @@ def main():
     default_filter_settings = build_default_filter_settings()
     filters = prepare_filters(default_filter_settings)
     fill_header_section(header_section, filters)
-    data = get_data(filters)
+    data = get_data(filters, default_filter_settings)
     fill_kpis_section(kpis_section, data)
     fill_main_chart_section(main_chart_section, data)
     fill_helper_charts_section(helper_charts_section, data)
@@ -52,7 +52,8 @@ def build_default_filter_settings():
     return {
         "date_range": (datetime.date(2024, 1, 1), datetime.date(2024, 12, 31)),
         "interval": "month",
-        "store_location": ("Tartu"),
+        "store_location": ("Tartu",),
+        "comparison_store_location": ("Tallinn",),
         "top_products_limit": 5
     }
 
@@ -117,14 +118,17 @@ def add_interval_setting(filters, default_filter_settings):
     else:
         filters["interval"] = default_filter_settings["interval"]
 
-def get_data(filters):
+def get_data(filters, default_filter_settings):
     comparison_filters = filters_with_comparison_date_range(filters)
     return {
         "aggregated_sales": data_loader.aggregate_sales_by_interval(filters),
         "top_products": data_loader.fetch_top_products(filters),
         "aggregated_sales_by_customer_city": data_loader.aggregate_sales_by_customer_city(filters),
         "summary": data_loader.fetch_aggregated_sales_summary(filters),
-        "comparison_summary": data_loader.fetch_aggregated_sales_summary(comparison_filters)
+        "comparison_summary": data_loader.fetch_aggregated_sales_summary(comparison_filters),
+        "comparison_store_location_aggregated_sales": data_loader.aggregate_sales_by_interval(
+            filters_with_comparison_store_location(filters, default_filter_settings)
+        )
     }
 
 def fill_header_section(header_section, filters):
@@ -172,9 +176,8 @@ def fill_kpis_section(kpis_section, data):
 
 def fill_main_chart_section(main_chart_section, data):
     with main_chart_section.container():
-        df = data["aggregated_sales"]
         st.header("Müügitrendid")
-        fig_trend = charts.create_revenue_trend(df)
+        fig_trend = charts.create_revenue_trend(data)
         st.plotly_chart(fig_trend, use_container_width=True)
 
 def fill_helper_charts_section(helper_charts_section, data):
@@ -213,6 +216,11 @@ def filters_with_comparison_date_range(filters):
         comparison_date_range[0],
         comparison_date_range[1] - datetime.timedelta(days=1)
     )
+    return comparison_filters
+
+def filters_with_comparison_store_location(filters, default_filter_settings):
+    comparison_filters = dict(filters)
+    comparison_filters["store_location"] = default_filter_settings["comparison_store_location"]
     return comparison_filters
 
 if __name__ == "__main__":
