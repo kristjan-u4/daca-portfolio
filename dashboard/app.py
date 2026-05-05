@@ -20,8 +20,7 @@ def main():
     default_filter_settings = build_default_filter_settings()
     filters = prepare_filters(default_filter_settings)
     fill_header_section(header_section, filters)
-    params = compose_sql_params(filters, default_filter_settings)
-    data = get_data(params)
+    data = get_data(filters)
     fill_kpis_section(kpis_section, filters)
     fill_main_chart_section(main_chart_section, data)
     render_footer(data)
@@ -46,10 +45,8 @@ def prepare_placeholders():
     return header_section, kpis_section, main_chart_section
 
 def build_default_filter_settings():
-    min_date, max_date = get_sale_date_boundaries()
     return {
-        "min_date": min_date,
-        "max_date": max_date,
+        "date_range": (datetime.date(2024, 1, 1), datetime.date(2024, 12, 31)),
         "interval": "month"
     }
 
@@ -58,17 +55,17 @@ def prepare_filters(default_filter_settings):
     col1, _, _, _ = st.columns(4)
     filters = {}
     add_date_range_filter(filters, col1, default_filter_settings)
+    add_derived_filters(filters, default_filter_settings)
     st.divider()
     return filters
 
 def add_date_range_filter(filters, container, default_filter_settings):
-    min_date = default_filter_settings["min_date"]
-    max_date = default_filter_settings["max_date"]
+    min_date, max_date = get_sale_date_boundaries()
     
     date_range = container.date_input(
         "Ajavahemik",
         format="DD.MM.YYYY",
-        value=(min_date, max_date),
+        value=default_filter_settings["date_range"],
         min_value=min_date,
         max_value=max_date,
         help="Vali algus- ja lõppkuupäev"
@@ -82,31 +79,25 @@ def add_date_range_filter(filters, container, default_filter_settings):
     date_to = date_range[1] or default_filter_settings["max_date"]
 
     filters["date_range"] = (date_from, date_to)
-    # Defineerime lisaks veel avatud ülempiiriga ajavahemiku, mida kasutatakse SQL päringutes:
+
+# Add secondary date-related settings, derived from user input.
+def add_derived_filters(filters, default_filter_settings):
+    date_from, date_to = filters["date_range"]
     filters["open_date_range"] = (date_from, date_to + datetime.timedelta(days=1))
+    add_interval_setting(filters, default_filter_settings)
 
-def compose_sql_params(filters, default_filter_settings):
-    params = {}
-    add_date_range_sql_params(params, filters, default_filter_settings)
-    add_interval_sql_params(params, default_filter_settings)
-    return params
-
-def add_date_range_sql_params(params, filters, default_filter_settings):
-    date_range = filters["open_date_range"]
-    params["time_from"] = date_range[0]
-    params["time_to"] = date_range[1]
-
-def add_interval_sql_params(params, default_filter_settings):
-    delta = params["time_to"] - params["time_from"]
+def add_interval_setting(filters, default_filter_settings):
+    date_from, date_to = filters["open_date_range"]
+    delta = date_to - date_from
     if delta.days < 60:
-        params["interval"] = "day"
+        filters["interval"] = "day"
     else:
-        params["interval"] = default_filter_settings["interval"]
+        filters["interval"] = default_filter_settings["interval"]
 
-def get_data(params):
+def get_data(filters):
     return {
-        "aggregated_sales": load_aggregated_sales_data(params),
-        "total_customers": count_total_customers(params)
+        "aggregated_sales": load_aggregated_sales_data(filters),
+        "total_customers": count_total_customers(filters)
     }
 
 def fill_header_section(header_section, filters):
@@ -123,7 +114,7 @@ def fill_kpis_section(kpis_section, filters):
         col1, col2, col3 = st.columns(3)
         
         # Arvuta müügikäive koos muutusega eelneva perioodiga võrreldes.
-        total_revenue_with_delta = calculate_total_revenue_with_delta(filters["open_date_range"])
+        total_revenue_with_delta = calculate_total_revenue_with_delta(filters)
         total_revenue = total_revenue_with_delta[0]
         total_revenue_delta = total_revenue_with_delta[1]
 
@@ -135,7 +126,7 @@ def fill_kpis_section(kpis_section, filters):
         )
 
         # Arvuta klientide arv koos muutusega eelneva perioodiga võrreldes.
-        total_customers_with_delta = calculate_total_customers_with_delta(filters["open_date_range"])
+        total_customers_with_delta = calculate_total_customers_with_delta(filters)
         total_customers = total_customers_with_delta[0]
         total_customers_delta = total_customers_with_delta[1]
         
@@ -145,22 +136,6 @@ def fill_kpis_section(kpis_section, filters):
             delta=utils.format_metric_delta_as_percentage(total_customers_delta),
             help="Erinevate klientide arv valitud perioodil"
         )
-
-        # Kas muutuse jaoks eraldi KPI kaart on ikka õige?
-        # Praegune eraldi KPI, kus on võrdlus fikseeritud aastate vahel, on vaid grupitöö jaoks.
-        kpi3_year = 2024
-        kpi3_comparison_year = kpi3_year - 1
-        kpi3_date_range = (datetime.date(kpi3_year, 1, 1), datetime.date(kpi3_year + 1, 1, 1))
-        kpi3_total_revenue_with_change = calculate_total_revenue_with_delta(kpi3_date_range)
-        kpi3_total_revenue_delta = kpi3_total_revenue_with_change[1]
-
-        if kpi3_total_revenue_delta:
-            value_text = f"{kpi3_total_revenue_delta:,.0f} %".replace(",", " ")
-            col3.metric(
-                label=f"Müügitulu muutus {kpi3_year} vs {kpi3_comparison_year}",
-                value=value_text,
-                help=f"{kpi3_year} võrdluses {kpi3_comparison_year}. aastaga"
-            )
 
 def fill_main_chart_section(main_chart_section, data):
     with main_chart_section.container():
@@ -177,19 +152,29 @@ def render_footer(data):
         f"Andmeid: {orders_text} rida"
     )
 
-def calculate_total_revenue_with_delta(date_range):
-    comparison_date_range = utils.calculate_previous_open_date_range(date_range)
-    total_revenue_current = calculate_total_revenue({ "time_from": date_range[0], "time_to": date_range[1] })
-    total_revenue_previous = calculate_total_revenue({ "time_from": comparison_date_range[0], "time_to": comparison_date_range[1] })
+def calculate_total_revenue_with_delta(filters):
+    comparison_filters = filters_with_comparison_date_range(filters)
+    total_revenue_current = calculate_total_revenue(filters)
+    total_revenue_previous = calculate_total_revenue(comparison_filters)
     delta = utils.calculate_delta_in_percents(total_revenue_current, total_revenue_previous)
     return (total_revenue_current, delta)
 
-def calculate_total_customers_with_delta(date_range):
-    comparison_date_range = utils.calculate_previous_open_date_range(date_range)
-    total_customers_current = count_total_customers({ "time_from": date_range[0], "time_to": date_range[1] })
-    total_customers_previous = count_total_customers({ "time_from": comparison_date_range[0], "time_to": comparison_date_range[1] })
+def calculate_total_customers_with_delta(filters):
+    comparison_filters = filters_with_comparison_date_range(filters)
+    total_customers_current = count_total_customers(filters)
+    total_customers_previous = count_total_customers(comparison_filters)
     delta = utils.calculate_delta_in_percents(total_customers_current, total_customers_previous)
     return (total_customers_current, delta)
+
+def filters_with_comparison_date_range(filters):
+    comparison_filters = dict(filters) # make a copy
+    comparison_date_range = utils.calculate_previous_open_date_range(filters["open_date_range"])
+    comparison_filters["open_date_range"] = comparison_date_range
+    comparison_filters["date_range"] = (
+        comparison_date_range[0],
+        comparison_date_range[1] - datetime.timedelta(days=1)
+    )
+    return comparison_filters
 
 # ============================================================
 # ANDMETE LAADIMINE ja mälus puhverdamine (cache)
@@ -201,17 +186,17 @@ def get_sale_date_boundaries():
     return data_loader.fetch_min_and_max_sale_date()
  
 @st.cache_data(ttl=300)
-def load_aggregated_sales_data(params):
+def load_aggregated_sales_data(filters):
     """Laadi agregeeritud müügiandmed Supabase'ist."""
-    return data_loader.aggregate_sales_by_interval(params)
+    return data_loader.aggregate_sales_by_interval(filters)
 
 @st.cache_data(ttl=300)
-def count_total_customers(params):
-    return data_loader.count_unique_customers(params)
+def count_total_customers(filters):
+    return data_loader.count_unique_customers(filters)
 
 @st.cache_data(ttl=300)
-def calculate_total_revenue(params):
-    return data_loader.calculate_total_revenue(params)
+def calculate_total_revenue(filters):
+    return data_loader.calculate_total_revenue(filters)
 
 if __name__ == "__main__":
     main()

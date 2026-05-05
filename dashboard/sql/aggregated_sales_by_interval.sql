@@ -4,7 +4,7 @@ SELECT
   count(s.sale_id) AS orders,
   count(DISTINCT s.customer_id) AS customers
 FROM sales s
-WHERE s.sale_date >= :time_from
-AND s.sale_date < :time_to
+WHERE 1 = 1
+{{filters_section}}
 GROUP BY date_trunc(:interval, s.sale_date)
 ORDER BY interval_start ASC;
