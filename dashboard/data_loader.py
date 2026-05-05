@@ -36,7 +36,8 @@ def fetch_min_and_max_sale_date():
 
 def fetch_store_locations():
     query = sa.text(_load_query_template("store_locations.sql"))
-    return pd.read_sql(query, supabase)
+    df = pd.read_sql(query, supabase)
+    return df["store_location"]
 
 # In your main Streamlit file or controller
 def _fetch_filtered_data(template_file_name, filters):

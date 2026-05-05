@@ -47,14 +47,16 @@ def prepare_placeholders():
 def build_default_filter_settings():
     return {
         "date_range": (datetime.date(2024, 1, 1), datetime.date(2024, 12, 31)),
-        "interval": "month"
+        "interval": "month",
+        "store_location": ("Tartu")
     }
 
 def prepare_filters(default_filter_settings):
     st.header("Filtrid")
-    col1, _, _, _ = st.columns(4)
+    col1, col2, _, _ = st.columns(4)
     filters = {}
     add_date_range_filter(filters, col1, default_filter_settings)
+    add_store_location_filter(filters, col2, default_filter_settings)
     add_derived_filters(filters, default_filter_settings)
     st.divider()
     return filters
@@ -79,6 +81,21 @@ def add_date_range_filter(filters, container, default_filter_settings):
     date_to = date_range[1] or default_filter_settings["max_date"]
 
     filters["date_range"] = (date_from, date_to)
+
+def add_store_location_filter(filters, container, default_filter_settings):
+    all_store_locations = fetch_store_locations()
+    default_store_locations = tuple(
+        x for x in all_store_locations
+        if x in default_filter_settings["store_location"]
+    )
+    store_location = container.multiselect(
+        "Kaupluste asukohad",
+        options=all_store_locations,
+        default=default_store_locations,
+        help="Vali kaupluste asukohad, mille andmeid soovid näha"
+    )
+    filters["store_location"] = store_location
+
 
 # Add secondary date-related settings, derived from user input.
 def add_derived_filters(filters, default_filter_settings):
@@ -184,6 +201,10 @@ def filters_with_comparison_date_range(filters):
 @st.cache_data(ttl=300)  # Cache 5 minutiks (300 sekundit)
 def get_sale_date_boundaries():
     return data_loader.fetch_min_and_max_sale_date()
+
+@st.cache_data(ttl=300)
+def fetch_store_locations():
+    return data_loader.fetch_store_locations()
  
 @st.cache_data(ttl=300)
 def load_aggregated_sales_data(filters):
