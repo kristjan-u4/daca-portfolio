@@ -21,13 +21,9 @@ supabase = sa.create_engine(os.getenv("SUPABASE_CONNECTION_STRING"))
 def aggregate_sales_by_interval(filters):
     return _fetch_filtered_data("aggregated_sales_by_interval.sql", filters)
 
-def count_unique_customers(filters):
-    df = _fetch_filtered_data("unique_customers_count.sql", filters)
-    return df["unique_customers"].iloc[0]
-
-def calculate_total_revenue(filters):
-    df = _fetch_filtered_data("total_revenue.sql", filters)
-    return df["total_revenue"].iloc[0]
+def fetch_aggregated_sales_summary(filters):
+    df = _fetch_filtered_data("aggregated_sales_summary.sql", filters)
+    return df.to_dict(orient='records')[0]
 
 def fetch_min_and_max_sale_date():
     query = sa.text("SELECT min(sale_date) AS min_date, max(sale_date) AS max_date FROM sales;")

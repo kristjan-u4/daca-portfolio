@@ -21,7 +21,7 @@ def main():
     filters = prepare_filters(default_filter_settings)
     fill_header_section(header_section, filters)
     data = get_data(filters)
-    fill_kpis_section(kpis_section, filters)
+    fill_kpis_section(kpis_section, data)
     fill_main_chart_section(main_chart_section, data)
     render_footer(data)
 
@@ -112,10 +112,13 @@ def add_interval_setting(filters, default_filter_settings):
         filters["interval"] = default_filter_settings["interval"]
 
 def get_data(filters):
+    comparison_filters = filters_with_comparison_date_range(filters)
     return {
         "aggregated_sales": load_aggregated_sales_data(filters),
-        "total_customers": count_total_customers(filters)
+        "summary": fetch_aggregated_sales_summary(filters),
+        "comparison_summary": fetch_aggregated_sales_summary(comparison_filters)
     }
+
 
 def fill_header_section(header_section, filters):
     with header_section.container():
@@ -125,33 +128,39 @@ def fill_header_section(header_section, filters):
             f"{utils.format_date(filters['date_range'][0])} - {utils.format_date(filters['date_range'][1])}*"
         )
 
-def fill_kpis_section(kpis_section, filters):
+def fill_kpis_section(kpis_section, data):
     with kpis_section.container():
         # KPI kaardid
         col1, col2, col3 = st.columns(3)
         
         # Arvuta müügikäive koos muutusega eelneva perioodiga võrreldes.
-        total_revenue_with_delta = calculate_total_revenue_with_delta(filters)
-        total_revenue = total_revenue_with_delta[0]
-        total_revenue_delta = total_revenue_with_delta[1]
+        value, value_delta = compose_kpi_data(data, "total_revenue")
 
         col1.metric(
-            label="Müügitulu",
-            value=f"€{total_revenue:,.0f}".replace(",", " "),
-            delta=utils.format_metric_delta_as_percentage(total_revenue_delta),
-            help="Valitud perioodi kogu müügitulu"
+            label="Kogukäive",
+            value=f"€ {value:,.0f}".replace(",", " "),
+            delta=utils.format_metric_delta_as_percentage(value_delta),
+            help="Valitud perioodi kogukäive võrreldes eelmisega"
         )
 
-        # Arvuta klientide arv koos muutusega eelneva perioodiga võrreldes.
-        total_customers_with_delta = calculate_total_customers_with_delta(filters)
-        total_customers = total_customers_with_delta[0]
-        total_customers_delta = total_customers_with_delta[1]
+        # Number of orders compared to previous period.
+        value, value_delta = compose_kpi_data(data, "orders")
         
         col2.metric(
-            label="Klientide arv",
-            value=f"{total_customers:,}".replace(",", " "),
-            delta=utils.format_metric_delta_as_percentage(total_customers_delta),
-            help="Erinevate klientide arv valitud perioodil"
+            label="Tellimuste arv",
+            value=f"{value:,.0f}".replace(",", " "),
+            delta=utils.format_metric_delta_as_percentage(value_delta),
+            help="Tellimuste arv valitud perioodil võrreldes eelmisega"
+        )
+
+        # Number of orders compared to previous period.
+        value, value_delta = compose_kpi_data(data, "average_order")
+        
+        col3.metric(
+            label="Keskmine tellimus",
+            value=f"€ {value:,.2f}".replace(",", " ").replace(".", ","),
+            delta=utils.format_metric_delta_as_percentage(value_delta),
+            help="Keskmine tellimus valitud perioodil võrreldes eelmisega"
         )
 
 def fill_main_chart_section(main_chart_section, data):
@@ -169,19 +178,11 @@ def render_footer(data):
         f"Andmeid: {orders_text} rida"
     )
 
-def calculate_total_revenue_with_delta(filters):
-    comparison_filters = filters_with_comparison_date_range(filters)
-    total_revenue_current = calculate_total_revenue(filters)
-    total_revenue_previous = calculate_total_revenue(comparison_filters)
-    delta = utils.calculate_delta_in_percents(total_revenue_current, total_revenue_previous)
-    return (total_revenue_current, delta)
-
-def calculate_total_customers_with_delta(filters):
-    comparison_filters = filters_with_comparison_date_range(filters)
-    total_customers_current = count_total_customers(filters)
-    total_customers_previous = count_total_customers(comparison_filters)
-    delta = utils.calculate_delta_in_percents(total_customers_current, total_customers_previous)
-    return (total_customers_current, delta)
+def compose_kpi_data(data, metric_name):
+    metric_current = data["summary"][metric_name]
+    metric_previous = data["comparison_summary"][metric_name]
+    delta = utils.calculate_delta_in_percents(metric_current, metric_previous)
+    return (metric_current, delta)
 
 def filters_with_comparison_date_range(filters):
     comparison_filters = dict(filters) # make a copy
@@ -205,19 +206,15 @@ def get_sale_date_boundaries():
 @st.cache_data(ttl=300)
 def fetch_store_locations():
     return data_loader.fetch_store_locations()
- 
+
+@st.cache_data(ttl=300)
+def fetch_aggregated_sales_summary(filters):
+    return data_loader.fetch_aggregated_sales_summary(filters)
+
 @st.cache_data(ttl=300)
 def load_aggregated_sales_data(filters):
     """Laadi agregeeritud müügiandmed Supabase'ist."""
     return data_loader.aggregate_sales_by_interval(filters)
-
-@st.cache_data(ttl=300)
-def count_total_customers(filters):
-    return data_loader.count_unique_customers(filters)
-
-@st.cache_data(ttl=300)
-def calculate_total_revenue(filters):
-    return data_loader.calculate_total_revenue(filters)
 
 if __name__ == "__main__":
     main()
