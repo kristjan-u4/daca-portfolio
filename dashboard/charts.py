@@ -6,6 +6,7 @@ Kolm põhidiagrammi: müügitrend, top tooted, müük linnade kaupa.
 
 import pandas as pd
 import plotly.express as px
+import utils
 
 def create_revenue_trend(df):
     """
@@ -40,6 +41,37 @@ def create_revenue_trend(df):
         tickfont_size=12,
         tickfont_color="#1A1A2E"
     )
+
+    if not df.empty:
+        max_row = df.loc[df['total_revenue'].idxmax()]
+
+        # Annotation for month with maximum total revenue.
+        fig.add_annotation(
+            x=max_row["interval_start"],
+            y=max_row["total_revenue"],
+            text=f"MAX: {utils.format_eur_amount(max_row['total_revenue'])} ({utils.format_date_as_text(max_row["interval_start"])})",
+            showarrow=True,
+            arrowhead=2,
+            ax=0, # Arrow rotation
+            ay=-40, # Text is above the arrow
+            bgcolor="#009B8D",
+            font=dict(color="white")
+        )
+
+        min_row = df.loc[df['total_revenue'].idxmin()]
+
+        # Annotation for month with minimum total revenue.
+        fig.add_annotation(
+            x=min_row["interval_start"],
+            y=min_row["total_revenue"],
+            text=f"MIN: {utils.format_eur_amount(min_row['total_revenue'])} ({utils.format_date_as_text(min_row["interval_start"])})",
+            showarrow=True,
+            arrowhead=2,
+            ax=0, # Arrow rotation
+            ay=40, # Text is below the arrow
+            bgcolor="#009B8D",
+            font=dict(color="white")
+        )
  
     # Samm 2: Kohanda välimust
     fig.update_layout(
@@ -61,7 +93,7 @@ def create_revenue_trend(df):
         y=avg_revenue,
         line_dash="dash",
         line_color="gray",
-        annotation_text=f"Keskmine: €{avg_revenue:,.0f}".replace(",", " "),
+        annotation_text=f"Keskmine: {utils.format_eur_amount(avg_revenue)}",
         annotation_position="top right"
     )
  
@@ -80,7 +112,7 @@ def create_top_products(df, top_n=5):
         x="total_revenue",
         y="product_name",
         orientation="h",
-        title=f"Top {top_n} toodet müügitulu järgi",
+        title=f"Top {top_n} toodet",
         labels={
             "total_revenue": "Käive (€)",
             "product_name": "Toode"
@@ -92,11 +124,12 @@ def create_top_products(df, top_n=5):
     # Adjust appearance.
     fig.update_layout(
         font_family="Arial",
-        title_font_size=20,
+        title_font_size=16,
         showlegend=False,
         xaxis_tickformat=",.0f",
         xaxis_tickprefix="€",
-        coloraxis_showscale=False
+        coloraxis_showscale=False,
+        separators=", "
     )
  
     return fig
@@ -114,8 +147,8 @@ def create_sales_by_customer_city(df):
         main_cities,
         values="total_revenue",
         names="city",
-        title="Müügitulu jaotus linnade kaupa",
-        color_discrete_sequence=px.colors.qualitative.Set2  # värviskeem
+        title="Käibe jaotus klientide päritolulinnade kaupa",
+        color_discrete_sequence=px.colors.sequential.Teal_r  # värviskeem
     )
  
     # Samm 4: Kohanda välimust
@@ -129,7 +162,8 @@ def create_sales_by_customer_city(df):
  
     fig.update_layout(
         font_family="Arial",
-        title_font_size=20
+        title_font_size=16,
+        separators=", "
     )
  
     return fig

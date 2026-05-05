@@ -145,7 +145,7 @@ def fill_kpis_section(kpis_section, data):
 
         col1.metric(
             label="Kogukäive",
-            value=f"€ {value:,.0f}".replace(",", " "),
+            value=utils.format_eur_amount(value),
             delta=utils.format_metric_delta_as_percentage(value_delta),
             help="Valitud perioodi kogukäive võrreldes eelmisega"
         )
@@ -155,7 +155,7 @@ def fill_kpis_section(kpis_section, data):
         
         col2.metric(
             label="Tellimuste arv",
-            value=f"{value:,.0f}".replace(",", " "),
+            value=utils.format_number(value),
             delta=utils.format_metric_delta_as_percentage(value_delta),
             help="Tellimuste arv valitud perioodil võrreldes eelmisega"
         )
@@ -165,7 +165,7 @@ def fill_kpis_section(kpis_section, data):
         
         col3.metric(
             label="Keskmine tellimus",
-            value=f"€ {value:,.2f}".replace(",", " ").replace(".", ","),
+            value=utils.format_eur_amount(value),
             delta=utils.format_metric_delta_as_percentage(value_delta),
             help="Keskmine tellimus valitud perioodil võrreldes eelmisega"
         )
@@ -182,21 +182,21 @@ def fill_helper_charts_section(helper_charts_section, data):
         df = data["top_products"]
         col1, col2 = st.columns(2)
 
-        col1.header("TOP 5 tooted")
+        col1.header("Suurima kogumüügiga tooted")
         top_products = charts.create_top_products(data["top_products"])
         col1.plotly_chart(top_products, use_container_width=True)
 
-        col2.header("Käibe jaotus klientide asukoha järgi")
+        col2.header("Klientide päritolu")
         cities = charts.create_sales_by_customer_city(data["aggregated_sales_by_customer_city"])
         col2.plotly_chart(cities, use_container_width=True)
 
 
 def render_footer(data):
-    orders_text = f"{data['aggregated_sales']['orders'].sum():,}".replace(",", " ")
+    orders = data['summary']['orders']
     st.caption(
         "UrbanStyle.ltd — CEO Dashboard | "
-        "DACA Programm, Nädal 5 | "
-        f"Andmeid: {orders_text} rida"
+        "DACA Programm, Nädal 6 | "
+        f"Andmeid: {utils.format_number(orders)} rida"
     )
 
 def compose_kpi_data(data, metric_name):

@@ -3,7 +3,10 @@ import math
 
 # Eesti formaat kuupäevadele.
 def format_date(date):
-    return date.strftime('%d.%m.%Y')
+    return date.strftime("%d.%m.%Y")
+
+def format_date_as_text(date):
+    return date.strftime("%b %Y")
 
 # Arvutab sama pika võrdlusajavahemiku etteantud ajavahemikule.
 def calculate_previous_open_date_range(open_date_range):
@@ -32,3 +35,9 @@ def calculate_delta_in_percents(current_metric, previous_metric):
         return delta
     except ZeroDivisionError:
         return None
+
+def format_eur_amount(value, precision=0):
+    return f"€{format_number(value, precision)}"
+
+def format_number(value, precision=0):
+    return f"{value:,.{precision}f}".replace(",", " ").replace(".", ",")
