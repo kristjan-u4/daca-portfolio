@@ -66,3 +66,37 @@ def create_revenue_trend(df):
     )
  
     return fig
+
+def create_top_products(df, top_n=5):
+    """
+    Horizontal bar chart - TOP N products.
+    """
+ 
+    product_revenue = df.head(top_n)
+ 
+    # Create chart.
+    fig = px.bar(
+        product_revenue,
+        x="total_revenue",
+        y="product_name",
+        orientation="h",
+        title=f"Top {top_n} toodet müügitulu järgi",
+        labels={
+            "total_revenue": "Käive (€)",
+            "product_name": "Toode"
+        },
+        color="total_revenue",
+        color_continuous_scale="Teal"
+    )
+ 
+    # Adjust appearance.
+    fig.update_layout(
+        font_family="Arial",
+        title_font_size=20,
+        showlegend=False,
+        xaxis_tickformat=",.0f",
+        xaxis_tickprefix="€",
+        coloraxis_showscale=False
+    )
+ 
+    return fig

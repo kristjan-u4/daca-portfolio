@@ -16,13 +16,14 @@ import utils
 
 def main():
     setup_page()
-    header_section, kpis_section, main_chart_section = prepare_placeholders()
+    header_section, kpis_section, main_chart_section, helper_charts_section = prepare_placeholders()
     default_filter_settings = build_default_filter_settings()
     filters = prepare_filters(default_filter_settings)
     fill_header_section(header_section, filters)
     data = get_data(filters)
     fill_kpis_section(kpis_section, data)
     fill_main_chart_section(main_chart_section, data)
+    fill_helper_charts_section(helper_charts_section, data)
     render_footer(data)
 
 def setup_page():
@@ -42,13 +43,17 @@ def prepare_placeholders():
     main_chart_section = st.empty()
     st.divider()
 
-    return header_section, kpis_section, main_chart_section
+    helper_charts_section = st.empty()
+    st.divider()
+
+    return header_section, kpis_section, main_chart_section, helper_charts_section
 
 def build_default_filter_settings():
     return {
         "date_range": (datetime.date(2024, 1, 1), datetime.date(2024, 12, 31)),
         "interval": "month",
-        "store_location": ("Tartu")
+        "store_location": ("Tartu"),
+        "top_products_limit": 5
     }
 
 def prepare_filters(default_filter_settings):
@@ -102,6 +107,7 @@ def add_derived_filters(filters, default_filter_settings):
     date_from, date_to = filters["date_range"]
     filters["open_date_range"] = (date_from, date_to + datetime.timedelta(days=1))
     add_interval_setting(filters, default_filter_settings)
+    filters["top_products_limit"] = default_filter_settings["top_products_limit"]
 
 def add_interval_setting(filters, default_filter_settings):
     date_from, date_to = filters["open_date_range"]
@@ -115,14 +121,14 @@ def get_data(filters):
     comparison_filters = filters_with_comparison_date_range(filters)
     return {
         "aggregated_sales": load_aggregated_sales_data(filters),
+        "top_products": fetch_top_products(filters),
         "summary": fetch_aggregated_sales_summary(filters),
         "comparison_summary": fetch_aggregated_sales_summary(comparison_filters)
     }
 
-
 def fill_header_section(header_section, filters):
     with header_section.container():
-        st.title("CEO Dashboard")
+        st.title("Tartu kauplus")
         st.markdown(
             f"*Müügitulu, klientide arv ja kasvutrend ajavahemikus "
             f"{utils.format_date(filters['date_range'][0])} - {utils.format_date(filters['date_range'][1])}*"
@@ -131,7 +137,7 @@ def fill_header_section(header_section, filters):
 def fill_kpis_section(kpis_section, data):
     with kpis_section.container():
         # KPI kaardid
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3 = kpis_section.columns(3)
         
         # Arvuta müügikäive koos muutusega eelneva perioodiga võrreldes.
         value, value_delta = compose_kpi_data(data, "total_revenue")
@@ -169,6 +175,16 @@ def fill_main_chart_section(main_chart_section, data):
         st.header("Müügitrendid")
         fig_trend = charts.create_revenue_trend(df)
         st.plotly_chart(fig_trend, use_container_width=True)
+
+def fill_helper_charts_section(helper_charts_section, data):
+    with helper_charts_section.container():
+        df = data["top_products"]
+        col1, _ = st.columns(2)
+        col1.header("TOP 5 tooted")
+
+        top_products = charts.create_top_products(df)
+        col1.plotly_chart(top_products, use_container_width=True)
+
 
 def render_footer(data):
     orders_text = f"{data['aggregated_sales']['orders'].sum():,}".replace(",", " ")
@@ -215,6 +231,10 @@ def fetch_aggregated_sales_summary(filters):
 def load_aggregated_sales_data(filters):
     """Laadi agregeeritud müügiandmed Supabase'ist."""
     return data_loader.aggregate_sales_by_interval(filters)
+
+@st.cache_data(ttl=300)
+def fetch_top_products(filters):
+    return data_loader.fetch_top_products(filters)
 
 if __name__ == "__main__":
     main()

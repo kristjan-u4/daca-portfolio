@@ -25,6 +25,9 @@ def fetch_aggregated_sales_summary(filters):
     df = _fetch_filtered_data("aggregated_sales_summary.sql", filters)
     return df.to_dict(orient='records')[0]
 
+def fetch_top_products(filters):
+    return _fetch_filtered_data("top_products.sql", filters)
+
 def fetch_min_and_max_sale_date():
     query = sa.text("SELECT min(sale_date) AS min_date, max(sale_date) AS max_date FROM sales;")
     df = pd.read_sql(query, supabase)
