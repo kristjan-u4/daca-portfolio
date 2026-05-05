@@ -100,3 +100,57 @@ def create_top_products(df, top_n=5):
     )
  
     return fig
+
+def create_sales_by_customer_city(df):
+    """
+    Pie chart of total revenue by customer city.
+    """
+
+    # First n cities will be displayed separately:
+    main_cities = _compress_cites_data_for_pie_chart(df, 5)
+ 
+    # Samm 3: Loo sektordiagramm
+    fig = px.pie(
+        main_cities,
+        values="total_revenue",
+        names="city",
+        title="Müügitulu jaotus linnade kaupa",
+        color_discrete_sequence=px.colors.qualitative.Set2  # värviskeem
+    )
+ 
+    # Samm 4: Kohanda välimust
+    fig.update_traces(
+        textposition="inside",                         # tekst sektori sees
+        textinfo="percent+label",                      # näita protsenti ja nime
+        hovertemplate="<b>%{label}</b><br>"
+                      "Käive: €%{value:,.0f}<br>"
+                      "Osakaal: %{percent}<extra></extra>"
+    )
+ 
+    fig.update_layout(
+        font_family="Arial",
+        title_font_size=20
+    )
+ 
+    return fig
+
+def _compress_cites_data_for_pie_chart(df, number_of_sectors):
+    if len(df) <= number_of_sectors:
+        return df
+    
+    n = number_of_sectors - 1
+
+    # First n cities will be displayed separately:
+    result = df.iloc[:n]
+
+    # Remaining cities will be grouped together and represented as others:
+    other_cities = df.iloc[n:]
+    other_total = other_cities["total_revenue"].sum()
+
+    other_row = pd.DataFrame({
+        "city": ["Muud linnad"],
+        "total_revenue": [other_total]
+    })
+    result = pd.concat([result, other_row], ignore_index=True)
+
+    return result

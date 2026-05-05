@@ -9,8 +9,11 @@ from dotenv import load_dotenv
 import sqlalchemy as sa
 import pandas as pd
 from pathlib import Path
+import streamlit as st
 
 from sql_filter_builder import SqlFilterBuilder
+
+CACHE_TTL = 300
  
 # Laadi keskkonna muutujad .env failist
 load_dotenv(override=True)
@@ -18,21 +21,30 @@ load_dotenv(override=True)
 # Loo Supabase klient SQL päringute tegemiseks:
 supabase = sa.create_engine(os.getenv("SUPABASE_CONNECTION_STRING"))
 
+@st.cache_data(ttl=CACHE_TTL)
 def aggregate_sales_by_interval(filters):
     return _fetch_filtered_data("aggregated_sales_by_interval.sql", filters)
 
+@st.cache_data(ttl=CACHE_TTL)
+def aggregate_sales_by_customer_city(filters):
+    return _fetch_filtered_data("aggregated_sales_by_customer_city.sql", filters)
+
+@st.cache_data(ttl=CACHE_TTL)
 def fetch_aggregated_sales_summary(filters):
     df = _fetch_filtered_data("aggregated_sales_summary.sql", filters)
     return df.to_dict(orient='records')[0]
 
+@st.cache_data(ttl=CACHE_TTL)
 def fetch_top_products(filters):
     return _fetch_filtered_data("top_products.sql", filters)
 
-def fetch_min_and_max_sale_date():
+@st.cache_data(ttl=CACHE_TTL)
+def get_sale_date_boundaries():
     query = sa.text("SELECT min(sale_date) AS min_date, max(sale_date) AS max_date FROM sales;")
     df = pd.read_sql(query, supabase)
     return df["min_date"].iloc[0], df["max_date"].iloc[0]
 
+@st.cache_data(ttl=CACHE_TTL)
 def fetch_store_locations():
     query = sa.text(_load_query_template("store_locations.sql"))
     df = pd.read_sql(query, supabase)

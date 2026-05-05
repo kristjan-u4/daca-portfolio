@@ -67,7 +67,7 @@ def prepare_filters(default_filter_settings):
     return filters
 
 def add_date_range_filter(filters, container, default_filter_settings):
-    min_date, max_date = get_sale_date_boundaries()
+    min_date, max_date = data_loader.get_sale_date_boundaries()
     
     date_range = container.date_input(
         "Ajavahemik",
@@ -88,7 +88,7 @@ def add_date_range_filter(filters, container, default_filter_settings):
     filters["date_range"] = (date_from, date_to)
 
 def add_store_location_filter(filters, container, default_filter_settings):
-    all_store_locations = fetch_store_locations()
+    all_store_locations = data_loader.fetch_store_locations()
     default_store_locations = tuple(
         x for x in all_store_locations
         if x in default_filter_settings["store_location"]
@@ -120,10 +120,11 @@ def add_interval_setting(filters, default_filter_settings):
 def get_data(filters):
     comparison_filters = filters_with_comparison_date_range(filters)
     return {
-        "aggregated_sales": load_aggregated_sales_data(filters),
-        "top_products": fetch_top_products(filters),
-        "summary": fetch_aggregated_sales_summary(filters),
-        "comparison_summary": fetch_aggregated_sales_summary(comparison_filters)
+        "aggregated_sales": data_loader.aggregate_sales_by_interval(filters),
+        "top_products": data_loader.fetch_top_products(filters),
+        "aggregated_sales_by_customer_city": data_loader.aggregate_sales_by_customer_city(filters),
+        "summary": data_loader.fetch_aggregated_sales_summary(filters),
+        "comparison_summary": data_loader.fetch_aggregated_sales_summary(comparison_filters)
     }
 
 def fill_header_section(header_section, filters):
@@ -179,11 +180,15 @@ def fill_main_chart_section(main_chart_section, data):
 def fill_helper_charts_section(helper_charts_section, data):
     with helper_charts_section.container():
         df = data["top_products"]
-        col1, _ = st.columns(2)
-        col1.header("TOP 5 tooted")
+        col1, col2 = st.columns(2)
 
-        top_products = charts.create_top_products(df)
+        col1.header("TOP 5 tooted")
+        top_products = charts.create_top_products(data["top_products"])
         col1.plotly_chart(top_products, use_container_width=True)
+
+        col2.header("Käibe jaotus klientide asukoha järgi")
+        cities = charts.create_sales_by_customer_city(data["aggregated_sales_by_customer_city"])
+        col2.plotly_chart(cities, use_container_width=True)
 
 
 def render_footer(data):
@@ -209,32 +214,6 @@ def filters_with_comparison_date_range(filters):
         comparison_date_range[1] - datetime.timedelta(days=1)
     )
     return comparison_filters
-
-# ============================================================
-# ANDMETE LAADIMINE ja mälus puhverdamine (cache)
-# ============================================================
-
-# First and last sale date as default date range filters.
-@st.cache_data(ttl=300)  # Cache 5 minutiks (300 sekundit)
-def get_sale_date_boundaries():
-    return data_loader.fetch_min_and_max_sale_date()
-
-@st.cache_data(ttl=300)
-def fetch_store_locations():
-    return data_loader.fetch_store_locations()
-
-@st.cache_data(ttl=300)
-def fetch_aggregated_sales_summary(filters):
-    return data_loader.fetch_aggregated_sales_summary(filters)
-
-@st.cache_data(ttl=300)
-def load_aggregated_sales_data(filters):
-    """Laadi agregeeritud müügiandmed Supabase'ist."""
-    return data_loader.aggregate_sales_by_interval(filters)
-
-@st.cache_data(ttl=300)
-def fetch_top_products(filters):
-    return data_loader.fetch_top_products(filters)
 
 if __name__ == "__main__":
     main()
