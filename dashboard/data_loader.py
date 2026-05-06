@@ -5,21 +5,26 @@ Andmete laadimine andmebaasist.
 """
  
 import os
-from dotenv import load_dotenv
 import sqlalchemy as sa
 import pandas as pd
 from pathlib import Path
-import streamlit as st
 
 from sql_filter_builder import SqlFilterBuilder
 
 CACHE_TTL = 300
+
+try:
+    import streamlit as st
+    # Streamlit Cloud environment - no .env file available, uses secrets instead.
+    supabase_connection_string = st.secrets["supabase"]["connection_string"]
+except Exception:
+    # Local environment - using .env file.
+    from dotenv import load_dotenv
+    load_dotenv(override=True)
+    supabase_connection_string = os.getenv("SUPABASE_CONNECTION_STRING")
  
-# Laadi keskkonna muutujad .env failist
-load_dotenv(override=True)
- 
-# Loo Supabase klient SQL päringute tegemiseks:
-supabase = sa.create_engine(os.getenv("SUPABASE_CONNECTION_STRING"))
+# Create Supabase client for SQL queries:
+supabase = sa.create_engine(supabase_connection_string)
 
 @st.cache_data(ttl=CACHE_TTL)
 def aggregate_sales_by_interval(filters):
