@@ -39,5 +39,9 @@ def calculate_delta_in_percents(current_metric, previous_metric):
 def format_eur_amount(value, precision=0):
     return f"€{format_number(value, precision)}"
 
+def format_as_percentage(value, precision=0):
+    perc = value * 100.0
+    return f"{format_number(perc, precision)}%"
+
 def format_number(value, precision=0):
     return f"{value:,.{precision}f}".replace(",", " ").replace(".", ",")

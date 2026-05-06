@@ -133,11 +133,26 @@ def get_data(filters, default_filter_settings):
 
 def fill_header_section(header_section, filters):
     with header_section.container():
-        st.title("Tartu kauplus")
-        st.markdown(
-            f"*Müügitulu, klientide arv ja kasvutrend ajavahemikus "
-            f"{utils.format_date(filters['date_range'][0])} - {utils.format_date(filters['date_range'][1])}*"
-        )
+        st.title("Juhtide kokkuvõte - Tartu kauplus 2024")
+        st.markdown("""
+            * ✅ **Jätkusuutlik kasv:** Tartu tulu on kasvanud **13%** YoY, kinnitades brändi regionaalset elujõulisust.
+            * ⚠️ **Septembri paradoks:** **36%** langus tudengite saabumise ajal viitab suunatud turunduse puudumisele või tootevaliku sobimatusele tudengite eelarvega.
+            * 🎓 **Tudengite segment:** Suur Tallinna ja teiste linnade klientide osakaal viitab tudengitele; segment on hetkel UrbanStyle'i jaoks alakasutatud potentsiaal.
+            * 🎯 **Soovitus Anna Metsale:** Käivitada tudengitele suunatud sooduskampaania ja testida taskukohasemat "Campus-look" tootesarja.
+            * 🔍 **Soovitus Liis Koppelile:** Viia läbi Tartu poe hinnatundlikkuse audit, et selgitada septembri languse ja toote hinna seost.
+        """)
+
+        st.markdown("""
+            UrbanStyle’i kiire laienemine on toonud kaasa andmekaose, kuid Tartu kaupluse **13%**-line aastane
+            käibekasv kinnitab meie brändi tugevnemist ka väljaspool pealinna.
+            Süvaanalüüs paljastas aga paradoksi: kuigi Tartu on ülikoolilinn ja suurima osa sealsest käibest
+            loovad mujal (sh Tallinnas) registreeritud kliendid, toimus septembris tudengite naasmise ajal
+            kriitiline **36%**-line langus. See viitab võimalikule lõhele meie premium-toodete
+            (nt hitt-toode **Luksuslikud villased pahkluu saapad**) ja tudengite ostujõu vahel
+            või suunatud 'Back-to-University' kampaania puudumisele. Soovitame auditeerida
+            Tartu poe hinnastrateegiat ja käivitada tudengitele suunatud segmendikampaania,
+            et kindlustada investoritele lubatud poole miljoni eurone kasvulugu.
+        """)
 
 def fill_kpis_section(kpis_section, data):
     with kpis_section.container():
@@ -197,7 +212,7 @@ def fill_helper_charts_section(helper_charts_section, data):
 def render_footer(data):
     orders = data['summary']['orders']
     st.caption(
-        "UrbanStyle.ltd — CEO Dashboard | "
+        "UrbanStyle.ltd — Juhtide kokkuvõte (Roll B) | "
         "DACA Programm, Nädal 6 | "
         f"Andmeid: {utils.format_number(orders)} rida"
     )

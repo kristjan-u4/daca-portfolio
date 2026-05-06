@@ -16,6 +16,7 @@ def create_revenue_trend(data):
 
     df = data["aggregated_sales"]
     store_location_comparison_df = data["comparison_store_location_aggregated_sales"]
+    df["total_revenue_delta"] = df["total_revenue"].pct_change()
  
     # Samm 1: Loo joondiagramm
     fig = px.line(
@@ -75,6 +76,21 @@ def create_revenue_trend(data):
             bgcolor="#009B8D",
             font=dict(color="white")
         )
+
+        biggest_drop_row = df.loc[df['total_revenue_delta'].idxmin()]
+
+        # Annotation for month with biggest drop in revenue.
+        fig.add_annotation(
+            x=biggest_drop_row["interval_start"],
+            y=biggest_drop_row["total_revenue"],
+            text=f"Suurim langus: {utils.format_as_percentage(biggest_drop_row['total_revenue_delta'])} ({utils.format_date_as_text(biggest_drop_row["interval_start"])})",
+            showarrow=True,
+            arrowhead=2,
+            ax=0, # Arrow rotation
+            ay=40, # Text is below the arrow
+            bgcolor="#009B8D",
+            font=dict(color="white")
+        )
  
     # Samm 2: Kohanda välimust
     fig.update_layout(
@@ -90,14 +106,14 @@ def create_revenue_trend(data):
     # Samm 3: Muudame joone värvi ja  paksust
     fig.update_traces(line_color="#009B8D", line_width=3)
  
-    # Samm 4: Lisa joon, mis näitab võrdluseks Tallinna keskmist.
+    # Samm 4: Lisa joon, mis näitab võrdluseks kuude keskmist.
 
-    avg_revenue = store_location_comparison_df["total_revenue"].mean()
+    avg_revenue = df["total_revenue"].mean()
     fig.add_hline(
         y=avg_revenue,
         line_dash="dash",
         line_color="gray",
-        annotation_text=f"Tallinna keskmine: {utils.format_eur_amount(avg_revenue)}",
+        annotation_text=f"Keskmine: {utils.format_eur_amount(avg_revenue)}",
         annotation_position="top right"
     )
  
