@@ -1,3 +1,5 @@
+# Juhtide kokkuvõte
+
 * ✅ **Jätkusuutlik kasv:** Tartu tulu on kasvanud **13%** YoY, kinnitades brändi regionaalset elujõulisust.
 * ⚠️ **Septembri paradoks:** **36%** langus tudengite saabumise ajal viitab suunatud turunduse puudumisele või tootevaliku sobimatusele tudengite eelarvega.
 * 🎓 **Tudengite segment:** Suur Tallinna ja teiste linnade klientide osakaal viitab tudengitele; segment on hetkel UrbanStyle'i jaoks alakasutatud potentsiaal.
