@@ -1,3 +1,5 @@
+# Andmelugu
+
 UrbanStyle’i kiire laienemine on toonud kaasa andmekaose, kuid Tartu kaupluse **13%**-line aastane
 käibekasv kinnitab meie brändi tugevnemist ka väljaspool pealinna.
 Süvaanalüüs paljastas aga paradoksi: kuigi Tartu on ülikoolilinn ja suurima osa sealsest käibest
