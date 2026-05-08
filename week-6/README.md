@@ -19,11 +19,6 @@ Eelvaade:
 ![Tartu kaupluse dashboard](./individual/week6_tartu_dashboard_screenshot.png)
 *Märkus: Dashboard sisaldab interaktiivseid filtreid.*
 
-## Ärilised järeldused
-
-* **Juhtide kokkuvõte**: vt. [week6_executive_summary.md](./individual/week6_executive_summary.md)
-* **Andmelugu**: vt. [week6_tartu_narrative.md](./individual/week6_tartu_narrative.md)
-
 ## AI kasutamine
 
 ### Google Gemini
@@ -55,6 +50,8 @@ Eelvaade:
 6. Käivita rakendus terminalist: `streamlit run dashboard/app.py`
 
 ## Lingid
-* **Kohalik Streamlit rakendus:** [app.py](dashboard/app.py) (alates käesolevast nädalast asub iganädalaselt edasiarendatav Streamlit rakendus üldises `dashboard` kataloogis, mitte enam nädalapõhises)
+* **Kohalik Streamlit rakendus:** [app.py](../dashboard/app.py) (alates käesolevast nädalast asub iganädalaselt edasiarendatav Streamlit rakendus üldises `dashboard` kataloogis, mitte enam nädalapõhises)
 * **Streamlit Community Cloud keskkonda paigaldatud Streamlit rakendus:** https://daca-portfolio-phhwf82drryvzpf8r8ypxr.streamlit.app/
-* **Meeskonna koondvaade:** [https://github.com/sille-pragi/urbanstyle-marketing-data/blob/main/week_6/week6_team_combined_view.md]
+* **Juhtide kokkuvõte**: vt. [week6_executive_summary.md](./individual/week6_executive_summary.md)
+* **Andmelugu**: vt. [week6_tartu_narrative.md](./individual/week6_tartu_narrative.md)
+* **Meeskonna koondvaade:** [week6_team_combined_view.md](./team/week6_team_combined_view.md)
