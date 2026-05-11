@@ -5,6 +5,7 @@ matplotlib
 seaborn
 psycopg2-binary
 sqlalchemy
+supabase
 streamlit
 ipykernel
 jupyter
