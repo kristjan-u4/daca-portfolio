@@ -55,6 +55,12 @@ def fetch_store_locations():
     df = pd.read_sql(query, supabase)
     return df["store_location"]
 
+# Should not be used in production!
+def fetch_all_sales_rows():
+    query = sa.text("SELECT * FROM sales ORDER BY id ASC")
+    df = pd.read_sql(query, supabase)
+    return df
+
 # In your main Streamlit file or controller
 def _fetch_filtered_data(template_file_name, filters):
     # Initialize the builder
