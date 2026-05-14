@@ -43,7 +43,23 @@
 
 * Abistas äritõlgenduste sõnastamisel peamiste etteantud kliendisegmentide võrdlemisel minu poolt tehtud tähelepanekute pinnalt.
 
+## Tehniline teostus
+
+* **Andmeallikas:** PostgreSQL (Supabase).
+* **Tööriistad:** Python, Pandas, SQLAlchemy, Supabase, Plotly Express, Jupyter Lab.
+* **Meetodid:** `groupby`, `agg`, `qcut`, `rank`.
+
+## Kuidas .ipynb notebook'i käivitada (Ubuntu Linux näitel)
+
+1. Veendu, et sul on Python installitud
+2. Mine käesoleva projekti juurkataloogi ja loo Pythoni virtuaalkeskkond: `python -m venv .venv` (kui `python` ei tööta, proovi `python3`)
+3. Aktiveeri Pythoni virtuaalkeskkond: `source .venv/bin/activate`
+4. Vajaminevad teegid on loetletud **requirements.txt** failis. Installi need: `pip install -r requirements.txt`
+5. Seadista andmebaasiühendus, kasutades `.env` faili. Vajaduse korral pöördu käesolevasse punkti tagasi, kui punktis 7. esineb Supabase'i ühendusega seotud veateade.
+6. Käivita **Jupyter Lab** terminalis: `jupyter lab`. Jupyter Lab on Jupyter Notebook kaasaegsem edasiarendus.
+7. Vali Jupyter Lab keskkonnas week-7 alamkataloogidest soovitud .ipynb fail ja klõpsa hiirega **Restart the kernel and run all cells** valikul.
+
 ## Lingid
 
-* **Meeskondlik notebook:** [week7_rfm_complete.ipynb](./team/week7_rfm_complete.ipynb)
-* **Individuaalne notebook**, mille koostamisel simuleerisin ka teisi rolle, mis võimaldas mul teiste meeskonnaliikmetega samaaegselt töötada enda alamülesandega: [individual/week7_rfm_role_c.ipynb](./individual/week7_rfm_role_c.ipynb)
+* **Meeskondlik .ipynb notebook:** [week7_rfm_complete.ipynb](./team/week7_rfm_complete.ipynb)
+* **Individuaalne .ipynb notebook**, mille koostamisel simuleerisin ka teisi rolle, mis võimaldas mul teiste meeskonnaliikmetega samaaegselt töötada enda alamülesandega: [individual/week7_rfm_role_c.ipynb](./individual/week7_rfm_role_c.ipynb)
