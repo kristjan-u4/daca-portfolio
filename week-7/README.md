@@ -42,3 +42,8 @@
 ### NotebookLM
 
 * Abistas äritõlgenduste sõnastamisel peamiste etteantud kliendisegmentide võrdlemisel minu poolt tehtud tähelepanekute pinnalt.
+
+## Lingid
+
+* **Meeskondlik notebook:** [week7_rfm_complete.ipynb](./team/week7_rfm_complete.ipynb)
+* **Individuaalne notebook**, mille koostamisel simuleerisin ka teisi rolle, mis võimaldas mul teiste meeskonnaliikmetega samaaegselt töötada enda alamülesandega: [individual/week7_rfm_role_c.ipynb](./individual/week7_rfm_role_c.ipynb)
