@@ -5,7 +5,7 @@
 ### Analysis — RFM kliendisegmenteerimine
 
 * Uurisin Roll B poolt puhastatud müügiandmeid kuni **viitekuupäevani 28.02.2025**
-* Iga kliendi kohta arvutasin välja 3 mõõdikut, mille väärtuseks on **hinne skaalal 1-5**:
+* Kasutades Pandase `qcut()` meetodit, arvutasin iga kliendi kohta välja 3 mõõdikut, mille väärtuseks on **hinne skaalal 1-5**:
   * **Recency (R)** iseloomustab kõige viimasest ostust möödunud aega.
     * Aluseks olev mõõdik: viitekuupäeva ja viimase ostukuupäeva vahe.
     * Mida lühem aeg, seda kõrgem hinne.
