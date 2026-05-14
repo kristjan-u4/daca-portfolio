@@ -2,7 +2,7 @@
 
 ## Minu roll
 
-### Analysis — RFM kliendisegmenteerimine
+### Roll C: Analysis — RFM kliendisegmenteerimine
 
 * Uurisin Roll B poolt puhastatud müügiandmeid kuni **viitekuupäevani 28.02.2025**
 * Kasutades Pandase `qcut()` meetodit, arvutasin iga kliendi kohta välja 3 mõõdikut, mille väärtuseks on **hinne skaalal 1-5**:
