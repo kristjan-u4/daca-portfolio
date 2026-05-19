@@ -26,7 +26,10 @@ import visualize_export
 
 
 def main():
-    """Main entry point that parses arguments and handles top-level execution exceptions."""
+    """
+    Parse arguments, launch the ETL pipeline execution, track performance, 
+    and handle top-level runtime exceptions.
+    """
     try:
         logger.info("Parsing command line arguments")
         args = _parse_command_line_arguments()
@@ -83,7 +86,8 @@ def run_pipeline(*, start_date, end_date):
             }
         )
 
-        visualize_export.send_success_notification(kpis, saved_files)
+        summary = visualize_export.send_success_notification(kpis, saved_files)
+        logger.info(f"Summary:\n{summary}")
         _log_etl_stage_event("Finished", "LOAD")
         
     except Exception as e:
@@ -129,7 +133,10 @@ def _parse_command_line_arguments():
         help="Latest sale_date (YYYY-MM-DD). Not specified by default."
     )
 
-    return parser.parse_args()
+    # parse_known_args() returns a tuple where only the first element represents the args we're looking for
+    # Underscore (_) represents the rest of the tuple which we don't need.
+    args, _ = parser.parse_known_args()
+    return args
 
 
 def _normalize_date(date_str):
