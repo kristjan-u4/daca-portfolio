@@ -16,3 +16,6 @@ __pycache__/
 
 # Temporary files.
 tmp/
+
+# Auto-generated files:
+output/
