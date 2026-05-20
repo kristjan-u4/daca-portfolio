@@ -60,8 +60,13 @@ def run_pipeline(*, start_date, end_date):
     try:
         # --- EXTRACT STAGE ---
         _log_etl_stage_event("Starting", "EXTRACT")
+        logger.info("Start fetching sales data")
         df_sales = data_fetcher.fetch_sales(start_date, end_date)
+        logger.info(f"Finished fetching sales data: (rows, columns) = {df_sales.shape}")
+
+        logger.info("Start fetching customers data")
         df_customers = data_fetcher.fetch_customers()
+        logger.info(f"Finished fetching customers data: (rows, columns) = {df_customers.shape}")
         _log_etl_stage_event("Finished", "EXTRACT")
 
         # --- TRANSFORM STAGE ---
@@ -92,13 +97,6 @@ def run_pipeline(*, start_date, end_date):
         
     except Exception as e:
         logger.exception(f"Pipeline failed with exception: {e}")
-
-
-def _log_etl_stage_event(event, section_name):
-    """Log an ETL stage boundary event with a synchronized 100-character banner."""
-    msg = f"{'=' * 40} {event}: {section_name} "
-    logger.info(msg.ljust(100, "="))
-
 
 def _parse_command_line_arguments():
     """
@@ -156,7 +154,11 @@ def _normalize_date(date_str):
         return datetime.strptime(date_str, "%Y-%m-%d").date()
     except Exception:
         raise argparse.ArgumentTypeError(f"Invalid date format: '{date_str}'. Use YYYY-MM-DD.")
-
+    
+def _log_etl_stage_event(event, section_name):
+    """Log an ETL stage boundary event with a synchronized 100-character banner."""
+    msg = f"{'=' * 40} {event}: {section_name} "
+    logger.info(msg.ljust(100, "="))
 
 if __name__ == "__main__":
     main()
