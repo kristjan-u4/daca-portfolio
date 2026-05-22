@@ -19,3 +19,6 @@ tmp/
 
 # Auto-generated files:
 output/
+
+# Aider - an open-source AI pair programming tool:
+.aider*
