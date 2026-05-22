@@ -1,16 +1,20 @@
+import logging
 import pandas as pd
+
+logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def clean_data(df_sales):
     """
     Clean and validate the sales DataFrame for downstream analysis.
     
     Performs the following cleaning operations:
-    1. Converts 'sale_date' to datetime and drops rows with invalid dates.
-    2. Removes rows where 'total_price' is zero or negative.
-    3. Drops rows with duplicate 'sale_id' values, keeping the first occurrence.
-    4. Removes rows where 'customer_id' is missing.
-    5. Fills missing 'store_location' values with 'Online'.
-    6. Converts 'customer_id' from float to integer after handling missing values.
+    1. Converts "sale_date" to datetime and drops rows with invalid dates.
+    2. Removes rows where "total_price" is zero or negative.
+    3. Drops rows with duplicate "sale_id" values, keeping the first occurrence.
+    4. Removes rows where "customer_id" is missing.
+    5. Fills missing "store_location" values with "Online".
+    6. Converts "customer_id" from float to integer after handling missing values.
     7. Resets the row index to ensure a continuous, sequential integer range.
     
     Args:
@@ -103,7 +107,7 @@ def clean_data_with_full_audit(df_sales):
         # Capture rows in their ORIGINAL state (where store_location is still NULL/NaN)
         modified_stores = df_clean[missing_store_mask].copy()
         modified_stores["audit_action"] = "MODIFY_VALUE"
-        modified_stores["audit_reason"] = "Filled missing store_location with 'Online'"
+        modified_stores["audit_reason"] = "Filled missing store_location with \"Online\""
         audit_rows.append(modified_stores)
         
         # Apply the modification to the clean dataframe
@@ -124,8 +128,38 @@ def clean_data_with_full_audit(df_sales):
     
     return df_clean, df_audit
 
-def calculate_weekly_aggregates():
-    pass
+def calculate_weekly_aggregates(df_sales_clean):
+    """
+    Aggregates sales data by week, calculating total revenue, number of transactions,
+    and average transaction value for each week.
+
+    Args:
+        df_sales_clean (pd.DataFrame): A DataFrame containing cleaned sales data,
+                                       with "sale_date" (datetime) and "total_price" columns.
+
+    Returns:
+        pd.DataFrame: A new DataFrame with weekly aggregates, indexed by the start of the week.
+    """
+    if df_sales_clean.empty:
+        return pd.DataFrame(columns=["total_revenue", "number_of_transactions", "average_transaction_value"])
+
+    # Group by week and calculate aggregates
+    # "sale_date" is expected to be datetime type after clean_data
+    weekly_aggregates = df_sales_clean.set_index("sale_date").resample("W").agg(
+        total_revenue=("total_price", "sum"),
+        number_of_transactions=("sale_id", "count"), # Assuming sale_id is unique per transaction
+        average_transaction_value=("total_price", "mean")
+    )
+
+    # Reset index to make the week start date a column
+    weekly_aggregates = weekly_aggregates.reset_index()
+    weekly_aggregates.rename(columns={"sale_date": "week_start_date"}, inplace=True)
+
+    logger.info(f"Weekly aggregates dimensions: {weekly_aggregates.shape}")
+    logger.info(f"First 5 rows of weekly aggregates:\n{weekly_aggregates.head().to_string()}")
+
+    return weekly_aggregates
+
 
 def calculate_kpis():
     pass
