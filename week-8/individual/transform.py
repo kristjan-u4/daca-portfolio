@@ -215,6 +215,5 @@ def merge_datasets(df_sales_clean, df_customers):
         return df_sales_clean
 
     merged_df = pd.merge(df_sales_clean, df_customers, on="customer_id", how="left")
-    logger.info(f"Merged datasets dimensions: {merged_df.shape}")
-    logger.info(f"First 5 rows of merged dataset:\n{merged_df.head().to_string()}")
+    logger.info(f"Merged dataset dimensions: {merged_df.shape}")
     return merged_df

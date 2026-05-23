@@ -5,24 +5,13 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.io as pio
+from plotly.subplots import make_subplots
 
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Configure Plotly to use a default template that respects the desired font/color
 pio.templates.default = "plotly_white" # Use a white background template as a base
-
-def _format_eur_amount_str(value, precision=0): # Changed default precision to 0
-    """Formats a float as an EUR amount string (e.g., '€ 1 234').""" # Updated docstring
-    if pd.isna(value):
-        return '€ -'
-    return f"€ {value:,.{precision}f}".replace(",", " ").replace(".", ",")
-
-def _format_number_str(value):
-    """Formats an integer with space as thousands separator (e.g., '1 234')."""
-    if pd.isna(value):
-        return '-'
-    return f"{int(value):,}".replace(",", " ")
 
 def create_weekly_chart(df_weekly):
     """
@@ -89,14 +78,14 @@ def create_weekly_chart(df_weekly):
 
 def create_kpi_summary(kpis):
     """
-    Creates a Plotly table figure to display Key Performance Indicators (KPIs).
+    Creates a Plotly figure to display Key Performance Indicators (KPIs) using indicators.
 
     Args:
         kpis (dict): Dictionary from transform.calculate_kpis containing:
                      'total_revenue', 'unique_customers', 'avg_order_value'.
 
     Returns:
-        go.Figure: A Plotly graph object (table).
+        go.Figure: A Plotly graph object (figure with indicators).
     """
     if not kpis:
         logger.warning("KPIs dictionary is empty, returning an empty Plotly figure.")
@@ -104,40 +93,63 @@ def create_kpi_summary(kpis):
         fig.update_layout(title_text="KPI kokkuvõte (andmed puuduvad)", title_x=0.5)
         return fig
         
-    kpi_names = ["Kogutulu", "Unikaalsed kliendid", "Keskmine tellimuse väärtus"]
-    
-    # Format values according to requirements
-    formatted_total_revenue = _format_eur_amount_str(kpis.get("total_revenue", 0.0))
-    formatted_unique_customers = _format_number_str(kpis.get("unique_customers", 0))
-    formatted_avg_order_value = _format_eur_amount_str(kpis.get("avg_order_value", 0.0))
+    fig = make_subplots(
+        rows=1, 
+        cols=3, 
+        specs=[[{'type':'domain'}, {'type':'domain'}, {'type':'domain'}]],
+        subplot_titles=("Kogutulu", "Unikaalsed kliendid", "Keskmine tellimuse väärtus")
+    )
 
-    kpi_values = [formatted_total_revenue, formatted_unique_customers, formatted_avg_order_value]
+    # Kogutulu
+    fig.add_trace(go.Indicator(
+        mode="number",
+        value=kpis.get("total_revenue", 0.0),
+        number={
+            "valueformat": ".0f",
+            "prefix": "€ ",
+            "font": {"size": 36, "color": "#009B8D"}
+        },
+        domain={'x': [0, 1], 'y': [0, 1]} # Use full domain within subplot
+    ), row=1, col=1)
 
-    fig = go.Figure(data=[go.Table(
-        header=dict(
-            values=[f"<b>{name}</b>" for name in kpi_names],
-            fill_color='#009B8D',
-            align='center',
-            font=dict(color='white', size=12, family="sans-serif"),
-            height=30
-        ),
-        cells=dict(
-            values=[kpi_values],
-            fill_color='white',
-            align='center',
-            font=dict(color='#1A1A2E', size=14, family="sans-serif"),
-            height=30
-        )
-    )])
+    # Unikaalsed kliendid
+    fig.add_trace(go.Indicator(
+        mode="number",
+        value=kpis.get("unique_customers", 0),
+        number={
+            "valueformat": ".0f",
+            "font": {"size": 36, "color": "#009B8D"}
+        },
+        domain={'x': [0, 1], 'y': [0, 1]}
+    ), row=1, col=2)
+
+    # Keskmine tellimuse väärtus
+    fig.add_trace(go.Indicator(
+        mode="number",
+        value=kpis.get("avg_order_value", 0.0),
+        number={
+            "valueformat": ".0f",
+            "prefix": "€ ",
+            "font": {"size": 36, "color": "#009B8D"}
+        },
+        domain={'x': [0, 1], 'y': [0, 1]}
+    ), row=1, col=3)
 
     fig.update_layout(
         title_text="Müügi KPI kokkuvõte",
         title_x=0.5,
         plot_bgcolor='white',
         paper_bgcolor='white',
-        font=dict(family="sans-serif", color="#1A1A2E")
+        font=dict(family="sans-serif", color="#1A1A2E"),
+        margin=dict(l=20, r=20, t=80, b=20), # Adjust margins
+        height=250, # Adjust height for better visualization of indicators
+        separators=' .,' # Space for thousands, comma for decimals for Estonian locale
     )
-    logger.info("Created KPI summary chart.")
+    # Update subplot titles font
+    for i in range(1, 4):
+        fig.layout.annotations[i-1].update(font=dict(size=16, color="#1A1A2E"))
+
+    logger.info("Created KPI summary chart using indicators.")
     return fig
 
 def export_results(df: pd.DataFrame, output_dir: str, charts: dict):
@@ -195,4 +207,15 @@ def send_success_notification(kpis: dict, saved_files: dict):
     logger.info("Exported files:")
     for file_type, filepath in saved_files.items():
         logger.info(f"  {file_type}: {filepath}")
-    logger.info("------------------------------------------")
+
+def _format_eur_amount_str(value, precision=0):
+    """Formats a float as an EUR amount string (e.g., '€ 1 234')."""
+    if pd.isna(value):
+        return '€ -'
+    return f"€ {value:,.{precision}f}".replace(",", " ").replace(".", ",")
+
+def _format_number_str(value):
+    """Formats an integer with space as thousands separator (e.g., '1 234')."""
+    if pd.isna(value):
+        return '-'
+    return f"{int(value):,}".replace(",", " ")
