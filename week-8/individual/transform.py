@@ -199,18 +199,18 @@ def calculate_kpis(df_sales_clean):
 
 def merge_datasets(df_sales_clean, df_customers):
     """
-    Merges cleaned sales data with customer data using a left join on 'customer_id'.
+    Merges cleaned sales data with customer data using a left join on "customer_id".
 
     Args:
-        df_sales_clean (pd.DataFrame): Cleaned sales DataFrame with 'customer_id'.
-        df_customers (pd.DataFrame): Customer DataFrame with 'customer_id'.
+        df_sales_clean (pd.DataFrame): Cleaned sales DataFrame with "customer_id".
+        df_customers (pd.DataFrame): Customer DataFrame with "customer_id".
 
     Returns:
         pd.DataFrame: Merged DataFrame containing sales and customer information.
     """
     if df_sales_clean.empty:
         logger.warning("df_sales_clean is empty, returning empty DataFrame from merge_datasets.")
-        return pd.DataFrame(columns=list(df_sales_clean.columns) + [col for col in df_customers.columns if col != 'customer_id'])
+        return pd.DataFrame(columns=list(df_sales_clean.columns) + [col for col in df_customers.columns if col != "customer_id"])
 
     if df_customers.empty:
         logger.warning("df_customers is empty, returning df_sales_clean as no customer data to merge.")
