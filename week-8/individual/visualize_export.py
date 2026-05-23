@@ -31,15 +31,14 @@ def create_weekly_chart(df_weekly):
         return fig
 
     df_plot = df_weekly.copy()
-    # Create the week label for the x-axis
-    df_plot['week_label'] = df_plot.apply(
-        lambda row: f"Nädal {row['week_start_date'].isocalendar()[1]}: {row['week_start_date'].strftime('%d.%m.%Y')} - {(row['week_start_date'] + timedelta(days=6)).strftime('%d.%m.%Y')}",
-        axis=1
+    # Create the week label for the x-axis from the 'week' Period objects
+    df_plot['week_label'] = df_plot['week'].apply(
+        lambda p: f"Nädal {p.week}: {p.start_time.strftime('%d.%m.%Y')} - {p.end_time.strftime('%d.%m.%Y')}"
     )
 
     fig = px.line(
         df_plot,
-        x="week_label",
+        x="week_label", # Use the newly created week_label for x-axis
         y="total_revenue",
         title="Kogutulu nädala kaupa",
         line_shape='linear', # Default, but explicitly set for clarity

@@ -144,16 +144,18 @@ def calculate_weekly_aggregates(df_sales_clean):
         return pd.DataFrame(columns=["total_revenue", "number_of_orders", "avg_order_value"])
 
     # Group by week and calculate aggregates
-    # "sale_date" is expected to be datetime type after clean_data
-    weekly_aggregates = df_sales_clean.set_index("sale_date").resample("W").agg(
+    # Create a copy to avoid modifying the original df_sales_clean
+    df_temp = df_sales_clean.copy()
+    
+    # Calculate the week period for each sale date
+    df_temp["week"] = df_temp["sale_date"].dt.to_period("W")
+
+    # Group by week and calculate aggregates
+    weekly_aggregates = df_temp.groupby("week").agg(
         total_revenue=("total_price", "sum"),
         number_of_orders=("sale_id", "count"), # Assuming sale_id is unique per order
         avg_order_value=("total_price", "mean")
-    )
-
-    # Reset index to make the week start date a column
-    weekly_aggregates = weekly_aggregates.reset_index()
-    weekly_aggregates.rename(columns={"sale_date": "week_start_date"}, inplace=True)
+    ).reset_index() # Reset index to make "week" a column
 
     logger.info(f"Weekly aggregates dimensions: {weekly_aggregates.shape}")
     logger.info(f"First 5 rows of weekly aggregates:\n{weekly_aggregates.head().to_string()}")
