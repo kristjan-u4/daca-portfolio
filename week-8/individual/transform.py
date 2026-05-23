@@ -141,14 +141,14 @@ def calculate_weekly_aggregates(df_sales_clean):
         pd.DataFrame: A new DataFrame with weekly aggregates, indexed by the start of the week.
     """
     if df_sales_clean.empty:
-        return pd.DataFrame(columns=["total_revenue", "number_of_transactions", "average_transaction_value"])
+        return pd.DataFrame(columns=["total_revenue", "number_of_orders", "avg_order_value"])
 
     # Group by week and calculate aggregates
     # "sale_date" is expected to be datetime type after clean_data
     weekly_aggregates = df_sales_clean.set_index("sale_date").resample("W").agg(
         total_revenue=("total_price", "sum"),
-        number_of_transactions=("sale_id", "count"), # Assuming sale_id is unique per transaction
-        average_transaction_value=("total_price", "mean")
+        number_of_orders=("sale_id", "count"), # Assuming sale_id is unique per order
+        avg_order_value=("total_price", "mean")
     )
 
     # Reset index to make the week start date a column
@@ -161,8 +161,60 @@ def calculate_weekly_aggregates(df_sales_clean):
     return weekly_aggregates
 
 
-def calculate_kpis():
-    pass
+def calculate_kpis(df_sales_clean):
+    """
+    Calculates key performance indicators (KPIs) from the cleaned sales data.
 
-def merge_datasets():
-    pass
+    Args:
+        df_sales_clean (pd.DataFrame): A DataFrame containing cleaned sales data,
+                                       with "total_price" and "customer_id" columns.
+
+    Returns:
+        dict: A dictionary containing the calculated KPIs:
+              - total_revenue (float): Sum of all total_price values.
+              - unique_customers (int): Count of unique customer_id values.
+              - avg_order_value (float): Average of all total_price values.
+    """
+    if df_sales_clean.empty:
+        return {
+            "total_revenue": 0.0,
+            "unique_customers": 0,
+            "avg_order_value": 0.0
+        }
+
+    total_revenue = df_sales_clean["total_price"].sum()
+    unique_customers = df_sales_clean["customer_id"].nunique()
+    avg_order_value = df_sales_clean["total_price"].mean()
+
+    kpis = {
+        "total_revenue": total_revenue,
+        "unique_customers": unique_customers,
+        "avg_order_value": avg_order_value
+    }
+    logger.info(f"Calculated KPIs: {kpis}")
+    return kpis
+
+
+def merge_datasets(df_sales_clean, df_customers):
+    """
+    Merges cleaned sales data with customer data using a left join on 'customer_id'.
+
+    Args:
+        df_sales_clean (pd.DataFrame): Cleaned sales DataFrame with 'customer_id'.
+        df_customers (pd.DataFrame): Customer DataFrame with 'customer_id'.
+
+    Returns:
+        pd.DataFrame: Merged DataFrame containing sales and customer information.
+    """
+    if df_sales_clean.empty:
+        logger.warning("df_sales_clean is empty, returning empty DataFrame from merge_datasets.")
+        return pd.DataFrame(columns=list(df_sales_clean.columns) + [col for col in df_customers.columns if col != 'customer_id'])
+
+    if df_customers.empty:
+        logger.warning("df_customers is empty, returning df_sales_clean as no customer data to merge.")
+        return df_sales_clean
+
+    merged_df = pd.merge(df_sales_clean, df_customers, on="customer_id", how="left")
+    logger.info(f"Merged datasets dimensions: {merged_df.shape}")
+    logger.info(f"First 5 rows of merged dataset:\n{merged_df.head().to_string()}")
+    return merged_df
