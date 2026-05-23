@@ -51,16 +51,17 @@ def create_weekly_chart(df_weekly):
         marker=dict(size=6, color='#009B8D'),
         hovertemplate=(
             '<b>%{x}</b><br>' + # Week label
-            '<b>Kogutulu:</b> %{y:,.0f} €<extra></extra>' # Rounded to 0 decimal places
+            '<b>Kogutulu:</b> € %{y:,.0f}<extra></extra>' # Moved € prefix for Estonian format
         )
     )
 
     fig.update_layout(
         title_x=0.5,
+        title_font=dict(size=16), # Set main title font size to 16px
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(family="sans-serif", color="#1A1A2E"),
-        separators=' .', # Space for thousands, period for decimals
+        separators=', ', # Format: "[decimal part separator][thousands separator]"
         xaxis=dict(
             title="Nädal", # X-axis title
             showgrid=False,
@@ -69,7 +70,7 @@ def create_weekly_chart(df_weekly):
         yaxis=dict(
             title="Kogutulu (€)",
             showgrid=False,
-            tickformat='.0f', # Round to 0 decimal places
+            tickformat=',.0f', # If present, separate decimal part with comma
             tickprefix='€ '
         )
     )
@@ -105,7 +106,7 @@ def create_kpi_summary(kpis):
         mode="number",
         value=kpis.get("total_revenue", 0.0),
         number={
-            "valueformat": ".0f",
+            "valueformat": ",.0f", # Changed to use thousands separator for Estonian format
             "prefix": "€ ",
             "font": {"size": 36, "color": "#009B8D"}
         },
@@ -117,7 +118,7 @@ def create_kpi_summary(kpis):
         mode="number",
         value=kpis.get("unique_customers", 0),
         number={
-            "valueformat": ".0f",
+            "valueformat": ",.0f", # Changed to use thousands separator for Estonian format
             "font": {"size": 36, "color": "#009B8D"}
         },
         domain={'x': [0, 1], 'y': [0, 1]}
@@ -128,7 +129,7 @@ def create_kpi_summary(kpis):
         mode="number",
         value=kpis.get("avg_order_value", 0.0),
         number={
-            "valueformat": ".0f",
+            "valueformat": ",.0f", # Changed to use thousands separator for Estonian format
             "prefix": "€ ",
             "font": {"size": 36, "color": "#009B8D"}
         },
@@ -138,12 +139,13 @@ def create_kpi_summary(kpis):
     fig.update_layout(
         title_text="Müügi KPI kokkuvõte",
         title_x=0.5,
+        title_font=dict(size=16), # Set main title font size to 16px
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(family="sans-serif", color="#1A1A2E"),
         margin=dict(l=20, r=20, t=80, b=20), # Adjust margins
         height=250, # Adjust height for better visualization of indicators
-        separators=' .,' # Space for thousands, comma for decimals for Estonian locale
+        separators=', ' # Format: "[decimal part separator][thousands separator]"
     )
     # Update subplot titles font
     for i in range(1, 4):
