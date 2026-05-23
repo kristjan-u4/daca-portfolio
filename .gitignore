@@ -14,8 +14,11 @@ __pycache__/
 # Jupyter Notebook checkpoints:
 .ipynb_checkpoints/
 
+# Log files.
+log
+
 # Temporary files.
-tmp/
+tmp
 
 # Auto-generated files:
 output/
