@@ -3,6 +3,7 @@ import os
 from datetime import datetime, timedelta
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.express as px
 import plotly.io as pio
 
 logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
@@ -11,8 +12,8 @@ logger = logging.getLogger(__name__)
 # Configure Plotly to use a default template that respects the desired font/color
 pio.templates.default = "plotly_white" # Use a white background template as a base
 
-def _format_eur_amount_str(value, precision=2):
-    """Formats a float as an EUR amount string (e.g., '€ 1 234,56')."""
+def _format_eur_amount_str(value, precision=0): # Changed default precision to 0
+    """Formats a float as an EUR amount string (e.g., '€ 1 234').""" # Updated docstring
     if pd.isna(value):
         return '€ -'
     return f"€ {value:,.{precision}f}".replace(",", " ").replace(".", ",")
@@ -40,64 +41,50 @@ def create_weekly_chart(df_weekly):
         fig.update_layout(title_text="Nädala tulu (andmed puuduvad)", title_x=0.5)
         return fig
 
-    fig = go.Figure()
+    df_plot = df_weekly.copy()
+    # Create the week label for the x-axis
+    df_plot['week_label'] = df_plot.apply(
+        lambda row: f"Nädal {row['week_start_date'].isocalendar()[1]}: {row['week_start_date'].strftime('%d.%m.%Y')} - {(row['week_start_date'] + timedelta(days=6)).strftime('%d.%m.%Y')}",
+        axis=1
+    )
 
-    # Calculate week_end_date for tick text
-    df_weekly = df_weekly.copy()
-    df_weekly['week_end_date'] = df_weekly['week_start_date'] + timedelta(days=6)
+    fig = px.line(
+        df_plot,
+        x="week_label",
+        y="total_revenue",
+        title="Kogutulu nädala kaupa",
+        line_shape='linear', # Default, but explicitly set for clarity
+        color_discrete_sequence=['#009B8D'] # Set line color
+    )
 
-    # Prepare tick text for x-axis
-    tickvals = df_weekly['week_start_date'].dt.strftime('%Y-%m-%d').tolist()
-    ticktext = [
-        f"Nädala nr. {date.isocalendar()[1]} - {date.strftime('%d.%m')}-{end_date.strftime('%d.%m')}"
-        for date, end_date in zip(df_weekly['week_start_date'], df_weekly['week_end_date'])
-    ]
-
-    fig.add_trace(go.Scatter(
-        x=df_weekly["week_start_date"],
-        y=df_weekly["total_revenue"],
-        mode='lines+markers',
-        name='Kogutulu',
-        line=dict(color='#009B8D', width=2),
+    fig.update_traces(
+        mode='lines+markers', # Show points on the line
         marker=dict(size=6, color='#009B8D'),
-        hovertemplate='<b>Nädala algus:</b> %{x|%d.%m.%Y}<br>'+
-                      '<b>Kogutulu:</b> %{y:,.2f} €<extra></extra>'
-    ))
+        hovertemplate=(
+            '<b>%{x}</b><br>' + # Week label
+            '<b>Kogutulu:</b> %{y:,.0f} €<extra></extra>' # Rounded to 0 decimal places
+        )
+    )
 
     fig.update_layout(
-        title_text="Kogutulu nädala kaupa",
         title_x=0.5,
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(family="sans-serif", color="#1A1A2E"),
-        separators=' .',  # Space for thousands, period for decimals (Plotly translates . to , if locale is set)
-
+        separators=' .', # Space for thousands, period for decimals
         xaxis=dict(
-            title="Nädala alguskuupäev",
+            title="Nädal", # X-axis title
             showgrid=False,
-            tickangle=75,
-            tickmode='array',
-            tickvals=tickvals,
-            ticktext=ticktext,
-            rangeslider_visible=True,
-            rangeselector=dict(
-                buttons=list([
-                    dict(count=1, label="1k", step="month", stepmode="backward"),
-                    dict(count=6, label="6k", step="month", stepmode="backward"),
-                    dict(count=1, label="1a", step="year", stepmode="backward"),
-                    dict(step="all")
-                ])
-            )
+            tickangle=45 # 45-degree angle
         ),
         yaxis=dict(
             title="Kogutulu (€)",
             showgrid=False,
-            # For Estonian formatting: space for thousands, comma for decimals, € prefix
-            tickformat='.2f', # Use .2f to ensure two decimal places
+            tickformat='.0f', # Round to 0 decimal places
             tickprefix='€ '
         )
     )
-    logger.info("Created weekly revenue chart.")
+    logger.info("Created weekly revenue chart using Plotly Express.")
     return fig
 
 def create_kpi_summary(kpis):
@@ -196,7 +183,6 @@ def send_success_notification(kpis: dict, saved_files: dict):
         kpis (dict): The dictionary of calculated KPIs.
         saved_files (dict): The dictionary of exported file paths.
     """
-    logger.info("--- ETL Pipeline Completed Successfully ---")
     logger.info("Calculated KPIs:")
     for kpi_name, kpi_value in kpis.items():
         if "revenue" in kpi_name or "value" in kpi_name:
