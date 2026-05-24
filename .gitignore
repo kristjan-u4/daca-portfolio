@@ -14,5 +14,14 @@ __pycache__/
 # Jupyter Notebook checkpoints:
 .ipynb_checkpoints/
 
+# Log files.
+log
+
 # Temporary files.
-tmp/
+tmp
+
+# Auto-generated files:
+output/
+
+# Aider - an open-source AI pair programming tool:
+.aider*
