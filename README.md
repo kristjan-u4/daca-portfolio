@@ -16,4 +16,4 @@ Olen aastaid töötanud tarkvaraarendajana (Ruby, Java), kuid nüüd soovin teha
 | 4 | SQL Aggregation | Lõpetatud |
 | 5-6 | Visualiseerimine | Lõpetatud |
 | 7-8 | Python | Lõpetatud |
-| 9-10 | Portfoolio + Karjäär | Tulemas |
+| 9-10 | Portfoolio + Karjäär | Käimasolev |
