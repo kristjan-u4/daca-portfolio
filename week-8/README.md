@@ -30,7 +30,7 @@ ETL Pipeline automatiseerimise edasiste võimaluste uurimiseks kirjutasin sh skr
 * Vastas küsimustele, kuidas üht või teist eesmärki Pythonis saavutada (näiteks kuidas lugeda terminalilt sisendiks ette antud kuupäevavahemikku).
 * Aitas pipeline'i arendamisel tekkinud tehniliste tõrgete lahendamisel.
 * Vastas erinevatele `bin/weekly_demo.sh` skripti kirjutamisel tekkinud küsimustele, nt. kuidas praeguse kuupäeva alusel eelmist nädalat ajavahemikuna välja arvutada.
-* Informeeris mind, et on olemas terminalil põhineb AI paarisprogrammeerimise tööriist nimega **Aider**, mis aitab arendusprotsessis AI kasutamist automatiseerida ja vastas mu küsimustele, kuidas seda seadistada ja kasutada.
+* Informeeris mind, et on olemas terminalil põhinev AI paarisprogrammeerimise tööriist nimega **Aider**, mis aitab arendusprotsessis AI kasutamist automatiseerida ja vastas mu küsimustele, kuidas seda seadistada ja kasutada.
 
 ### Aider + Gemini 2.5 Flash
 
