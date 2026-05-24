@@ -53,9 +53,9 @@ Minu eesmärgiks oli ka teiste rollide ülesanded iseseisvalt läbi teha pärast
 
 * **Andmeallikas:** PostgreSQL (Supabase).
 * **Programmeerimiskeeled:** Python, Bash
-* **Pythoni moodulid:** logging, time, argparse, datetime.
+* **Pythoni moodulid:** logging, time, argparse, datetime, os, dotenv, supabase, pandas, plotly.
 * **ETL Pipeline moodulid:** data_fetcher, transform, visualize_export.
-* **Töövahendid:** VS Code, Git, Aider, Ubuntu terminal.
+* **Töövahendid:** VS Code, Git, Aider, Ubuntu terminal, crontab, less, vim.
 
 ## Pipeline käivitamine (Ubuntu terminal)
 
