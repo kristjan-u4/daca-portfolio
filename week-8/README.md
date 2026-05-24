@@ -21,7 +21,7 @@ Minu ülesandeks oli kirjutada Pythoni skript `pipeline.py`, mis seob teiste mee
 
 ### Automatiseerimine
 
-ETL Pipeline automatiseerimise edasiste võimaluste uurimiseks kirjutasin sh skripti `bin/weekly_demo.sh`, mis demonstreerib, kuidas `pipeline.py` skriptile ajavahemikuna ette anda käesolevale nädalale eelnev nädal. Esitlusel näitasin veel, kuidas nimetatud sh skripti saab seadistada programmiga `crontab`, et panna see automaatselt jooksma kord nädalas etteantud ajal.
+ETL Pipeline automatiseerimise edasiste võimaluste uurimiseks kirjutasin sh skripti `bin/weekly_demo.sh`, mis demonstreerib, kuidas `pipeline.py` skriptile ajavahemikuna ette anda käesolevale nädalale eelnev nädal. Meeskonnatöö esitlusel näitasin veel, kuidas nimetatud sh skripti saab seadistada programmiga `crontab`, et panna see automaatselt jooksma kord nädalas etteantud ajal.
 
 ## AI kasutamine
 
@@ -66,7 +66,13 @@ Minu eesmärgiks oli ka teiste rollide ülesanded iseseisvalt läbi teha pärast
 6. Käivita pipeline sobiva kuupäevavahemikuga:
 
 ```bash
-python3 week_8/pipeline.py --start-date=2024-01-01 --end-date=2025-02-28
+python3 week-8/individual/pipeline.py --start-date=2024-01-01 --end-date=2025-02-28
 ```
 
-## Lingid
+## Meeskonnatöö tulemuste asukoht
+
+Meeskondlik pipeline koos moodulitega asub portfoolio [urbanstyle-marketing-data](https://github.com/sille-pragi/urbanstyle-marketing-data) kataloogis **week_8**. Seadistusjuhend on sarnane juhendile eelmises punktis, kuid skripti käivitamine on kataloogipuu struktuurierinevuste tõttu veidi erinev:
+
+```bash
+python3 week_8/pipeline.py --start-date=2024-01-01 --end-date=2025-02-28
+```
