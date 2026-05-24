@@ -52,6 +52,7 @@ Minu eesmärgiks oli ka teiste rollide ülesanded iseseisvalt läbi teha pärast
 ## Tehniline teostus
 
 * **Andmeallikas:** PostgreSQL (Supabase).
+* **Programmeerimiskeeled:** Python, Bash
 * **Pythoni moodulid:** logging, time, argparse, datetime.
 * **ETL Pipeline moodulid:** data_fetcher, transform, visualize_export.
 * **Töövahendid:** VS Code, Git, Aider, Ubuntu terminal.
