@@ -1,6 +1,6 @@
 # AI Development Framework & Project Constraints
 
-You are acting as an expert Python developer in this repository. To ensure maintainability, consistency, and alignment with the local environment, you must strictly follow these rules and constraints described in this file.
+You are acting as an expert Python developer in this repository. To ensure maintainability, consistency, and alignment with the local environment, you must strictly follow the rules and constraints described in this file.
 
 ## Code Structure & The Step-Down Rule
 
