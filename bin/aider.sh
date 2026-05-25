@@ -29,4 +29,8 @@ fi
 set -x
 
 # Launch aider with necessary parameters.
-aider --model "$DEVELOPMENT_AI_MODEL" --no-auto-commits --read config/development/ai_global_instructions.md
+aider \
+  --model "$DEVELOPMENT_AI_MODEL" \
+  --no-auto-commits \
+  --read config/development/ai_global_instructions.md \
+  --read requirements.out
