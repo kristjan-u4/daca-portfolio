@@ -31,5 +31,6 @@ You are acting as an expert Python developer in this repository. To ensure maint
 
 ## Environment and Dependencies
 
+- Check the `.python-version` file in the root directory to ensure code generation is strictly compatible with the specified Python version.
 - Always check the `requirements.out` file in the root directory to verify installed Python package versions before writing imports or using specific library APIs.
 - Do not assume newer or older API syntaxes than what is strictly installed in the environment.

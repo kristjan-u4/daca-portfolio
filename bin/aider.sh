@@ -33,4 +33,5 @@ aider \
   --model "$DEVELOPMENT_AI_MODEL" \
   --no-auto-commits \
   --read config/development/ai_global_instructions.md \
+  --read .python-version \
   --read requirements.out
