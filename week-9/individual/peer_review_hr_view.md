@@ -1,4 +1,4 @@
-# Peer Review: Palkamisjuhi (HR) perspektiiv
+# Peer Review: Palkamisjuhi vaade (HR / Hiring Manager)
 
 **Kandidaat:** Sille
 
