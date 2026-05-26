@@ -10,4 +10,4 @@
 
 ### Google Gemini chatbot
 
-* Kui ma esialgu testisin NotebookLM kasutamist peer review tegemiseks enda repositooriumi peal, siis andsin ma NotebookLM-ile allikatena sisendiks ette minu hinnangul vajaminevate failide GitHub URL-id igaühe eraldi, mille peale NotebookLM vastas tõrketeatega: "Teie märkmiku üleslaaditavate failide piirarv on täis". Pöördusin Gemini poole, kes soovitas mul koondada kõik info ühte markdown-faili, kasutades üksikute failide "lehekülgedeks" jaotamiseks XML-tääge. Toimisin vastavalt soovitusele, mille tulemusena NotebookLM tõrge kadus.
+* Kui ma esialgu testisin NotebookLM kasutamist peer review tegemiseks enda repositooriumi peal, siis andsin ma NotebookLM-ile allikatena sisendiks ette minu hinnangul vajaminevate failide GitHub URL-id igaühe eraldi, mille peale NotebookLM vastas tõrketeatega: "_Teie märkmiku üleslaaditavate failide piirarv on täis_". Pöördusin Gemini poole, kes soovitas mul koondada kõik info ühte markdown-faili, kasutades üksikute failide "lehekülgedeks" jaotamiseks XML-tääge. Toimisin vastavalt soovitusele, mille tulemusena NotebookLM tõrge kadus.
