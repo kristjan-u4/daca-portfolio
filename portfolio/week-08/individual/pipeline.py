@@ -4,11 +4,11 @@ UrbanStyle Sales Data ETL Pipeline.
 This script extracts data from Supabase, transforms it into analytics-ready
 formats, calculates KPIs, generates reports, and exports visual charts.
 
-Simple command-line usage (in project root directory):
-    python3 week-8/individual/pipeline.py
+Simple command-line usage (in repository root directory):
+    python3 portfolio/week-08/individual/pipeline.py
 
 Using custom sale_date range:
-    python3 week-8/individual/pipeline.py --start-date=2024-12-01 --end-date=2024-12-31
+    python3 portfolio/week-08/individual/pipeline.py --start-date=2024-12-01 --end-date=2024-12-31
 """
 
 import logging
@@ -107,9 +107,9 @@ def _parse_command_line_arguments():
     # Adding usage examples to the help output via epilog
     epilog_examples = (
         "Examples:\n"
-        "  Note: The examples below assume that the script is executed from the project root directory.\n\n"
-        "  python3 week-8/individual/pipeline.py\n"
-        "  python3 week-8/individual/pipeline.py --start-date=2024-12-01 --end-date=2024-12-31"
+        "  Note: The examples below assume that the script is executed from the repository root directory.\n\n"
+        "  python3 portfolio/week-08/individual/pipeline.py\n"
+        "  python3 portfolio/week-08/individual/pipeline.py --start-date=2024-12-01 --end-date=2024-12-31"
     )
     
     parser = argparse.ArgumentParser(

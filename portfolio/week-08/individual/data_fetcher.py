@@ -8,9 +8,25 @@ supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
 
 BATCH_SIZE = 1000  # Supabase API restriction on number of rows returned in API response
 
-def fetch_sales(start_date, end_date):
-    """Fetch sales data filtered by date range in batches."""
-    api_call_factory = lambda: supabase.table("sales").select("*").gte("sale_date", start_date).lte("sale_date", end_date)
+def fetch_sales(start_date=None, end_date=None):
+    """
+    Fetch sales data filtered by an optional date range in batches.
+    
+    Args:
+        start_date (datetime.date, optional): The earliest sale date to include. Defaults to None.
+        end_date (datetime.date, optional): The latest sale date to include. Defaults to None.
+    
+    Returns:
+        pd.DataFrame: A DataFrame containing the fetched sales data.
+    """
+    def api_call_factory():
+        query = supabase.table("sales").select("*")
+        if start_date:
+            query = query.gte("sale_date", start_date)
+        if end_date:
+            query = query.lte("sale_date", end_date)
+        return query
+
     return _fetch_data_in_batches(api_call_factory)
 
 def fetch_customers():
