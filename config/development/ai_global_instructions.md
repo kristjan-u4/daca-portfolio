@@ -34,3 +34,8 @@ You are acting as an expert Python developer in this repository. To ensure maint
 - Check the `.python-version` file in the root directory to ensure code generation is strictly compatible with the specified Python version.
 - Always check the `requirements.out` file in the root directory to verify installed Python package versions before writing imports or using specific library APIs.
 - Do not assume newer or older API syntaxes than what is strictly installed in the environment.
+
+## File Operations & Git Safety
+- **Strictly Prohibit Raw Move/Delete Commands:** Do NOT generate or execute raw shell commands (like `mv`, `rm`, `cp`) to move, rename, or delete files that are tracked by Git.
+- **Mandatory Git Operations:** You MUST use official Git operations (`git mv` for moving/renaming and `git rm` for deleting) to preserve file history and ensure changes are properly staged.
+- **Safety First:** If you cannot perform the move using Git commands directly, ask the user for clarification instead of falling back to raw OS-level commands.
