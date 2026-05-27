@@ -60,7 +60,7 @@ Minu eesmärgiks oli ka teiste rollide ülesanded iseseisvalt läbi teha pärast
 ## Pipeline käivitamine (Ubuntu terminal)
 
 1. Veendu, et on Python installitud
-2. Mine käesoleva portfoolio juurkataloogi ja loo Pythoni virtuaalkeskkond: `python3 -m venv .venv`
+2. Mine käesoleva repositooriumi juurkataloogi ja loo Pythoni virtuaalkeskkond: `python3 -m venv .venv`
 3. Aktiveeri Pythoni virtuaalkeskkond: `source .venv/bin/activate`
 4. Vajaminevad teegid on loetletud **requirements.txt** failis. Installi need: `pip install -r requirements.txt`
 5. Seadista andmebaasiühendus, kasutades `.env` faili.
@@ -72,7 +72,7 @@ python3 portfolio/week-08/individual/pipeline.py --start-date=2024-01-01 --end-d
 
 ## Meeskonnatöö tulemuste asukoht
 
-Meeskondlik pipeline koos moodulitega asub portfoolio [urbanstyle-marketing-data](https://github.com/sille-pragi/urbanstyle-marketing-data) kataloogis **week_8**. Seadistusjuhend on sarnane juhendile eelmises punktis, kuid skripti käivitamine on kataloogipuu struktuurierinevuste tõttu veidi erinev:
+Meeskondlik pipeline koos moodulitega asub repositooriumi [urbanstyle-marketing-data](https://github.com/sille-pragi/urbanstyle-marketing-data) kataloogis **week_8**. Seadistusjuhend on sarnane juhendile eelmises punktis, kuid skripti käivitamine on kataloogipuu struktuurierinevuste tõttu veidi erinev:
 
 ```bash
 python3 week_8/pipeline.py --start-date=2024-01-01 --end-date=2025-02-28
