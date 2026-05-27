@@ -37,12 +37,12 @@ Analüüsides UrbanStyle'i koondandmeid, tuvastasin järgmised olulised punktid 
 Meie meeskonna ühine investorite koondvaade, mis sünteesib CEO, turunduse ja operatsioonide vaated, asub [siin](https://github.com/sille-pragi/urbanstyle-marketing-data/blob/main/week_5/investor_dashboard.png).
 
 ## Kuidas rakendust käivitada (Ubuntu Linux näitel)
-1. Veendu, et sul on Python installitud
-2. Mine käesoleva projekti juurkataloogi ja loo Pythoni virtuaalkeskkond: `python -m venv .venv` (kui `python` ei tööta, proovi `python3`)
+1. Veendu, et Python on installitud
+2. Mine käesoleva repositooriumi juurkataloogi ja loo Pythoni virtuaalkeskkond: `python -m venv .venv` (kui `python` ei tööta, proovi `python3`)
 3. Aktiveeri Pythoni virtuaalkeskkond: `source .venv/bin/activate`
 4. Vajaminevad teegid on loetletud **requirements.txt** failis. Installi need: `pip install -r requirements.txt`
 5. Seadista andmebaasiühendus. Loo selleks `.env` fail ja lisa sinna: `SUPABASE_CONNECTION_STRING=[direct_connection_string_of_your_database_in_supabase]`. Sobiva väärtuse leiad oma Supabase andmebaasi seadetest.
-6. Käivita rakendus terminalist: `streamlit run week-5/individual/dashboard/app.py`
+6. Käivita rakendus terminalist: `streamlit run portfolio/week-05/individual/dashboard/app.py`
 
 ## Lähtekood
 
