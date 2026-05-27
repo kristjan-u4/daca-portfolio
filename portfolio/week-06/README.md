@@ -42,7 +42,7 @@ Eelvaade:
 
 ## Kuidas rakendust käivitada (Ubuntu Linux näitel)
 
-1. Veendu, et sul on Python installitud
+1. Veendu, et Python on installitud
 2. Mine käesoleva projekti juurkataloogi ja loo Pythoni virtuaalkeskkond: `python -m venv .venv` (kui `python` ei tööta, proovi `python3`)
 3. Aktiveeri Pythoni virtuaalkeskkond: `source .venv/bin/activate`
 4. Vajaminevad teegid on loetletud **requirements.txt** failis. Installi need: `pip install -r requirements.txt`
@@ -50,7 +50,7 @@ Eelvaade:
 6. Käivita rakendus terminalist: `streamlit run dashboard/app.py`
 
 ## Lingid
-* **Kohalik Streamlit rakendus:** [app.py](../dashboard/app.py) (alates käesolevast nädalast asub iganädalaselt edasiarendatav Streamlit rakendus üldises `dashboard` kataloogis, mitte enam nädalapõhises)
+* **Kohalik Streamlit rakendus:** [app.py](./individual/dashboard/app.py)
 * **Streamlit Community Cloud keskkonda paigaldatud Streamlit rakendus:** https://daca-portfolio-phhwf82drryvzpf8r8ypxr.streamlit.app/
 * **Juhtide kokkuvõte**: vt. [week6_executive_summary.md](./individual/week6_executive_summary.md)
 * **Andmelugu**: vt. [week6_tartu_narrative.md](./individual/week6_tartu_narrative.md)
