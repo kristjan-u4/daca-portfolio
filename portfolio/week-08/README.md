@@ -67,7 +67,7 @@ Minu eesmärgiks oli ka teiste rollide ülesanded iseseisvalt läbi teha pärast
 6. Käivita pipeline sobiva kuupäevavahemikuga:
 
 ```bash
-python3 week-8/individual/pipeline.py --start-date=2024-01-01 --end-date=2025-02-28
+python3 portfolio/week-08/individual/pipeline.py --start-date=2024-01-01 --end-date=2025-02-28
 ```
 
 ## Meeskonnatöö tulemuste asukoht

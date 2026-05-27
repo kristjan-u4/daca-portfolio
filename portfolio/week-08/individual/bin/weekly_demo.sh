@@ -16,10 +16,11 @@ current_dir=$(pwd)
 # The directory this shell script is located in.
 script_dir=$(dirname "$0")
 
-# The project root directory is 3 directories up from the script directory.
+# The project root directory is 4 directories up from the script directory.
 pipeline_dir=$(dirname "$script_dir")
 week_8_dir=$(dirname "$pipeline_dir")
-project_root_dir=$(dirname "$week_8_dir")
+portfolio_dir=$(dirname "$week_8_dir")
+project_root_dir=$(dirname "$portfolio_dir")
 
 # Regardless of the outcome, return back to where we started after this script terminates.
 trap 'cd "$current_dir"' EXIT
@@ -38,4 +39,4 @@ mkdir -p log
 set -x
 
 # Run pipeline:
-python3 week-8/individual/pipeline.py --start-date="$start_date" --end-date="$end_date" >> log/pipeline.log 2>&1
+python3 portfolio/week-08/individual/pipeline.py --start-date="$start_date" --end-date="$end_date" >> log/pipeline.log 2>&1
