@@ -1,5 +1,5 @@
 """
-Roll A — UrbanStyle CEO Dashboard
+Roll B — Juhtide kokkuvõte - Tartu kauplus 2024
 ===================================================
 Andmete laadimine andmebaasist.
 """

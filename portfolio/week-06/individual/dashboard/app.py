@@ -1,10 +1,8 @@
-# Running this script: streamlit run week-5/individual/dashboard/app.py
-
 """
 UrbanStyle CEO Dashboard
 ===============================
-Interaktiivne dashboard UrbanStyle CEO jaoks — Plotly + Streamlit.
-DACA Programm, Nädal 5: Visualiseerimise Disain, Track B.
+Interaktiivne dashboard Juhtide kokkuvõte - Tartu kauplus 2024 — Plotly + Streamlit.
+DACA Programm, Nädal 6: Visualiseerimise Andmed, Track B.
 """
  
 import streamlit as st

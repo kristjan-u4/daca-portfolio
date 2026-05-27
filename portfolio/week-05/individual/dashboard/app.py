@@ -1,5 +1,3 @@
-# Running this script: streamlit run week-5/individual/dashboard/app.py
-
 """
 UrbanStyle CEO Dashboard
 ===============================
