@@ -16,4 +16,4 @@
 
 * Jätkasin eelmisel nädalal avastatud AI paarisprogrammeerimise töövahendiga **Aider** tutvumist. Kasutasin Aider'it käesoleva repositooriumi korrastamiseks. Aideri abiga teisaldasin nädalapõhised projektid `portfolio` kataloogi ja lisasin projektide nimedes nädala järjekorranumbri ette numbri 0, et week-10 tulekuga säiliks loomulik ajalises järjekorras sorteerimine. Lisaks parandasin Aider + AI mudeli abiga Pythoni koodis ja Shell skriptides vigu, mis tekkisid seoses failide teisaldamisega.
 * Lisasin Aider + AI mudeli jaoks instruktsioonid, mis kehtivad üle terve repositooriumi: [config/development/ai_global_instructions.md](../../config/development/ai_global_instructions.md)
-* Lisasin Aider'i mugavaks käivitamiseks vajaliku kontekstiga (AI mudel, vaikimisi sisseloetavad failid, instruktsioonid AI mudeli kaoks) Shell skripti: [bin/aider.sh](../../bin/aider.sh)
+* Lisasin Aider'i mugavaks käivitamiseks vajaliku kontekstiga (AI mudeli nimi, vaikimisi sisseloetavad failid, instruktsioonid AI mudeli jaoks) Shell skripti: [bin/aider.sh](../../bin/aider.sh)
