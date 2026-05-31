@@ -21,9 +21,9 @@ Pärast sales tabeli uurimist, osalesin meeskonna andmemaastiku koostamisel, kus
 * Puuduva väärtusega väljade ja duplikaatide teket oleks võimalik andmebaasi tasandil ennetada.
 
 ## Failid
-* `individual/week1_sales_exploration.sql` -- minu SQL päringud
-* `individual/week1_results_screenshot.png` -- tulemuste pilt
+* [Minu SQL päringud](./individual/week1_sales_exploration.sql)
+* [Ekraanipilt päringute tulemustest](./individual/week1_results_screenshot.png)
 
 ## Meeskonna töö
 
-https://docs.google.com/document/d/1KF1IGFOY9RUol8cVMe5yTnogB1FGSfCGG2i4NwDDIE8/edit
+[https://docs.google.com/document/d/1KF1IGFOY9RUol8cVMe5yTnogB1FGSfCGG2i4NwDDIE8/edit](https://github.com/sillepragi/urbanstyle-marketing-data/blob/main/week_1/README.md)
