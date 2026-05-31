@@ -1,5 +1,18 @@
 # Nädal 9: Karjääri ettevalmistus
 
+## Minu roll
+
+### Roll A: Palkamisjuhi vaade (HR/Hiring Manager)
+
+Minu ülesandeks oli hinnata meeskonnakaaslase (**Roll B**) Github portfooliot, pöörates tähelepanu alljärgnevale.
+
+1. Kas portfoolio on konverteeritav tugevaks CV-ks?
+2. Kas portfoolio on piisavalt esinduslik LinkedIn'is esiletõstmiseks?
+3. Tuua välja 3 tugevust ja 2 parandusettepanekut.
+4. Anda värbamissoovitus ja põhjendada seda.
+
+**Väljund:** [peer_review_hr_view.md](./individual/peer_review_hr_view.md)
+
 ## AI kasutamine
 
 ### NotebookLM
@@ -18,3 +31,7 @@
 
 * Kui ma esialgu testisin NotebookLM kasutamist peer review tegemiseks enda repositooriumi peal, siis andsin ma NotebookLM-ile allikatena sisendiks ette minu hinnangul vajaminevate failide GitHub URL-id igaühe eraldi, mille peale NotebookLM vastas tõrketeatega: "_Teie märkmiku üleslaaditavate failide piirarv on täis_". Pöördusin Gemini poole, kes soovitas mul koondada kõik info ühte markdown-faili, kasutades üksikute failide "lehekülgedeks" jaotamiseks XML-tääge. Toimisin vastavalt soovitusele, mille tulemusena NotebookLM tõrge kadus.
 * Juhendas Aider'i käivitusskripti kirjutamisel ja selle AI mudeli instrueerimiseks vajaliku markdown-faili koostamisel.
+
+## Meeskondlik väljund
+
+Individuaalsete rollide väljunditest sünteesis meeskond [värbamisjuhendi](https://github.com/sillepragi/urbanstyle-marketing-data/blob/main/week_9/urbanstyle_da_recruitment_guide.md)
