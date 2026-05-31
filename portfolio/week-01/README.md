@@ -26,4 +26,4 @@ Pärast sales tabeli uurimist, osalesin meeskonna andmemaastiku koostamisel, kus
 
 ## Meeskonna töö
 
-[https://docs.google.com/document/d/1KF1IGFOY9RUol8cVMe5yTnogB1FGSfCGG2i4NwDDIE8/edit](https://github.com/sillepragi/urbanstyle-marketing-data/blob/main/week_1/README.md)
+https://github.com/sillepragi/urbanstyle-marketing-data/blob/main/week_1/README.md
