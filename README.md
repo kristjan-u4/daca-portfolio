@@ -6,7 +6,12 @@ Olen aastaid töötanud tarkvaraarendajana (Ruby, Java), kuid nüüd soovin teha
 ## Eesmärk
 Õppida andmeanalüüsi -- SQL, Python, visualiseerimine -- ja ehitada professionaalne portfoolio.
 
-## Nädala kaupa
+## Portfoolio
+
+Nädalapõhised projektid asuvad kataloogis [portfolio](./portfolio)
+
+### Nädala kaupa
+
 | Nädal | Algus | Lõpp | Teema | Staatus |
 |-------|-------|------|-------|---------|
 | 0 | 23 Mar 2026 | 29 Mar 2026 | Onboarding | Lõpetatud |
