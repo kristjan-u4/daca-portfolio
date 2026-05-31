@@ -12,7 +12,7 @@ Sel nädalal oli fookuses andmete viimistlemine ja andmeloo jutustamine (Data St
 *   **Andmete koondamine:** Lisasin populaarseimate toodete müügi visualiseerimiseks tulpdiagrammi ning klientide geograafilise jaotuse esitamiseks sektordiagrammi, mis toetavad Tartu poe spetsiifilist andmelugu.
 
 ## Dashboard
-Asukoht: https://daca-portfolio-phhwf82drryvzpf8r8ypxr.streamlit.app/
+Asukoht: https://daca-portfolio-3hkfvtlw9ikvnhidkd5cw3.streamlit.app/
 
 Eelvaade:
 
@@ -51,7 +51,7 @@ Eelvaade:
 
 ## Lingid
 * **Kohalik Streamlit rakendus:** [app.py](./individual/dashboard/app.py)
-* **Streamlit Community Cloud keskkonda paigaldatud Streamlit rakendus:** https://daca-portfolio-phhwf82drryvzpf8r8ypxr.streamlit.app/
+* **Streamlit Community Cloud keskkonda paigaldatud Streamlit rakendus:** https://daca-portfolio-3hkfvtlw9ikvnhidkd5cw3.streamlit.app/
 * **Juhtide kokkuvõte**: vt. [week6_executive_summary.md](./individual/week6_executive_summary.md)
 * **Andmelugu**: vt. [week6_tartu_narrative.md](./individual/week6_tartu_narrative.md)
 * **Meeskonna koondvaade:** [week6_team_combined_view.md](./team/week6_team_combined_view.md)
