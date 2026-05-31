@@ -22,8 +22,8 @@
 
 ## Meeskonnatöö
 
-* Koondraport: https://docs.google.com/document/d/1R7yLGLHO6CHmOL75oUjyiKYUK_8N7ghAnALVK6LZufA/edit?tab=t.0
-* SQL päringud: [week4_marketing_campaign_roi_aggregation.sql](individual/week4_marketing_campaign_roi_aggregation.sql)
+* Koondraport: https://github.com/sillepragi/urbanstyle-marketing-data/blob/main/week_4/week4_team_aggregation_report.md
+* Minu SQL päringud: [week4_marketing_campaign_roi_aggregation.sql](individual/week4_marketing_campaign_roi_aggregation.sql)
 
 ### Turunduskanalite koondandmed
 
