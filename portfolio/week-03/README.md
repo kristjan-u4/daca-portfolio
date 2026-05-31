@@ -87,4 +87,4 @@ Uurisin toodete, mida kunagi pole müüdud, laoseisu. Selgus, et kõigil 12-l mi
 
 ## 5. Meeskonnatöö viide
 
-https://docs.google.com/document/d/1qGOioIUVrGnW9Agh-j3Dd9A8UvVJInbfLx43OtV-rqI/edit?tab=t.0
+https://github.com/sillepragi/urbanstyle-marketing-data/blob/main/week_3/README.md
