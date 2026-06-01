@@ -18,7 +18,7 @@
         -- Copy data from the original table
         INSERT INTO test_web_logs SELECT * FROM web_logs;
         ```
-    *   I experimented with visualizing the trends of the Facebook Ads marketing channel as a graph, asking the AI to generate the Python script [facebook_ads_monthly_customers_chart.py](individual/facebook_ads_monthly_customers_chart.py) for this purpose. I ran the script using the VS Code development environment and saved the resulting graph as a PDF file.
+    *   I experimented with visualizing the trends of the Facebook Ads marketing channel as a graph, asking the AI to generate the Python script [facebook_ads_monthly_customers_chart.py](individual/facebook_ads_monthly_customers_chart.py) for this purpose. I ran the script using the VS Code development environment and saved the resulting graph as a PNG file.
 
 ## Teamwork
 
