@@ -1,17 +1,17 @@
-# Nädal 0
+# Week 0
 
-## Kokkuvõte
+## Summary
 
-* Supabase keskkonnas PostgreSQL andmebaas loodud, tabel team_members loodud, täidetud andmetega INSERT päringute abil ja neid andmeid loetud SELECT päringuid kasutades.
-* GitHub repositoorium daca-portfolio (käesolev) loodud.
-* VS Code arenduskeskkond installitud koos laiendustega (Python, SQLTools).
-* VS Code arenduskeskkonnast ühendus Supabase'is asuva PostgreSQL andmebaasiga loodud ja testitud SELECT päringuid kasutades.
-* GitHubi repositoorium daca-portfolio VS Code keskkonnas terminali kasutades alla laetud (git clone) ning git commit, push ja pull testitud.
-* Python installitud, VS Code terminali abil seadistatud virtuaalkeskkond (venv) ja testitud teekide installimist etteantud failist (requirements.in). Installitud teekide versioonid külmutatud (pip freeze) ja salvestatud requirements.txt faili.
-* NotebookLM keskkonnas CORE RAG failid üles laetud, heliülevaade genereeritud ja sellega tutvutud. Lisatud ka muid faile, nt. N0_2_1_P_GT_Onboarding_v2.1, et grupitöö nõuetest paremini aru saada tehisintellektile küsimuste esitamise teel.
-* Grupitöös osaletud, Team Charter Koostaja rollis.
-* Boonussammuna käesolev repositoorium ühendatud Verceliga ja deploy edukalt testitud.
+*   PostgreSQL database created in Supabase environment, `team_members` table created, populated with data using INSERT queries, and data read using SELECT queries.
+*   GitHub repository daca-portfolio (this one) created.
+*   VS Code development environment installed with extensions (Python, SQLTools).
+*   Connection to PostgreSQL database in Supabase created from VS Code development environment and tested using SELECT queries.
+*   GitHub repository daca-portfolio cloned (git clone) using the terminal in VS Code environment, and git commit, push, and pull tested.
+*   Python installed, virtual environment (venv) configured using VS Code terminal, and installation of libraries from the provided file (requirements.in) tested. Installed library versions frozen (pip freeze) and saved to requirements.txt.
+*   CORE RAG files uploaded in NotebookLM environment, audio overview generated and reviewed. Other files also added, e.g., N0_2_1_P_GT_Onboarding_v2.1, to better understand group work requirements by asking questions to the AI.
+*   Participated in group work, in the role of Team Charter Creator.
+*   As a bonus step, this repository was connected to Vercel and deploy successfully tested.
 
-## Meeskonna portfoolio link
+## Team Portfolio Link
 
 https://github.com/sille-pragi/urbanstyle-marketing-data
