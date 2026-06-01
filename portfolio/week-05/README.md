@@ -1,7 +1,7 @@
 # Week 5: Visualization Design
 
 ## Project Overview
-This week, the focus was on data visualization and dashboard design for UrbanStyle.ltd stakeholders. I fulfilled the tasks of **Role A (CEO's perspective)** in the group work. My goal was to create a high-level overview of the company's performance, answering Kristi's main question: "Are we growing?". As I decided to follow **Track B** for data visualization tools, I used the programming language **Python** and its libraries **Plotly** and **Streamlit** to create the dashboard.
+This week, the focus was on data visualization and dashboard design for UrbanStyle.ltd stakeholders. I fulfilled the tasks of **Role A (CEO's perspective)** in the group work. My goal was to create a high-level overview of the company's performance, answering CEO's main question: "Are we growing?". As I decided to follow **Track B** for data visualization tools, I used the programming language **Python** and its libraries **Plotly** and **Streamlit** to create the dashboard.
 
 ## Dashboard Preview
 ![CEO Dashboard Screenshot](./individual/week_5_ceo_dashboard_screenshot.png)
@@ -31,7 +31,7 @@ Analyzing UrbanStyle's aggregated data, I identified the following key points fo
 ## Technical Implementation
 *   **Data Source:** PostgreSQL (Supabase) `sales` table.
 *   **Tools:** Python, SQLAlchemy, Pandas, Plotly Express, Streamlit.
-*   **Design Principles:** I followed **Tufte's** principles (high data-ink ratio) and **Knaflic's** design thinking. I placed the most important KPI cards at the top of the screen (F-pattern) so that Kristi could understand the situation in 10 seconds. I used UrbanStyle's brand color (#009B8D teal) to highlight trends.
+*   **Design Principles:** I followed **Tufte's** principles (high data-ink ratio) and **Knaflic's** design thinking. I placed the most important KPI cards at the top of the screen (F-pattern) so that the CEO could understand the situation in 10 seconds. I used UrbanStyle's brand color (#009B8D teal) to highlight trends.
 
 ## Team Consolidated Report
 Our team's combined investor overview, synthesizing CEO, marketing, and operations perspectives, is located [here](https://github.com/sille-pragi/urbanstyle-marketing-data/blob/main/week_5/investor_dashboard.png).
