@@ -1,65 +1,65 @@
-# Nädal 7: Python Pandas — RFM kliendisegmenteerimine
+# Week 7: Python Pandas — RFM Customer Segmentation
 
-## Minu roll
+## My Role
 
-### Roll C: Analysis — RFM kliendisegmenteerimine
+### Role C: Analysis — RFM Customer Segmentation
 
-* Uurisin Roll B poolt puhastatud müügiandmeid kuni **viitekuupäevani 28.02.2025**
-* Kasutades Pandase `qcut()` meetodit, arvutasin iga kliendi kohta välja 3 mõõdikut, mille väärtuseks on **hinne skaalal 1-5**:
-  * **Recency (R)** iseloomustab kõige viimasest ostust möödunud aega.
-    * Aluseks olev mõõdik: viitekuupäeva ja viimase ostukuupäeva vahe.
-    * Mida lühem aeg, seda kõrgem hinne.
-  * **Frequency (F)** iseloomustab ostude sagedust.
-    * Aluseks olev mõõdik: tellimuste arv kliendi kohta.
-    * Mida suurem ostude arv, seda kõrgem hinne.
-  * **Monetary (M)** iseloomustab ostude rahalist väärtust.
-    * Aluseks olev mõõdik: ostude kogusumma eurodes kliendi kohta.
-    * Mida suurem kogusumma, seda kõrgem hinne.
-* Summeerisin R, F ja M mõõdikud ja leidsin seeläbi iga kliendi jaoks **RFM skoori**, mille alusel jaotasin kliendid segmentidesse:
-  * **VIP Champions:** skoor 13-15,  kokku **453** klienti
-  * **Loyal:** skoor 10-12,  kokku **677** klienti
-  * **Potential:** skoor 7-9,  kokku **768** klienti
-  * **At Risk:** skoor 4-6,  kokku **525** klienti
-  * **Lost:** skoor 3,  kokku **117** klienti
-* Andmed klientide RFM skooride ja segmentidega edastasin sisendina Roll D-le andmete visualiseerimiseks.
+*   I analyzed sales data cleaned by Role B up to the **reference date of 28.02.2025**.
+*   Using Pandas' `qcut()` method, I calculated 3 metrics for each customer, with a value of **a score on a scale of 1-5**:
+    *   **Recency (R)** characterizes the time elapsed since the most recent purchase.
+        *   Underlying metric: the difference between the reference date and the last purchase date.
+        *   The shorter the time, the higher the score.
+    *   **Frequency (F)** characterizes the frequency of purchases.
+        *   Underlying metric: the number of orders per customer.
+        *   The higher the number of purchases, the higher the score.
+    *   **Monetary (M)** characterizes the monetary value of purchases.
+        *   Underlying metric: the total amount of purchases in euros per customer.
+        *   The higher the total amount, the higher the score.
+*   I summed the R, F, and M metrics and thereby found the **RFM score** for each customer, based on which I divided customers into segments:
+    *   **VIP Champions:** score 13-15, total **453** customers
+    *   **Loyal:** score 10-12, total **677** customers
+    *   **Potential:** score 7-9, total **768** customers
+    *   **At Risk:** score 4-6, total **525** customers
+    *   **Lost:** score 3, total **117** customers
+*   I passed the customer RFM scores and segments as input to Role D for data visualization.
 
-## Peamised leiud
+## Key Findings
 
-* Kõige arvukam on potentsiaalsete klientide segment - 768 klienti. See on UrbanStyle’i jaoks kõige olulisem kasvumootor ja "toormaterjal".
-* Lojaalseid kliente on rohkem (677 klienti), kui riskantseid (525 klienti). See näitab, et UrbanStyle’i kliendibaas on hetkel tervislik ja brändi fookus on õige.
-* Riskantseid kliente on rohkem, kui VIP kliente (453 klienti). See on ohumärk, mis viitab sellele, et me kaotame väärtuslikke kliente kiiremini, kui suudame neid tippu (VIP-iks) kasvatada.
+*   The most numerous segment is potential customers - 768 clients. This is UrbanStyle's most important growth engine and "raw material".
+*   There are more loyal customers (677 clients) than at-risk customers (525 clients). This indicates that UrbanStyle's customer base is currently healthy and the brand's focus is correct.
+*   There are more at-risk customers than VIP customers (453 clients). This is a warning sign, indicating that we are losing valuable customers faster than we can grow them to the top (VIP status).
 
-## AI kasutamine
+## Use of AI
 
 ### Google Gemini
 
-* Õppejuhendis oli näidatud, kuidas R, F ja M lähteandmed grupeeritakse kliendi lõikes eraldi ja lõpuks ühendatakse (merge), aga mul tekkis hüpotees, et seda kõike saaks teha ühe meetodiga (agg).
-  Küsisin AI-lt, kas minu metoodika annab sama tulemuse, mis õppematerjalis toodu. AI vastas, et annab ning minu meetod olevat ka loetavam ja jõudluse mõttes kiirem.
-* Õpetas, kuidas qcut() parameetri q=5 korral hinnete list F ja M mõõdikute jaoks genereerida dünaamiliselt ja genereeritud listi pealt genereerida ümberpööratud list R-mõõdiku jaoks.
-* Mul tekkis F-skoori arvutamisel tõrge: `ValueError: Bin edges must be unique: Index([1.0, 2.0, 2.0, 3.0, 5.0, 77.0], dtype='float64', name='total_purchases')`. Küsisin AI-lt, millest see tuleb ja kuidas probleemi lahendada.
-  AI vastas, et see viga tekib siis, kui andmetes on **liiga palju korduvaid väärtusi** ja soovitas mul kasutada `.rank(method='first')`. AI soovitatud kooditäiendus eemaldas tõrke.
+*   The learning guide showed how R, F, and M source data are grouped separately by customer and finally merged, but I hypothesized that all this could be done with a single method (agg).
+    I asked the AI if my methodology yielded the same result as that presented in the learning material. The AI responded that it did and that my method was also more readable and faster in terms of performance.
+*   It taught how to dynamically generate a list of scores for F and M metrics when `q=5` in the `qcut()` parameter, and how to generate a reversed list for the R metric from the generated list.
+*   I encountered an error when calculating the F-score: `ValueError: Bin edges must be unique: Index([1.0, 2.0, 2.0, 3.0, 5.0, 77.0], dtype='float64', name='total_purchases')`. I asked the AI what caused this and how to solve the problem.
+    The AI replied that this error occurs when there are **too many duplicate values** in the data and recommended using `.rank(method='first')`. The AI's suggested code enhancement removed the error.
 
 ### NotebookLM
 
-* Abistas äritõlgenduste sõnastamisel peamiste etteantud kliendisegmentide võrdlemisel minu poolt tehtud tähelepanekute pinnalt.
+*   Assisted in formulating business interpretations by comparing the main given customer segments based on my observations.
 
-## Tehniline teostus
+## Technical Implementation
 
-* **Andmeallikas:** PostgreSQL (Supabase).
-* **Tööriistad:** Python, Pandas, SQLAlchemy, Supabase, Plotly Express, Jupyter Lab.
-* **Meetodid:** `groupby`, `agg`, `qcut`, `rank`.
+*   **Data Source:** PostgreSQL (Supabase).
+*   **Tools:** Python, Pandas, SQLAlchemy, Supabase, Plotly Express, Jupyter Lab.
+*   **Methods:** `groupby`, `agg`, `qcut`, `rank`.
 
-## Kuidas .ipynb notebook'i käivitada (Ubuntu Linux näitel)
+## How to Run the .ipynb Notebook (Ubuntu Linux example)
 
-1. Veendu, et Python on installitud
-2. Mine käesoleva repositooriumi juurkataloogi ja loo Pythoni virtuaalkeskkond: `python -m venv .venv` (kui `python` ei tööta, proovi `python3`)
-3. Aktiveeri Pythoni virtuaalkeskkond: `source .venv/bin/activate`
-4. Vajaminevad teegid on loetletud **requirements.txt** failis. Installi need: `pip install -r requirements.txt`
-5. Seadista andmebaasiühendus, kasutades `.env` faili. Vajaduse korral pöördu käesolevasse punkti tagasi, kui punktis 7. esineb Supabase'i ühendusega seotud veateade.
-6. Käivita **Jupyter Lab** terminalis: `jupyter lab`. Jupyter Lab on Jupyter Notebook kaasaegsem edasiarendus.
-7. Vali Jupyter Lab keskkonnas projekti week-07 alamkataloogidest soovitud .ipynb fail ja klõpsa hiirega **Restart the kernel and run all cells** valikul.
+1.  Ensure Python is installed.
+2.  Navigate to the root directory of this repository and create a Python virtual environment: `python -m venv .venv` (if `python` doesn't work, try `python3`).
+3.  Activate the Python virtual environment: `source .venv/bin/activate`.
+4.  Required libraries are listed in the **requirements.txt** file. Install them: `pip install -r requirements.txt`.
+5.  Set up the database connection using the `.env` file. If a Supabase connection error occurs in step 7, revisit this point.
+6.  Launch **Jupyter Lab** from the terminal: `jupyter lab`. Jupyter Lab is a more modern evolution of Jupyter Notebook.
+7.  In the Jupyter Lab environment, select the desired .ipynb file from the week-07 subdirectories of the project and click **Restart the kernel and run all cells**.
 
-## Lingid
+## Links
 
-* **Meeskondlik .ipynb notebook:** [week7_rfm_complete.ipynb](./team/week7_rfm_complete.ipynb)
-* **Individuaalne .ipynb notebook**, mille koostamisel simuleerisin ka teisi rolle, mis võimaldas mul teiste meeskonnaliikmetega samaaegselt töötada enda alamülesandega: [individual/week7_rfm_role_c.ipynb](./individual/week7_rfm_role_c.ipynb)
+*   **Team .ipynb notebook:** [week7_rfm_complete.ipynb](./team/week7_rfm_complete.ipynb)
+*   **Individual .ipynb notebook**, where I also simulated other roles, which allowed me to work on my subtask simultaneously with other team members: [individual/week7_rfm_role_c.ipynb](./individual/week7_rfm_role_c.ipynb)
