@@ -1,7 +1,7 @@
 # Week 5: Visualization Design
 
 ## Project Overview
-This week, the focus was on data visualization and dashboard design for UrbanStyle.ltd stakeholders. I fulfilled the tasks of **Role A (CEO Kristi Tamme's perspective)** in the group work. My goal was to create a high-level overview of the company's performance, answering Kristi's main question: "Are we growing?". As I decided to follow **Track B** for data visualization tools, I used the programming language **Python** and its libraries **Plotly** and **Streamlit** to create the dashboard.
+This week, the focus was on data visualization and dashboard design for UrbanStyle.ltd stakeholders. I fulfilled the tasks of **Role A (CEO's perspective)** in the group work. My goal was to create a high-level overview of the company's performance, answering Kristi's main question: "Are we growing?". As I decided to follow **Track B** for data visualization tools, I used the programming language **Python** and its libraries **Plotly** and **Streamlit** to create the dashboard.
 
 ## Dashboard Preview
 ![CEO Dashboard Screenshot](./individual/week_5_ceo_dashboard_screenshot.png)
@@ -22,7 +22,7 @@ AI is an indispensable helper for learning Python.
 * Provided information about the portfolio integration requirements for this week's group work.
 * Helped me create a sample template for this README file.
 
-## Business Insights for Kristi Tamme
+## Business Insights for CEO
 Analyzing UrbanStyle's aggregated data, I identified the following key points for the board meeting:
 
 1.  **Growth Trend 2023-2024:** Our monthly sales revenue in 2024 grew by 19% compared to 2023, with growth in the last quarter of 2024 being particularly significant. This confirms that UrbanStyle's strategy in 2023-2024 has been on the right track.
