@@ -4,7 +4,7 @@
 This week, I focused on cleaning UrbanStyle's database to prepare the data for the upcoming board meeting. My role was **Customer Data Cleaner (Role B)**, where my task was to analyze and organize the `customers` table.
 
 ## Work Done
-I worked according to Toomas Kasemets' guidelines using the "Test, Verify, Log, Commit" methodology:
+I worked according to Toomas Kask's guidelines using the "Test, Verify, Log, Commit" methodology:
 1.  **Test Environment Creation:** I made a copy of the `customers` table, `customers_test`, to ensure safe data processing.
 2.  **Diagnostics:** I identified duplicate emails, missing customer names, and inconsistent city names.
 3.  **Cleaning (Advanced Level):** I standardized city names (`INITCAP`, `TRIM`), normalized emails, and filled in missing name fields with the value 'Unknown'.
