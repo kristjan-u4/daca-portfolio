@@ -1,51 +1,51 @@
-# Nädal 5: Visualiseerimise disain
+# Week 5: Visualization Design
 
-## Projekti ülevaade
-Sel nädalal oli fookuses andmete visualiseerimine ja dashboardi disain UrbanStyle.ltd sidusrühmadele. Mina täitsin grupitöös **Roll A (Tegevjuht Kristi Tamme vaade)** ülesandeid. Minu eesmärk oli luua kõrgtaseme ülevaade ettevõtte käekäigust, vastates Kristi peamisele küsimusele: "Kas me kasvame?". Kuna andmete visualiseerimistööriistade valikul olen otsustanud minna **Track B** teed, siis kasutasin dashboardi loomisel programmeerimiskeelt **Python** ning selle teeke **Plotly** ja **Streamlit**.
+## Project Overview
+This week, the focus was on data visualization and dashboard design for UrbanStyle.ltd stakeholders. I fulfilled the tasks of **Role A (CEO Kristi Tamme's perspective)** in the group work. My goal was to create a high-level overview of the company's performance, answering Kristi's main question: "Are we growing?". As I decided to follow **Track B** for data visualization tools, I used the programming language **Python** and its libraries **Plotly** and **Streamlit** to create the dashboard.
 
-## Dashboardi eelvaade
-![CEO Dashboardi ekraanipilt](./individual/week_5_ceo_dashboard_screenshot.png)
-*Märkus: Ülaltoodud pilt on vaade valmis Streamliti rakendusest, mis on suunatud tegevjuhile.*
+## Dashboard Preview
+![CEO Dashboard Screenshot](./individual/week_5_ceo_dashboard_screenshot.png)
+*Note: The image above is a view of the finished Streamlit application, targeted at the CEO.*
 
-## AI kasutamine
+## Use of AI
 
 ### Google Gemini
 
-* Plotly ja Streamlit seadistamisjuhendis olev näidisrakendus laeb kõik 10 118 rida `sales` tabelist mällu, kasutades selleks Pythoni **Supabase** teeki, mis suhtleb Supabase andmebaasiga üle HTTP-põhise API. Kuna antud lahendus ei ole skaleeruv (mis siis, kui `sales` tabelis oleks 10 miljonit rida?), siis otsustasin kirjutada lähtekoodi ümber nii, et andmete agregeerimine ja filtreerimine toimuks andmebaasis, kasutades SQL päringuid. Uurisin AI-lt, kuidas Pythoni Supabase teeki saaks kasutada SQL päringute tegemiseks. AI vastas, et puhta SQL kasutamiseks on tarvis teisi teeke. AI soovitas mul installida **SQLAlchemy** teek, abistas mind sellega ja õpetas mind, kuidas seda kasutada.
-* Koostöös AI-ga selgitasime välja, et Pythoni moodul `dateutil.relativedelta` sobib suurepäraselt suvalise etteantud ajavahemiku põhjal sellele eelneva võrdlusperioodi arvutamiseks. See osutus vajalikuks KPI koostamisel, mis näitab 2024. aasta käibe muutust võrdluses 2023. aastaga.
-* AI abiga leidsime lahendused erinevatele Plotly graafikute välimuse kohandamisega seotud küsimustele (nt. kuidas muuta trendijoone värv UrbanStyle'i brändivärviks).
+* The example application in the Plotly and Streamlit setup guide loads all 10,118 rows from the `sales` table into memory using Python's **Supabase** library, which communicates with the Supabase database via an HTTP-based API. Since this solution is not scalable (what if the `sales` table had 10 million rows?), I decided to rewrite the source code so that data aggregation and filtering would occur in the database using SQL queries. I asked AI how Python's Supabase library could be used to perform SQL queries. AI responded that other libraries are needed for pure SQL. AI recommended that I install the **SQLAlchemy** library, assisted me with it, and taught me how to use it.
+* In cooperation with AI, we found that the Python module `dateutil.relativedelta` is perfectly suited for calculating a comparison period preceding any given date range. This proved necessary for developing a KPI that shows the change in 2024 revenue compared to 2023.
+* With the help of AI, we found solutions to various questions related to customizing the appearance of Plotly graphs (e.g., how to change the trend line color to UrbanStyle's brand color).
 
-AI on asendamatu abiline, kellega koos Pythonit õppida.
+AI is an indispensable helper for learning Python.
 
 ### NotebookLM
 
-* Andis infot selle nädala grupitöö portfoolio integratsiooni nõuete kohta.
-* Aitas mind käesoleva README faili jaoks näidispõhja tegemisel.
+* Provided information about the portfolio integration requirements for this week's group work.
+* Helped me create a sample template for this README file.
 
-## Ärilised järeldused (Insights) Kristi Tammele
-Analüüsides UrbanStyle'i koondandmeid, tuvastasin järgmised olulised punktid juhatuse koosolekuks:
+## Business Insights for Kristi Tamme
+Analyzing UrbanStyle's aggregated data, I identified the following key points for the board meeting:
 
-1. **Kasvutrend 2023-2024:** Meie igakuine müügitulu 2024. aastal kasvas 2023. aastaga võrreldes 19%, kusjuures 2024. aasta viimase kvartali kasv on olnud eriti märkimisväärne. See kinnitab, et UrbanStyle'i strateegia aastatel 2023-2024 on olnud õigel teel.
-2. **Puudulikud andmed alates 2025:** Alates 2025. aastast on andmetes lüngad ja esineb teisi anomaaliaid, mistõttu ei ole alates 2025. aastast võimalik müügitrende objektiivselt hinnata.
+1.  **Growth Trend 2023-2024:** Our monthly sales revenue in 2024 grew by 19% compared to 2023, with growth in the last quarter of 2024 being particularly significant. This confirms that UrbanStyle's strategy in 2023-2024 has been on the right track.
+2.  **Incomplete Data from 2025 onwards:** Starting from 2025, there are gaps and other anomalies in the data, making it impossible to objectively assess sales trends from 2025 onwards.
 
-## Tehniline teostus
-* **Andmeallikas:** PostgreSQL (Supabase) `sales` tabel.
-* **Tööriistad:** Python, SQLAlchemy, Pandas, Plotly Express, Streamlit.
-* **Disainipõhimõtted:** Järgisin **Tufte** põhimõtteid (kõrge data-ink ratio) ja **Knaflici** disainerimõtlemist. Asetasin kõige olulisemad KPI kaardid ekraani ülaossa (F-muster), et Kristi saaks olukorrast aru 10 sekundiga. Kasutasin UrbanStyle brändivärvi (#009B8D teal) trendide rõhutamiseks.
+## Technical Implementation
+*   **Data Source:** PostgreSQL (Supabase) `sales` table.
+*   **Tools:** Python, SQLAlchemy, Pandas, Plotly Express, Streamlit.
+*   **Design Principles:** I followed **Tufte's** principles (high data-ink ratio) and **Knaflic's** design thinking. I placed the most important KPI cards at the top of the screen (F-pattern) so that Kristi could understand the situation in 10 seconds. I used UrbanStyle's brand color (#009B8D teal) to highlight trends.
 
-## Meeskonna koondraport
-Meie meeskonna ühine investorite koondvaade, mis sünteesib CEO, turunduse ja operatsioonide vaated, asub [siin](https://github.com/sille-pragi/urbanstyle-marketing-data/blob/main/week_5/investor_dashboard.png).
+## Team Consolidated Report
+Our team's combined investor overview, synthesizing CEO, marketing, and operations perspectives, is located [here](https://github.com/sille-pragi/urbanstyle-marketing-data/blob/main/week_5/investor_dashboard.png).
 
-## Kuidas rakendust käivitada (Ubuntu Linux näitel)
-1. Veendu, et Python on installitud
-2. Mine käesoleva repositooriumi juurkataloogi ja loo Pythoni virtuaalkeskkond: `python -m venv .venv` (kui `python` ei tööta, proovi `python3`)
-3. Aktiveeri Pythoni virtuaalkeskkond: `source .venv/bin/activate`
-4. Vajaminevad teegid on loetletud **requirements.txt** failis. Installi need: `pip install -r requirements.txt`
-5. Seadista andmebaasiühendus. Loo selleks `.env` fail ja lisa sinna: `SUPABASE_CONNECTION_STRING=[direct_connection_string_of_your_database_in_supabase]`. Sobiva väärtuse leiad oma Supabase andmebaasi seadetest.
-6. Käivita rakendus terminalist: `streamlit run portfolio/week-05/individual/dashboard/app.py`
+## How to Run the Application (Ubuntu Linux example)
+1.  Ensure Python is installed.
+2.  Navigate to the root directory of this repository and create a Python virtual environment: `python -m venv .venv` (if `python` doesn't work, try `python3`).
+3.  Activate the Python virtual environment: `source .venv/bin/activate`.
+4.  Required libraries are listed in the **requirements.txt** file. Install them: `pip install -r requirements.txt`.
+5.  Set up the database connection. Create a `.env` file and add: `SUPABASE_CONNECTION_STRING=[direct_connection_string_of_your_database_in_supabase]`. You can find the appropriate value in your Supabase database settings.
+6.  Run the application from the terminal: `streamlit run portfolio/week-05/individual/dashboard/app.py`.
 
-## Lähtekood
+## Source Code
 
-* Streamlit rakendus: [app.py](./individual/dashboard/app.py)
-* Abiskriptid, millest app.py sõltub, asuvad samas kataloogis.
-* SQL päringute mallid, mida Pythoni kood kasutab, asuvad sql alamkataloogis. **NB!** Päringutes tuleb dünaamilised parameetrid asendada, kui on vajalik neid Supabase'is käsitsi jooksutada.
+*   Streamlit application: [app.py](./individual/dashboard/app.py)
+*   Helper scripts that app.py depends on are located in the same directory.
+*   SQL query templates used by the Python code are located in the `sql` subdirectory. **NOTE!** Dynamic parameters in queries must be replaced if they need to be run manually in Supabase.
