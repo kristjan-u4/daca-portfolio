@@ -1,4 +1,4 @@
-# Week 1: SQL Basics -- Exploring UrbanStyle's Data
+# Week 1: SQL Basics
 
 ## What I Did
 
@@ -11,7 +11,7 @@ I explored the `sales` table with SQL queries, focusing on sales data. During th
 *   The smallest transaction amount across all data is -€1405.32, which is negative.
 *   The `sales` table has 1487 rows where customer information is missing, i.e., where the `customer_id` field is empty.
 
-After examining the `sales` table, I participated in compiling the team's data landscape, where I briefly described the most important details I found. Additionally, I contributed 2 technical recommendations to IT Director Toomas:
+After examining the `sales` table, I participated in compiling the team's data landscape, where I briefly described the most important details I found. Additionally, I contributed 2 technical recommendations to UrbanStyle's IT Director:
 
 *   If a column should not contain NULL values, this can be prevented by adding a NOT NULL constraint to that column.
 *   If a column should not contain duplicates, the creation of duplicates can be prevented by adding a unique index (UNIQUE INDEX) to that column.
