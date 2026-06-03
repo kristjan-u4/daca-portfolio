@@ -1,4 +1,4 @@
-# Week 2: SQL Data Cleaning (UrbanStyle.ltd)
+# Week 2: SQL Data Cleaning
 
 ## Overview
 This week, I focused on cleaning UrbanStyle's database to prepare the data for the upcoming board meeting. My role was **Customer Data Cleaner (Role B)**, where my task was to analyze and organize the `customers` table.
