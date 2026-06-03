@@ -1,6 +1,6 @@
-# Week 3: Product Sales and Inventory Analysis (Role C)
+# Week 3: SQL JOINs
 
-**Role:** **Role C** – Unsold Products and Inventory Analyst
+**Role in Teamwork:** **Role C** – Unsold Products and Inventory Analyst
 **Analysis Object:** UrbanStyle.ltd product portfolio and stock levels
 **Objective:** Identify "ghost products" (unsold goods), assess sales success across categories, and provide recommendations for optimizing inventory levels.
 
