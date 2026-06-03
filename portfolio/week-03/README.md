@@ -37,16 +37,16 @@ As a result of an INNER JOIN query, UrbanStyle's bestsellers have been compiled 
 
 | Product name | Category | Subcategory | Eco certificate | Times sold | Total sales (€) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Õhuline sünteetiline sporditossud | jalanõusid | tossud | Ei | 35 | 27,347.04 |
-| Trendikas goretex oxfordid | jalanõusid | kingad | Ei | 32 | 23,376.15 |
-| Praktiline viskoosne jakk | naiste_riided | jakid | Ei | 35 | 22,188.80 |
-| Praktiline džersii seelik | naiste_riided | seelikud | Ei | 37 | 22,039.98 |
-| Boheemlaslik puuvillane tuulejope | naiste_riided | jakid | **Jah** | 30 | 21,309.96 |
+| Õhuline sünteetiline sporditossud | jalanõusid | tossud | No | 35 | 27,347.04 |
+| Trendikas goretex oxfordid | jalanõusid | kingad | No | 32 | 23,376.15 |
+| Praktiline viskoosne jakk | naiste_riided | jakid | No | 35 | 22,188.80 |
+| Praktiline džersii seelik | naiste_riided | seelikud | No | 37 | 22,039.98 |
+| Boheemlaslik puuvillane tuulejope | naiste_riided | jakid | **Yes** | 30 | 21,309.96 |
 | Õhuline sünteetiline kõrge kontsaga kingad | jalanõusid | kontsad | *NULL* | 38 | 21,295.56 |
-| Praktiline kangast kõrge kontsaga kingad | jalanõusid | kontsad | Ei | 37 | 21,118.68 |
-| Luksuslik villane pahkluu saapad | jalanõusid | botased | Ei | 28 | 19,704.87 |
-| Praktiline merino villane parka | meeste_riided | jakid | Ei | 30 | 19,620.45 |
-| Õhuline linane jakk | naiste_riided | jakid | Ei | 41 | 19,393.29 |
+| Praktiline kangast kõrge kontsaga kingad | jalanõusid | kontsad | No | 37 | 21,118.68 |
+| Luksuslik villane pahkluu saapad | jalanõusid | botased | No | 28 | 19,704.87 |
+| Praktiline merino villane parka | meeste_riided | jakid | No | 30 | 19,620.45 |
+| Õhuline linane jakk | naiste_riided | jakid | No | 41 | 19,393.29 |
 
 ### 2.3. Number of Products, Number of Sales, and Total Sales in Euros by Product Category
 Using LEFT JOIN, I examined which product categories have the largest total sales, also showing the number of sales and the number of products for comparison.
