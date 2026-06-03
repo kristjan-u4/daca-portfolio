@@ -1,8 +1,8 @@
 # Week 3: SQL JOINs
 
-**Role in Teamwork:** **Role C** – Unsold Products and Inventory Analyst
-**Analysis Object:** UrbanStyle.ltd product portfolio and stock levels
-**Objective:** Identify "ghost products" (unsold goods), assess sales success across categories, and provide recommendations for optimizing inventory levels.
+* **Role in Teamwork:** **Role C** – Unsold Products and Inventory Analyst
+* **Analysis Object:** UrbanStyle.ltd product portfolio and inventory
+* **Objective:** Identify "ghost products" (unsold goods), assess sales success across categories, and provide recommendations for optimizing inventory levels.
 
 ## 1. Overview and Methodology
 This report focuses on combining the `products`, `sales`, and `inventory` tables. The analysis primarily used `LEFT JOIN` type relationships to identify products that do not have 
@@ -13,8 +13,8 @@ matches in the sales table. The work was carried out according to "Test, Verify,
 ### 2.1. Unsold Products ("Ghost Products")
 Using a `LEFT JOIN` query and filtering out records where `sale_id IS NULL`, I identified products in UrbanStyle's product range that have never been sold.
 
-*   **Number of unsold products:** 12 products.
-*   **Critical observation:** All names of unsold products are also duplicated product names in the products table. This is indicated by the product name's occurrence sequence number, 
+* **Number of unsold products:** 12 products.
+* **Critical observation:** All names of unsold products are also duplicated product names in the products table. This is indicated by the product name's occurrence sequence number, 
 which is 2 in all cases.
 
 | Product ID | Product name | Category | Product Name Occurrence Sequence Number | Price (€) |
