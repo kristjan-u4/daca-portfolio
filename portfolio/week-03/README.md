@@ -1,19 +1,21 @@
-# Nädal 3: Tootemüügi ja inventuuri analüüs (Roll C)
+# Week 3: Product Sales and Inventory Analysis (Role C)
 
-**Roll:** Roll C – Müümata toodete ja inventuuri analüütik
-**Analüüsi objekt:** UrbanStyle.ltd tooteportfell ja laoseisud
-**Eesmärk:** Tuvastada "vaimtooted" (müümata kaup), hinnata müügiedu kategooriate lõikes ning anda soovitused laovarude optimeerimiseks.
+**Role:** **Role C** – Unsold Products and Inventory Analyst
+**Analysis Object:** UrbanStyle.ltd product portfolio and stock levels
+**Objective:** Identify "ghost products" (unsold goods), assess sales success across categories, and provide recommendations for optimizing inventory levels.
 
-## 1. Ülevaade ja metodoloogia
-Käesolev raport keskendub tabelite `products`, `sales` ja `inventory` ühendamisele. Analüüsis on kasutatud peamiselt `LEFT JOIN` tüüpi seoseid, et tuvastada tooted, millel puuduvad vasted müügitabelis. Töö viidi läbi vastavalt Toomas Kase "Test, Verify, Log, Commit" metoodikale.
+## 1. Overview and Methodology
+This report focuses on combining the `products`, `sales`, and `inventory` tables. The analysis primarily used `LEFT JOIN` type relationships to identify products that do not have 
+matches in the sales table. The work was carried out according to "Test, Verify, Log, Commit" methodology.
 
-## 2. Peamised leiud
+## 2. Main Findings
 
-### 2.1. Müümata tooted ("Vaimtooted")
-Kasutades `LEFT JOIN` päringut ja filtreerides välja kirjed, kus `sale_id IS NULL`, tuvastasin UrbanStyle'i tootevalikust tooted, mida pole kunagi müüdud.
+### 2.1. Unsold Products ("Ghost Products")
+Using a `LEFT JOIN` query and filtering out records where `sale_id IS NULL`, I identified products in UrbanStyle's product range that have never been sold.
 
-*   **Müümata toodete arv:** 12 toodet.
-*   **Kriitiline tähelepanek:** Kõikide müümata toodete nimed on ühtlasi ka dubleeritud tootenimed products tabelis. Sellele viitab tootenime esinemise järjekorranumber, mis kõikide juhtumite puhul on 2.
+*   **Number of unsold products:** 12 products.
+*   **Critical observation:** All names of unsold products are also duplicated product names in the products table. This is indicated by the product name's occurrence sequence number, 
+which is 2 in all cases.
 
 | Product ID | Product name | Category | Product Name Occurrence Sequence Number | Price (€) |
 | :--- | :--- | :--- | :--- | :--- |
@@ -63,7 +65,7 @@ I found that the product category with the highest total sales is **jalanõusid*
 By joining products with the `inventory` table, I identified goods whose stock levels have fallen below the critical threshold (`reorder_point`).
 
 *   **Products for which inventory information is missing:** 12 products, all of which were also found to have duplicate names.
-*   **Inventory needing replenishment:** 231 inventory records out of 1,400, or 16.5%, are in "TELLI JUURDE" status.
+*   **Inventory needing replenishment:** 231 inventory records out of 1,400, or 16.5%, are in "REORDER" status.
 *   **Most critical inventory:** **Õhuline polüester cargo püksid** in the **meeste_riided** category, with central warehouse stock being negative (-46 units). Negative stock may indicate pre-sales, but it could also be a data error.
 *   **Largest inventory surplus:** **Kerge satiinne jakk** in the **naiste_riided** category, with 9,985 units in the Tartu warehouse, which is more than 250 times the critical limit.
 
@@ -71,8 +73,8 @@ The following table demonstrates that one product can have a very large surplus 
 
 | Product name | Category | Location | Available quantity | Reorder point | Status | Seq No. |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Sportlik merino villane ülikond | meeste_riided | ladu | 19 | 32 | **TELLI JUURDE** | 1 |
-| Sportlik merino villane ülikond | meeste_riided | tartu | 26 | 35 | **TELLI JUURDE** | 1 |
+| Sportlik merino villane ülikond | meeste_riided | ladu | 19 | 32 | **REORDER** | 1 |
+| Sportlik merino villane ülikond | meeste_riided | tartu | 26 | 35 | **REORDER** | 1 |
 | Sportlik merino villane ülikond | meeste_riided | tallinn | 41 | 37 | OK | 1 |
 | Sportlik merino villane ülikond | meeste_riided | pärnu | **9,850** | 50 | OK | 1 |
 
