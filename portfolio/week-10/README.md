@@ -2,9 +2,9 @@
 
 ## My Role
 
-During the final week of the DACA program, our team's task was to prepare a 7-minute presentation for the UrbanStyle board meeting. My responsibility was to present the automation achieved through the ETL pipeline that the team built using Python in [Week 8](../week-08/README.md).
+During the final week of the DACA program, our team's task was to prepare a 7-minute presentation for the UrbanStyle board meeting. My responsibility was to present the **automation achieved through the ETL pipeline** that the team built using Python in [Week 8](../week-08/README.md).
 
-In my presentation, I described how manual data processing and the lack of real-time insights were key business problems for UrbanStyle, which drove the team to build an automated ETL pipeline. I highlighted that while manual data processing previously consumed 4 hours of valuable time from the UrbanStyle team every week, the automated ETL pipeline now saves the company 200 hours of manual labor per year. As my biggest takeaway, I noted that the ETL pipeline can accept dynamic arguments, such as specific sales date ranges.
+In my presentation, I described how manual data processing and the lack of real-time insights were key business problems for UrbanStyle, which drove the team to build an automated ETL pipeline. I highlighted that while manual data processing previously consumed 4 hours of valuable time from the UrbanStyle team every week, the automated ETL pipeline now **saves the company 200 hours of manual labor per year**. As my biggest takeaway, I noted that the ETL pipeline can accept dynamic arguments, such as specific sales date ranges.
 
 ## AI Usage
 
