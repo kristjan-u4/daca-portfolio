@@ -1,73 +1,73 @@
--- Leia tellimused, kus klient on teadmata
+-- Find orders where the customer is unknown
 SELECT sale_id, customer_id, total_price
 FROM sales
 WHERE customer_id IS NULL;
 
--- Leia kliendid, kellel ON e-mail olemas
+-- Find customers who DO have an email address
 SELECT customer_id, first_name, email
 FROM customers
 WHERE email IS NOT NULL;
 
--- Asenda puuduv kliendi nimi vaikeväärtusega
+-- Replace missing customer name with a default value
 SELECT
     customer_id,
-    COALESCE(first_name, 'Tundmatu') AS eesnimi,
-    COALESCE(email, 'puudub@urbanstyle.ee') AS email
+    COALESCE(first_name, 'Unknown') AS first_name_alias,
+    COALESCE(email, 'missing@urbanstyle.ee') AS email
 FROM customers;
 
--- Mitu asendusväärtust (valib esimese mitte-NULL väärtuse)
-SELECT COALESCE(NULL, NULL, 'Kolmas valik');
--- Tulemus: 'Kolmas valik'
+-- Multiple default values (picks the first non-NULL value)
+SELECT COALESCE(NULL, NULL, 'Third choice');
+-- Result: 'Third choice'
 
--- NULLIF(a, b): kui a = b, tagastab NULL; muidu tagastab a
-SELECT NULLIF('', trim(' '));  -- Tulemus: NULL
-SELECT NULLIF(100, 200);  -- Tulemus: 100
+-- NULLIF(a, b): if a = b, returns NULL; otherwise returns a
+SELECT NULLIF('', trim(' '));  -- Result: NULL
+SELECT NULLIF(100, 200);  -- Result: 100
 
--- Muuda 0-hinnaga tooted NULL-iks (hind pole tegelikult 0, vaid puudub)
+-- Turn 0-price products into NULL (price is not actually 0, but missing)
 SELECT
     product_id,
     product_name,
-    NULLIF(retail_price, 0) AS puhas_hind
+    NULLIF(retail_price, 0) AS clean_price
 FROM products;
 
-SELECT 100 + NULL;     -- Tulemus: NULL
-SELECT NULL * 5;       -- Tulemus: NULL
-SELECT SUM(total_price) FROM sales;  -- SUM ignoreerib NULL-e!
+SELECT 100 + NULL;     -- Result: NULL
+SELECT NULL * 5;       -- Result: NULL
+SELECT SUM(total_price) FROM sales;  -- SUM ignores NULL values!
 
--- Kuupäevade formateerimine UrbanStyle'i andmetes
+-- Date formatting in UrbanStyle data
 SELECT
     sale_id,
     sale_date,
-    TO_CHAR(sale_date, 'DD.MM.YYYY') AS eesti_kuupaev,
-    TO_CHAR(sale_date, 'Day') AS nadalapäev,
-    TO_CHAR(sale_date, 'YYYY-"Q"Q') AS kvartal,
-    EXTRACT(DOW FROM sale_date) AS paev_nr
+    TO_CHAR(sale_date, 'DD.MM.YYYY') AS formatted_date,
+    TO_CHAR(sale_date, 'Day') AS day_of_week,
+    TO_CHAR(sale_date, 'YYYY-"Q"Q') AS quarter,
+    EXTRACT(DOW FROM sale_date) AS day_number
 FROM sales
 ORDER BY sale_date DESC
 LIMIT 10;
 
--- Linnade ühtlustamise diagnostika
+-- Diagnostics for standardizing city names
 SELECT
-    city AS originaal,
-    TRIM(city) AS trimitud,
-    INITCAP(TRIM(city)) AS puhastatud,
-    COUNT(*) AS kliente
+    city AS original,
+    TRIM(city) AS trimmed,
+    INITCAP(TRIM(city)) AS sanitized,
+    COUNT(*) AS customers
 FROM customers
 GROUP BY city
 ORDER BY city;
 
 /*
-Tegelik statistika klientide päritolulinnade kohta, kus linna nimed on viidud ühtsele kujule,
-eemaldatud on tühikud ning linna nimed on kõik suure algustähega.
+Actual statistics regarding the customers' home cities, where city names have been standardized,
+whitespaces removed, and all city names are capitalized.
 */
 SELECT
-    initcap(trim(city)) AS "linn",
-    count(*) AS "kliente"
+    initcap(trim(city)) AS "city",
+    count(*) AS "customers"
 FROM customers
-GROUP BY 1 -- grupeerimine esimese veeru ehk "linn" järgi SELECT osas
-ORDER BY "kliente" DESC;
+GROUP BY 1 -- grouping by the first column, i.e., "city" in the SELECT clause
+ORDER BY "customers" DESC;
 
--- Kontrolli hinnaveeru tüüpi ja väärtusi
+-- Overview of price column types and values
 SELECT
     subq.cost_price_status,
     subq.retail_price_status,
@@ -79,15 +79,15 @@ FROM (
         cost_price,
         CASE
             WHEN cost_price IS NULL THEN 'NULL'
-            WHEN cost_price = 0 THEN 'NULL (0 = puudub?)'
-            WHEN cost_price < 0 THEN 'NEGATIIVNE!'
+            WHEN cost_price = 0 THEN 'NULL (0 = missing?)'
+            WHEN cost_price < 0 THEN 'NEGATIVE!'
             ELSE 'OK'
         END AS cost_price_status,
         retail_price,
         CASE
             WHEN retail_price IS NULL THEN 'NULL'
-            WHEN retail_price = 0 THEN 'NULL (0 = puudub?)'
-            WHEN retail_price < 0 THEN 'NEGATIIVNE!'
+            WHEN retail_price = 0 THEN 'NULL (0 = missing?)'
+            WHEN retail_price < 0 THEN 'NEGATIVE!'
             ELSE 'OK'
         END AS retail_price_status
     FROM products
@@ -96,11 +96,11 @@ FROM (
 GROUP BY 1, 2
 ORDER BY products DESC;
 
--- Duplikaatide ülevaade kõigis tabelites
-SELECT 'sales' AS tabel,
-    COUNT(*) AS ridu_kokku,
-    COUNT(DISTINCT sale_id) AS unikaalseid,
-    COUNT(*) - COUNT(DISTINCT sale_id) AS duplikaate
+-- Overview of duplicates across all tables
+SELECT 'sales' AS "table",
+    COUNT(*) AS total_rows,
+    COUNT(DISTINCT sale_id) AS unique_records,
+    COUNT(*) - COUNT(DISTINCT sale_id) AS duplicates
 FROM sales
 UNION ALL
 SELECT 'customers',
@@ -131,7 +131,7 @@ SELECT
     count(*) - count(phone) AS "NULL phone"
 FROM customers;
 
--- Linnade nimed algsel kujul, kõrvutatud puhastatud kujuga ning juures klientide arvud iga formaadi jaoks.
+-- City names in their original format, contrasted with the sanitized format, along with customer counts for each format.
 SELECT
     city,
     initcap(trim(city)) as "sanitized_city",
