@@ -1,48 +1,48 @@
--- Tabeli sales kõikide ridade arv.
-SELECT COUNT(*) AS ridade_arv FROM sales;
+-- Total number of rows in the sales table.
+SELECT COUNT(*) AS total_rows FROM sales;
 
--- 10 esimest rida tabelist sales.
+-- Top 10 rows from the sales table.
 SELECT * FROM sales
 LIMIT 10;
 
 /*
-15 kõige hiljutisemat Tallinna tehingut tabelist sales,
-alustades uuimast.
+15 most recent transactions from the sales table in Tallinn,
+starting from the newest.
 */
 SELECT * FROM sales
 WHERE store_location = 'Tallinn'
 ORDER BY sale_date DESC
 LIMIT 15;
 
--- 10 suurimat tehingut tabelist sales, alustades suurimast.
+-- 10 largest transactions from the sales table, starting from the largest.
 SELECT * FROM sales
 ORDER BY total_price DESC
 LIMIT 10;
 
--- 10 vähimat tehingut tabelist sales, alustades väikseimast.
+-- 10 smallest transactions from the sales table, starting from the smallest.
 SELECT * FROM sales
 ORDER BY total_price ASC
 LIMIT 10;
 
--- Ridade arv, kus puudub info kliendi kohta.
+-- Number of rows where customer information is missing.
 SELECT
-COUNT(*) - COUNT(customer_id) AS puuduv_klient
+COUNT(*) - COUNT(customer_id) AS missing_customer
 FROM sales;
 
--- Kõik erinevad müügikanalid sales tabelis.
+-- All distinct sales channels in the sales table.
 SELECT DISTINCT channel FROM sales;
 
--- Tehingute arv iga poe asukoha kohta.
+-- Number of transactions for each store location.
 SELECT
 store_location,
-COUNT(*) AS tehinguid
+COUNT(*) AS transactions_count
 FROM sales
 GROUP BY store_location
-ORDER BY tehinguid DESC;
+ORDER BY transactions_count DESC;
 
 /*
-Kõik Tallinna müügitehingud, mille väärtus on suurem kui 100 €.
-Suurimad tehingud on näidatud kõigepealt.
+All sales transactions in Tallinn with a value greater than 100 €.
+The largest transactions are shown first.
 */
 SELECT * FROM sales
 WHERE total_price > 100
