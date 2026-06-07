@@ -23,5 +23,5 @@ Nädalapõhised projektid asuvad kataloogis [portfolio](./portfolio).
 | 6 | 04 May 2026 | 10 May 2026 | [Visualiseerimine - Andmed](./portfolio/week-06) | Lõpetatud |
 | 7 | 11 May 2026 | 17 May 2026 | [Python - Pandas](./portfolio/week-07) | Lõpetatud |
 | 8 | 18 May 2026 | 24 May 2026 | [Python - APIs](./portfolio/week-08) | Lõpetatud |
-| 9 | 25 May 2026 | 31 May 2026 | [Karjääri ettevalmistus](./portfolio/week-09) | Käimasolev |
-| 10 | 01 Jun 2026 | 07 Jun 2026 | Portfoolio + Karjäär | Tulemas |
+| 9 | 25 May 2026 | 31 May 2026 | [Karjääri ettevalmistus](./portfolio/week-09) | Lõpetatud |
+| 10 | 01 Jun 2026 | 07 Jun 2026 | [Portfoolio Kaitsmine](./portfolio/week-10) | Käimasolev |
