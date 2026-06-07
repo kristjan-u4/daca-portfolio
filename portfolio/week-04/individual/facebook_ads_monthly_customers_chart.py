@@ -2,56 +2,55 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import json
 
-# Sinu JSON andmed
+# JSON data
 data = [
-    {"turunduskanal": "facebook ads", "kuu": "2024-12", "klientide_arv": 169},
-    {"turunduskanal": "facebook ads", "kuu": "2023-12", "klientide_arv": 147},
-    {"turunduskanal": "facebook ads", "kuu": "2023-03", "klientide_arv": 123},
-    {"turunduskanal": "facebook ads", "kuu": "2024-06", "klientide_arv": 172},
-    {"turunduskanal": "facebook ads", "kuu": "2024-03", "klientide_arv": 126},
-    {"turunduskanal": "facebook ads", "kuu": "2023-06", "klientide_arv": 129},
-    {"turunduskanal": "facebook ads", "kuu": "2023-07", "klientide_arv": 143},
-    {"turunduskanal": "facebook ads", "kuu": "2024-10", "klientide_arv": 138},
-    {"turunduskanal": "facebook ads", "kuu": "2024-08", "klientide_arv": 170},
-    {"turunduskanal": "facebook ads", "kuu": "2024-04", "klientide_arv": 136},
-    {"turunduskanal": "facebook ads", "kuu": "2023-11", "klientide_arv": 104},
-    {"turunduskanal": "facebook ads", "kuu": "2023-08", "klientide_arv": 151},
-    {"turunduskanal": "facebook ads", "kuu": "2025-02", "klientide_arv": 104},
-    {"turunduskanal": "facebook ads", "kuu": "2024-05", "klientide_arv": 138},
-    {"turunduskanal": "facebook ads", "kuu": "2023-05", "klientide_arv": 115},
-    {"turunduskanal": "facebook ads", "kuu": "2023-10", "klientide_arv": 94},
-    {"turunduskanal": "facebook ads", "kuu": "2023-04", "klientide_arv": 116},
-    {"turunduskanal": "facebook ads", "kuu": "2023-02", "klientide_arv": 86},
-    {"turunduskanal": "facebook ads", "kuu": "2024-07", "klientide_arv": 158},
-    {"turunduskanal": "facebook ads", "kuu": "2024-02", "klientide_arv": 95},
-    {"turunduskanal": "facebook ads", "kuu": "2024-11", "klientide_arv": 113},
-    {"turunduskanal": "facebook ads", "kuu": "2024-01", "klientide_arv": 115},
-    {"turunduskanal": "facebook ads", "kuu": "2024-09", "klientide_arv": 126},
-    {"turunduskanal": "facebook ads", "kuu": "2023-09", "klientide_arv": 100},
-    {"turunduskanal": "facebook ads", "kuu": "2025-01", "klientide_arv": 101},
-    {"turunduskanal": "facebook ads", "kuu": "2023-01", "klientide_arv": 97}
+    {"marketing_channel": "facebook ads", "month": "2024-12", "customer_count": 169},
+    {"marketing_channel": "facebook ads", "month": "2023-12", "customer_count": 147},
+    {"marketing_channel": "facebook ads", "month": "2023-03", "customer_count": 123},
+    {"marketing_channel": "facebook ads", "month": "2024-06", "customer_count": 172},
+    {"marketing_channel": "facebook ads", "month": "2024-03", "customer_count": 126},
+    {"marketing_channel": "facebook ads", "month": "2023-06", "customer_count": 129},
+    {"marketing_channel": "facebook ads", "month": "2023-07", "customer_count": 143},
+    {"marketing_channel": "facebook ads", "month": "2024-10", "customer_count": 138},
+    {"marketing_channel": "facebook ads", "month": "2024-08", "customer_count": 170},
+    {"marketing_channel": "facebook ads", "month": "2024-04", "customer_count": 136},
+    {"marketing_channel": "facebook ads", "month": "2023-11", "customer_count": 104},
+    {"marketing_channel": "facebook ads", "month": "2023-08", "customer_count": 151},
+    {"marketing_channel": "facebook ads", "month": "2025-02", "customer_count": 104},
+    {"marketing_channel": "facebook ads", "month": "2024-05", "customer_count": 138},
+    {"marketing_channel": "facebook ads", "month": "2023-05", "customer_count": 115},
+    {"marketing_channel": "facebook ads", "month": "2023-10", "customer_count": 94},
+    {"marketing_channel": "facebook ads", "month": "2023-04", "customer_count": 116},
+    {"marketing_channel": "facebook ads", "month": "2023-02", "customer_count": 86},
+    {"marketing_channel": "facebook ads", "month": "2024-07", "customer_count": 158},
+    {"marketing_channel": "facebook ads", "month": "2024-02", "customer_count": 95},
+    {"marketing_channel": "facebook ads", "month": "2024-11", "customer_count": 113},
+    {"marketing_channel": "facebook ads", "month": "2024-01", "customer_count": 115},
+    {"marketing_channel": "facebook ads", "month": "2024-09", "customer_count": 126},
+    {"marketing_channel": "facebook ads", "month": "2023-09", "customer_count": 100},
+    {"marketing_channel": "facebook ads", "month": "2025-01", "customer_count": 101},
+    {"marketing_channel": "facebook ads", "month": "2023-01", "customer_count": 97}
 ]
 
-# 1. Teeme andmed DataFrame'iks
+# Convert data to DataFrame
 df = pd.DataFrame(data)
 
-# 2. Muudame 'kuu' veeru kuupäeva tüübiks ja sorteerime
-df['kuu'] = pd.to_datetime(df['kuu'])
-df = df.sort_values('kuu')
+# Convert 'month' column to datetime and sort
+df["month"] = pd.to_datetime(df["month"])
+df = df.sort_values("month")
 
-# 3. Joonistame graafiku
-plt.figure(figsize=(12, 6))
-plt.plot(df['kuu'], df['klientide_arv'], marker='o', linestyle='-', color='#1877F2', linewidth=2)
+# Plot the chart
+plt.figure(figsize=(12, 6)) # Define figure size
+plt.plot(df["month"], df["customer_count"], marker="o", linestyle="-", color="#1877F2", linewidth=2)
 
-# 4. Kujundus
-plt.title('Facebook Ads: Klientide arv kuude lõikes', fontsize=14, pad=20)
-plt.xlabel('Kuu', fontsize=12)
-plt.ylabel('Klientide arv', fontsize=12)
-plt.grid(True, linestyle='--', alpha=0.6)
-plt.xticks(df['kuu'], df['kuu'].dt.strftime('%Y-%m'), rotation=45)
+# Styling
+plt.title("Facebook Ads: Customer Count by Month", fontsize=14, pad=20)
+plt.xlabel("Month", fontsize=12)
+plt.ylabel("Customer Count", fontsize=12)
+plt.grid(True, linestyle="--", alpha=0.6)
+plt.xticks(df["month"], df["month"].dt.strftime("%Y-%m"), rotation=45)
 
-# Hoiame ära siltide lõikumise
-plt.tight_layout()
-
-# 5. Näitame graafikut
+# Prevent labels from overlapping
+plt.tight_layout() 
+# Show the chart
 plt.show()
