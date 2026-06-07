@@ -1,18 +1,17 @@
-# Minu esimene Python skript
+# My first Python script
  
-print("Tere, DACA!")
+print("Hello, DACA!")
 print("=" * 40)
  
-# Muutujad
-nimi = "Anna"
-programm = "Data Analyst Career Accelerator"
-nadalaid = 11
+# Variables
+name = "Anna"
+program = "Data Analyst Career Accelerator"
+weeks = 11
  
-# Väljasta info
-print(f"Nimi: {nimi}")
-print(f"Programm: {programm}")
-print(f"Kestus: {nadalaid} nädalat")
+# Output information
+print(f"Name: {name}")
+print(f"Program: {program}")
+print(f"Duration: {weeks} weeks")
 print("=" * 40)
- 
-# Lihtne arvutus
-print(f"Kokku tunde (~3h/nädal): {nadalaid * 3}")
+# Simple calculation
+print(f"Total hours (~3h/week): {weeks * 3}")
