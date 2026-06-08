@@ -1,3 +1,5 @@
+# Data Story
+
 UrbanStyle's rapid expansion has brought data chaos, but the Tartu store's **13%** annual
 revenue growth confirms our brand's strengthening outside the capital.
 Deep analysis revealed a paradox: although Tartu is a university town and the largest share of sales
