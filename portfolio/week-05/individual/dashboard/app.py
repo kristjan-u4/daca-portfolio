@@ -103,7 +103,7 @@ def add_date_range_filter(filters, container, default_filter_settings):
 
     date_range = container.date_input(
         "Date Range",
-        format="DD.MM.YYYY",
+        format="YYYY-MM-DD", # Streamlit's date input format, not display format
         value=(min_date, max_date),
         min_value=min_date,
         max_value=max_date,
@@ -215,7 +215,7 @@ def fill_kpis_section(kpis_section, filters):
 
         col1.metric(
             label="Revenue",
-            value=f"€{total_revenue:,.0f}".replace(",", " "),
+            value=utils.format_eur_amount(total_revenue, 0),
             delta=utils.format_metric_delta_as_percentage(total_revenue_delta),
             help="Total revenue for the selected period"
         )
@@ -227,7 +227,7 @@ def fill_kpis_section(kpis_section, filters):
 
         col2.metric(
             label="Customer Count",
-            value=f"{total_customers:,}".replace(",", " "),
+            value=utils.format_number(total_customers, 0),
             delta=utils.format_metric_delta_as_percentage(total_customers_delta),
             help="Number of unique customers in the selected period"
         )
@@ -239,7 +239,7 @@ def fill_kpis_section(kpis_section, filters):
         kpi3_total_revenue_delta = kpi3_total_revenue_with_change[1]
 
         if kpi3_total_revenue_delta:
-            value_text = f"{kpi3_total_revenue_delta:,.0f} %".replace(",", " ")
+            value_text = utils.format_as_percentage(kpi3_total_revenue_delta, 0)
             col3.metric(
                 label=f"Revenue change {kpi3_year} vs {kpi3_comparison_year}",
                 value=value_text,
@@ -268,7 +268,7 @@ def render_footer(data):
     Args:
         data (dict): Dictionary containing all fetched data.
     """
-    orders_text = f"{data['aggregated_sales']['orders'].sum():,}".replace(",", " ")
+    orders_text = utils.format_number(data["aggregated_sales"]["orders"].sum(), 0)
     st.caption(
         "UrbanStyle.ltd — CEO Dashboard | "
         "DACA Program, Week 5 | "

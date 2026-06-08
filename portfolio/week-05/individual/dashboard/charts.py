@@ -3,6 +3,7 @@ UrbanStyle Dashboard — Chart Creation
 """
 
 import plotly.express as px
+import utils
 
 def create_revenue_trend(df):
     """
@@ -47,7 +48,7 @@ def create_revenue_trend(df):
         hovermode="x unified",
         yaxis_tickformat=",.0f",
         yaxis_tickprefix="€",
-        separators=", "
+        separators=".," # Thousands separator is comma, decimal separator is dot
     )
 
     fig.update_traces(line_color="#009B8D", line_width=3)
@@ -57,7 +58,7 @@ def create_revenue_trend(df):
         y=avg_revenue,
         line_dash="dash",
         line_color="gray",
-        annotation_text=f"Average: €{avg_revenue:,.0f}".replace(",", " "),
+        annotation_text=f"Average: {utils.format_eur_amount(avg_revenue, 0)}",
         annotation_position="top right"
     )
 

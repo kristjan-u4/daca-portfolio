@@ -3,15 +3,27 @@ import math
 
 def format_date(date):
     """
-    Formats a date object into a string using the DD.MM.YYYY format.
+    Formats a date object into a string using the "DD Mon YYYY" format.
 
     Args:
         date (datetime.date): The date object to format.
 
     Returns:
-        str: The formatted date string.
+        str: The formatted date string (e.g., "05 Jun 2024").
     """
-    return date.strftime("%d.%m.%Y")
+    return date.strftime("%d %b %Y")
+
+def format_date_month_precision(date):
+    """
+    Formats a date object into a string using the "Mon YYYY" format.
+
+    Args:
+        date (datetime.date): The date object to format.
+
+    Returns:
+        str: The formatted date string (e.g., "Jun 2024").
+    """
+    return date.strftime("%b %Y")
 
 def calculate_previous_open_date_range(open_date_range):
     """
@@ -49,6 +61,48 @@ def format_metric_delta_as_percentage(metric_delta):
         return f"{metric_delta:.0f} %"
     else:
         return None
+
+def format_eur_amount(value, precision=0):
+    """
+    Formats a numeric value as a Euro amount string, using comma as thousands
+    separator and dot as decimal separator, with an Euro symbol prefix.
+
+    Args:
+        value (float or int): The numeric value to format.
+        precision (int): The number of decimal places.
+
+    Returns:
+        str: The formatted Euro amount string (e.g., "€1,234.00").
+    """
+    return f"€{value:,.{precision}f}"
+
+def format_as_percentage(value, precision=0):
+    """
+    Formats a numeric value as a percentage string, using comma as thousands
+    separator and dot as decimal separator, with a percentage symbol suffix.
+
+    Args:
+        value (float or int): The numeric value to format.
+        precision (int): The number of decimal places.
+
+    Returns:
+        str: The formatted percentage string (e.g., "10.00 %").
+    """
+    return f"{value:,.{precision}f} %"
+
+def format_number(value, precision=0):
+    """
+    Formats a numeric value as a string, using comma as thousands separator
+    and dot as decimal separator.
+
+    Args:
+        value (float or int): The numeric value to format.
+        precision (int): The number of decimal places.
+
+    Returns:
+        str: The formatted number string (e.g., "1,234").
+    """
+    return f"{value:,.{precision}f}"
 
 def calculate_delta_in_percents(current_metric, previous_metric):
     """
