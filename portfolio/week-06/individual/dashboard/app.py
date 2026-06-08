@@ -114,6 +114,7 @@ def add_date_range_filter(filters, container, default_filter_settings):
         value=default_filter_settings["date_range"],
         min_value=min_date,
         max_value=max_date,
+        key="date_range_filter",
         help="Select start and end dates"
     )
     if len(date_range) < 2:
@@ -129,20 +130,31 @@ def add_store_location_filter(filters, container, default_filter_settings):
     """
     Add a multi-select store location filter to the specified container.
 
+    This filter persists its selection across script reruns using Streamlit's
+    session state. If a selection already exists in st.session_state, it maintains
+    the user's choice instead of reverting to the default configuration.
+
     Args:
         filters (dict): The dictionary to store the selected store locations.
         container (DeltaGenerator): The Streamlit container to render the input in.
         default_filter_settings (dict): The default filter values.
     """
+    session_state_key = "store_location_filter"
     all_store_locations = data_loader.fetch_store_locations()
-    default_store_locations = tuple(
-        x for x in all_store_locations
-        if x in default_filter_settings["store_location"]
-    )
+
+    if session_state_key in st.session_state:
+        default_store_locations = st.session_state[session_state_key]
+    else:
+        default_store_locations = tuple(
+            x for x in all_store_locations
+            if x in default_filter_settings["store_location"]
+        )
+
     store_location = container.multiselect(
         "Store Locations",
         options=all_store_locations,
         default=default_store_locations,
+        key=session_state_key,
         help="Select store locations to display data for"
     )
     filters["store_location"] = store_location
