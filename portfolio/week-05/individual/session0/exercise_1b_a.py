@@ -1,24 +1,30 @@
 import plotly.express as px
 import pandas as pd
 
-# 1. Valmistame andmed ette
-data = {
-    "Kuu": ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun"],
-    "Müük (€)": [18500, 17200, 20100, 22300, 21800, 24500]
-}
 
-df = pd.DataFrame(data)
+def main():
+    """
+    Generates and displays a bar chart showing monthly sales revenue for the first half-year.
+    """
+    data = {
+        "Month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        "Sales (€)": [18500, 17200, 20100, 22300, 21800, 24500]
+    }
 
-# 2. Loome tulpdiagrammi (Bar chart)
-fig = px.bar(
-    df, 
-    x="Kuu", 
-    y="Müük (€)", 
-    title="Müügitulu kuude lõikes (esimene poolaasta)",
-    text_auto='.s', # Lisab tulpadel olevad väärtused automaatselt
-    color="Müük (€)", # Muudab tulba värvi vastavalt summale
-    color_continuous_scale="Viridis" # Valib ilusa värvigamma
-)
+    df = pd.DataFrame(data)
 
-# 3. Kuvame diagrammi
-fig.show()
+    fig = px.bar(
+        df,
+        x="Month",
+        y="Sales (€)",
+        title="Sales Revenue by Month (First Half-Year)",
+        text_auto=".s",
+        color="Sales (€)",
+        color_continuous_scale="Viridis"
+    )
+
+    fig.show()
+
+
+if __name__ == "__main__":
+    main()

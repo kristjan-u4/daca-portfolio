@@ -25,7 +25,7 @@ You are acting as an expert Python developer in this repository. To ensure maint
 ## Code Style & Documentation Rules
 
 - **Mandatory Docstrings:** Every function, class, and public method MUST include a clear, professional docstring that explains its purpose, arguments (`Args`), and return values (`Returns`).
-- **Language Constraint:** All code documentation—including docstrings and architectural comments—must be written exclusively in **English**. 
+- **Language Constraint:** All code documentation — including docstrings and architectural comments and all string literals — must be written exclusively in **English**. 
 - **Strictly Ban Inline Explanations:** Do NOT add inline comments to modified or added lines to explain the git diff or the change itself (e.g., ban comments like `# Use the newly created week_label for x-axis`). The logic inside the function must remain clean and uncluttered.
 - **String Literal Quoting:** Use double quotes (`"strings"`) as the default for all string literals. Single quotes (`'strings'`) are strictly reserved for situations where you need to nest a string within another string (e.g., `"f-string with 'nested' quotes"` or HTML attributes).
 
