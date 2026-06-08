@@ -26,7 +26,7 @@ def main():
     fill_header_section(header_section, filters)
     data = get_data(filters, default_filter_settings)
     fill_kpis_section(kpis_section, data)
-    fill_main_chart_section(main_chart_section, data)
+    fill_main_chart_section(main_chart_section, data, filters)
     fill_helper_charts_section(helper_charts_section, data)
     render_footer(data)
 
@@ -278,17 +278,18 @@ def fill_kpis_section(kpis_section, data):
             help="Average order value in the selected period compared to the previous period"
         )
 
-def fill_main_chart_section(main_chart_section, data):
+def fill_main_chart_section(main_chart_section, data, filters):
     """
     Render the main sales trend chart.
 
     Args:
         main_chart_section (DeltaGenerator): The Streamlit placeholder for the main chart.
         data (dict): The fetched dashboard data.
+        filters (dict): Active filter settings.
     """
     with main_chart_section.container():
         st.header("Sales Trends")
-        fig_trend = charts.create_revenue_trend(data)
+        fig_trend = charts.create_revenue_trend(data, filters)
         st.plotly_chart(fig_trend, use_container_width=True)
 
 def fill_helper_charts_section(helper_charts_section, data):

@@ -8,12 +8,31 @@ import pandas as pd
 import plotly.express as px
 import utils
 
-def create_revenue_trend(data):
+INTERVAL_CONFIGS = {
+    "day": {
+        "label": "Date",
+        "tickformat": "%d %b %Y",
+        "format_fn": utils.format_date
+    },
+    "week": {
+        "label": "Week Starting",
+        "tickformat": "%d %b %Y",
+        "format_fn": utils.format_date
+    },
+    "month": {
+        "label": "Month",
+        "tickformat": "%b %Y",
+        "format_fn": utils.format_date_as_text
+    }
+}
+
+def create_revenue_trend(data, filters):
     """
-    Create a line chart showing monthly revenue trend.
+    Create a line chart showing revenue trend based on the selected interval.
 
     Args:
         data (dict): Dictionary containing aggregated sales data.
+        filters (dict): Active filter settings containing the interval.
 
     Returns:
         plotly.graph_objects.Figure: The generated line chart figure.
@@ -22,6 +41,13 @@ def create_revenue_trend(data):
     store_location_comparison_df = data["comparison_store_location_aggregated_sales"]
     df["total_revenue_delta"] = df["total_revenue"].pct_change()
  
+    interval = filters.get("interval", "month")
+    config = INTERVAL_CONFIGS.get(interval, {
+        "label": interval.capitalize(),
+        "tickformat": "%d %b %Y",
+        "format_fn": utils.format_date
+    })
+
     # Step 1: Create line chart
     fig = px.line(
         df,
@@ -29,7 +55,7 @@ def create_revenue_trend(data):
         y="total_revenue",
         title="Total Revenue Trend",
         labels={
-            "interval_start": "Month",
+            "interval_start": config["label"],
             "total_revenue": "Revenue (EUR)"
         }
     )
@@ -37,7 +63,7 @@ def create_revenue_trend(data):
     # X-axis settings
     fig.update_xaxes(
         title_text=None,
-        tickformat="%b %Y",
+        tickformat=config["tickformat"],
         dtick=None,
         tickfont_size=12,
         tickfont_color="#1A1A2E"
@@ -52,12 +78,13 @@ def create_revenue_trend(data):
 
     if not df.empty:
         max_row = df.loc[df["total_revenue"].idxmax()]
+        format_fn = config["format_fn"]
 
         # Annotation for month with maximum total revenue.
         fig.add_annotation(
             x=max_row["interval_start"],
             y=max_row["total_revenue"],
-            text=f"Max: {utils.format_eur_amount(max_row['total_revenue'])} ({utils.format_date_as_text(max_row['interval_start'])})",
+            text=f"Max: {utils.format_eur_amount(max_row['total_revenue'])} ({format_fn(max_row['interval_start'])})",
             showarrow=True,
             arrowhead=2,
             ax=0,
@@ -72,7 +99,7 @@ def create_revenue_trend(data):
         fig.add_annotation(
             x=min_row["interval_start"],
             y=min_row["total_revenue"],
-            text=f"Min: {utils.format_eur_amount(min_row['total_revenue'])} ({utils.format_date_as_text(min_row['interval_start'])})",
+            text=f"Min: {utils.format_eur_amount(min_row['total_revenue'])} ({format_fn(min_row['interval_start'])})",
             showarrow=True,
             arrowhead=2,
             ax=0,
@@ -87,7 +114,7 @@ def create_revenue_trend(data):
         fig.add_annotation(
             x=biggest_drop_row["interval_start"],
             y=biggest_drop_row["total_revenue"],
-            text=f"Biggest Drop: {utils.format_as_percentage(biggest_drop_row['total_revenue_delta'])} ({utils.format_date_as_text(biggest_drop_row['interval_start'])})",
+            text=f"Biggest Drop: {utils.format_as_percentage(biggest_drop_row['total_revenue_delta'])} ({format_fn(biggest_drop_row['interval_start'])})",
             showarrow=True,
             arrowhead=2,
             ax=0,
