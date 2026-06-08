@@ -1,7 +1,7 @@
 """
-UrbanStyle Dashboard — Diagrammide Loomine
-============================================
-Kolm põhidiagrammi: müügitrend, top tooted, müük linnade kaupa.
+UrbanStyle Dashboard — Chart Creation
+=====================================
+Three main charts: revenue trend, top products, sales by customer city.
 """
 
 import pandas as pd
@@ -10,36 +10,40 @@ import utils
 
 def create_revenue_trend(data):
     """
-    Joondiagramm: igakuine müügitulu.
-    Näitab UrbanStyle müügitrendi ajas.
-    """
+    Create a line chart showing monthly revenue trend.
 
+    Args:
+        data (dict): Dictionary containing aggregated sales data.
+
+    Returns:
+        plotly.graph_objects.Figure: The generated line chart figure.
+    """
     df = data["aggregated_sales"]
     store_location_comparison_df = data["comparison_store_location_aggregated_sales"]
     df["total_revenue_delta"] = df["total_revenue"].pct_change()
  
-    # Samm 1: Loo joondiagramm
+    # Step 1: Create line chart
     fig = px.line(
-        df, # agregeeritud andmed
-        x="interval_start", # x-telg: Kuu
-        y="total_revenue", # y-telg: müügitulu
-        title="Kogukäive kuude lõikes", # diagrammi pealkiri
-        labels={ # telgede sildid
-            "interval_start": "Kuu",
-            "total_revenue": "Müügitulu (EUR)"
+        df,
+        x="interval_start",
+        y="total_revenue",
+        title="Total Revenue Trend",
+        labels={
+            "interval_start": "Month",
+            "total_revenue": "Revenue (EUR)"
         }
     )
 
-    # X-telje seaded.
+    # X-axis settings
     fig.update_xaxes(
         title_text=None,
         tickformat="%b %Y",
-        dtick=None, # punktide intervall (nt."M1" tähendab 1 kuu)
+        dtick=None,
         tickfont_size=12,
         tickfont_color="#1A1A2E"
     )
 
-    # Y-telje seaded.
+    # Y-axis settings
     fig.update_yaxes(
         title_text=None,
         tickfont_size=12,
@@ -47,73 +51,72 @@ def create_revenue_trend(data):
     )
 
     if not df.empty:
-        max_row = df.loc[df['total_revenue'].idxmax()]
+        max_row = df.loc[df["total_revenue"].idxmax()]
 
         # Annotation for month with maximum total revenue.
         fig.add_annotation(
             x=max_row["interval_start"],
             y=max_row["total_revenue"],
-            text=f"Suurim: {utils.format_eur_amount(max_row['total_revenue'])} ({utils.format_date_as_text(max_row["interval_start"])})",
+            text=f"Max: {utils.format_eur_amount(max_row['total_revenue'])} ({utils.format_date_as_text(max_row['interval_start'])})",
             showarrow=True,
             arrowhead=2,
-            ax=0, # Arrow rotation
-            ay=-40, # Text is above the arrow
+            ax=0,
+            ay=-40,
             bgcolor="#009B8D",
             font=dict(color="white")
         )
 
-        min_row = df.loc[df['total_revenue'].idxmin()]
+        min_row = df.loc[df["total_revenue"].idxmin()]
 
         # Annotation for month with minimum total revenue.
         fig.add_annotation(
             x=min_row["interval_start"],
             y=min_row["total_revenue"],
-            text=f"Väikseim: {utils.format_eur_amount(min_row['total_revenue'])} ({utils.format_date_as_text(min_row["interval_start"])})",
+            text=f"Min: {utils.format_eur_amount(min_row['total_revenue'])} ({utils.format_date_as_text(min_row['interval_start'])})",
             showarrow=True,
             arrowhead=2,
-            ax=0, # Arrow rotation
-            ay=40, # Text is below the arrow
+            ax=0,
+            ay=40,
             bgcolor="#009B8D",
             font=dict(color="white")
         )
 
-        biggest_drop_row = df.loc[df['total_revenue_delta'].idxmin()]
+        biggest_drop_row = df.loc[df["total_revenue_delta"].idxmin()]
 
         # Annotation for month with biggest drop in revenue.
         fig.add_annotation(
             x=biggest_drop_row["interval_start"],
             y=biggest_drop_row["total_revenue"],
-            text=f"Suurim langus: {utils.format_as_percentage(biggest_drop_row['total_revenue_delta'])} ({utils.format_date_as_text(biggest_drop_row["interval_start"])})",
+            text=f"Biggest Drop: {utils.format_as_percentage(biggest_drop_row['total_revenue_delta'])} ({utils.format_date_as_text(biggest_drop_row['interval_start'])})",
             showarrow=True,
             arrowhead=2,
-            ax=0, # Arrow rotation
-            ay=40, # Text is below the arrow
+            ax=0,
+            ay=40,
             bgcolor="#009B8D",
             font=dict(color="white")
         )
  
-    # Samm 2: Kohanda välimust
+    # Step 2: Customize appearance
     fig.update_layout(
-        font_family="Arial",         # font
-        title_font_size=16,          # pealkirja suurus
-        title_font_color="#1A1A2E", # pealkirja värv
-        hovermode="x unified",       # hover näitab kõiki punkte samal x-väärtusel
-        yaxis_tickformat=",.0f",     # y-telg: tuhandete eraldaja, 0 kohta peale koma
-        yaxis_tickprefix="€",        # y-telg: euro sümbol ette
-        separators=", "              # Kümnendkohad eraldatud komaga, tuhandelised tühikuga
+        font_family="Arial",
+        title_font_size=16,
+        title_font_color="#1A1A2E",
+        hovermode="x unified",
+        yaxis_tickformat=",.0f",
+        yaxis_tickprefix="€",
+        separators=", "
     )
 
-    # Samm 3: Muudame joone värvi ja  paksust
+    # Step 3: Change line color and width
     fig.update_traces(line_color="#009B8D", line_width=3)
  
-    # Samm 4: Lisa joon, mis näitab võrdluseks kuude keskmist.
-
+    # Step 4: Add horizontal line for average revenue
     avg_revenue = df["total_revenue"].mean()
     fig.add_hline(
         y=avg_revenue,
         line_dash="dash",
         line_color="gray",
-        annotation_text=f"Keskmine: {utils.format_eur_amount(avg_revenue)}",
+        annotation_text=f"Average: {utils.format_eur_amount(avg_revenue)}",
         annotation_position="top right"
     )
  
@@ -121,35 +124,41 @@ def create_revenue_trend(data):
 
 def create_top_products(df, top_n=5):
     """
-    Horizontal bar chart - TOP N products.
+    Create a horizontal bar chart showing the top N products.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing product sales data.
+        top_n (int, optional): Number of top products to display. Defaults to 5.
+
+    Returns:
+        plotly.graph_objects.Figure: The generated bar chart figure.
     """
- 
     product_revenue = df.head(top_n)
  
-    # Create chart.
+    # Create chart
     fig = px.bar(
         product_revenue,
         x="total_revenue",
         y="product_name",
         orientation="h",
-        title=f"Top {top_n} toodet",
+        title=f"Top {top_n} Products",
         text="total_revenue",
         labels={
-            "total_revenue": "Kogumüük (€)",
-            "product_name": "Toode"
+            "total_revenue": "Total Sales (€)",
+            "product_name": "Product"
         },
         color="total_revenue",
         color_continuous_scale="Teal"
     )
 
-    # 1. Samm: Seadista tekstide vormindus tulpade peal
+    # Step 1: Configure text formatting on bars
     fig.update_traces(
-        texttemplate="€%{text:,.0f}", # Vormindab tulba peal oleva teksti
-        textposition="inside", # Paneb teksti tulbast välja (paremale)
-        hovertemplate="<b>%{y}</b><br>Kogumüük: €%{x:,.0f}<extra></extra>"
+        texttemplate="€%{text:,.0f}",
+        textposition="inside",
+        hovertemplate="<b>%{y}</b><br>Total Sales: €%{x:,.0f}<extra></extra>"
     )
  
-    # Adjust appearance.
+    # Adjust appearance
     fig.update_layout(
         font_family="Arial",
         title_font_size=16,
@@ -157,36 +166,41 @@ def create_top_products(df, top_n=5):
         xaxis_tickformat=",.0f",
         xaxis_tickprefix="€",
         coloraxis_showscale=False,
-        separators=", ", # Comma separates decimal part, whitespace separates thousands
-        yaxis={'categoryorder':'total ascending'} # The bigger the higher
+        separators=", ",
+        yaxis={"categoryorder": "total ascending"}
     )
  
     return fig
 
 def create_sales_by_customer_city(df):
     """
-    Pie chart of total revenue by customer city.
-    """
+    Create a pie chart of total revenue by customer city.
 
-    # First n cities will be displayed separately:
+    Args:
+        df (pd.DataFrame): DataFrame containing sales data by city.
+
+    Returns:
+        plotly.graph_objects.Figure: The generated pie chart figure.
+    """
+    # First n cities will be displayed separately
     main_cities = _compress_cites_data_for_pie_chart(df, 5)
  
-    # Samm 3: Loo sektordiagramm
+    # Step 3: Create pie chart
     fig = px.pie(
         main_cities,
         values="total_revenue",
         names="city",
-        title="Käibe jaotus klientide päritolulinnade kaupa",
-        color_discrete_sequence=px.colors.sequential.Teal_r  # värviskeem
+        title="Revenue Distribution by Customer City",
+        color_discrete_sequence=px.colors.sequential.Teal_r
     )
  
-    # Samm 4: Kohanda välimust
+    # Step 4: Customize appearance
     fig.update_traces(
-        textposition="inside",                         # tekst sektori sees
-        textinfo="percent+label",                      # näita protsenti ja nime
+        textposition="inside",
+        textinfo="percent+label",
         hovertemplate="<b>%{label}</b><br>"
-                      "Käive: €%{value:,.0f}<br>"
-                      "Osakaal: %{percent}<extra></extra>"
+                      "Revenue: €%{value:,.0f}<br>"
+                      "Share: %{percent}<extra></extra>"
     )
  
     fig.update_layout(
@@ -198,20 +212,30 @@ def create_sales_by_customer_city(df):
     return fig
 
 def _compress_cites_data_for_pie_chart(df, number_of_sectors):
+    """
+    Compress city sales data to group smaller cities into an 'Other cities' category.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing sales data by city.
+        number_of_sectors (int): Maximum number of sectors to display.
+
+    Returns:
+        pd.DataFrame: Compressed DataFrame.
+    """
     if len(df) <= number_of_sectors:
         return df
     
     n = number_of_sectors - 1
 
-    # First n cities will be displayed separately:
+    # First n cities will be displayed separately
     result = df.iloc[:n]
 
-    # Remaining cities will be grouped together and represented as others:
+    # Remaining cities will be grouped together and represented as others
     other_cities = df.iloc[n:]
     other_total = other_cities["total_revenue"].sum()
 
     other_row = pd.DataFrame({
-        "city": ["Muud linnad"],
+        "city": ["Other cities"],
         "total_revenue": [other_total]
     })
     result = pd.concat([result, other_row], ignore_index=True)
