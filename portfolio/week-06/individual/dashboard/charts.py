@@ -104,20 +104,21 @@ def create_revenue_trend(data, filters):
             font=dict(color="white")
         )
 
-        biggest_drop_row = df.loc[df["total_revenue_delta"].idxmin()]
+        if df["total_revenue_delta"].notna().any():
+            biggest_drop_row = df.loc[df["total_revenue_delta"].idxmin()]
 
-        # Annotation for month with biggest drop in revenue.
-        fig.add_annotation(
-            x=biggest_drop_row["interval_start"],
-            y=biggest_drop_row["total_revenue"],
-            text=f"Biggest Drop: {utils.format_as_percentage(biggest_drop_row['total_revenue_delta'])} ({format_fn(biggest_drop_row['interval_start'])})",
-            showarrow=True,
-            arrowhead=2,
-            ax=0,
-            ay=40,
-            bgcolor="#009B8D",
-            font=dict(color="white")
-        )
+            # Annotation for month with biggest drop in revenue.
+            fig.add_annotation(
+                x=biggest_drop_row["interval_start"],
+                y=biggest_drop_row["total_revenue"],
+                text=f"Biggest Drop: {utils.format_as_percentage(biggest_drop_row['total_revenue_delta'])} ({format_fn(biggest_drop_row['interval_start'])})",
+                showarrow=True,
+                arrowhead=2,
+                ax=0,
+                ay=40,
+                bgcolor="#009B8D",
+                font=dict(color="white")
+            )
  
     # Step 2: Customize appearance
     fig.update_layout(
