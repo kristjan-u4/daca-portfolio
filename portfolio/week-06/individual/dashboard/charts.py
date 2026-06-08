@@ -41,12 +41,8 @@ def create_revenue_trend(data, filters):
     store_location_comparison_df = data["comparison_store_location_aggregated_sales"]
     df["total_revenue_delta"] = df["total_revenue"].pct_change()
  
-    interval = filters.get("interval", "month")
-    config = INTERVAL_CONFIGS.get(interval, {
-        "label": interval.capitalize(),
-        "tickformat": "%d %b %Y",
-        "format_fn": utils.format_date
-    })
+    interval = filters["interval"]
+    config = INTERVAL_CONFIGS[interval]
 
     # Step 1: Create line chart
     fig = px.line(

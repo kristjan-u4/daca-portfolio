@@ -39,3 +39,9 @@ You are acting as an expert Python developer in this repository. To ensure maint
 - **Strictly Prohibit Raw Move/Delete Commands:** Do NOT generate or execute raw shell commands (like `mv`, `rm`, `cp`) to move, rename, or delete files that are tracked by Git.
 - **Mandatory Git Operations:** You MUST use official Git operations (`git mv` for moving/renaming and `git rm` for deleting) to preserve file history and ensure changes are properly staged.
 - **Safety First:** If you cannot perform the move using Git commands directly, ask the user for clarification instead of falling back to raw OS-level commands.
+
+## Coding Philosophy: Fail-Fast over Defensive Programming
+
+* **No Masking of Internal Logic:** For internal system states, calculated variables, or configuration lookups (e.g., dictionaries), do not provide generic fallbacks or default values to prevent crashes.
+* **Let it Crash:** If a value or key is missing due to a developer error, the application must fail immediately and loudly (e.g., raise `KeyError`, `ValueError`, etc.). 
+* **Avoid Duplication:** Avoid duplicating structures inside fallback mechanisms (like `dict.get(key, default_structure)`). Prefer direct lookups like `dict[key]` to ensure strict compliance with defined configurations.

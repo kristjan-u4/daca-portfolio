@@ -182,8 +182,10 @@ def add_interval_setting(filters, default_filter_settings):
     """
     date_from, date_to = filters["open_date_range"]
     delta = date_to - date_from
-    if delta.days < 60:
+    if delta.days <= 45:
         filters["interval"] = "day"
+    elif delta.days <= 180:
+        filters["interval"] = "week"
     else:
         filters["interval"] = default_filter_settings["interval"]
 
