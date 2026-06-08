@@ -3,7 +3,7 @@ import math
 
 def format_date(date):
     """
-    Format a date object into Estonian date format string (DD.MM.YYYY).
+    Format a date object into English date format string (DD MMM YYYY).
 
     Args:
         date (datetime.date): The date to format.
@@ -11,7 +11,7 @@ def format_date(date):
     Returns:
         str: The formatted date string.
     """
-    return date.strftime("%d.%m.%Y")
+    return date.strftime("%d %b %Y")
 
 def format_date_as_text(date):
     """
@@ -108,7 +108,7 @@ def format_as_percentage(value, precision=0):
 
 def format_number(value, precision=0):
     """
-    Format a number with thousands separators as spaces and decimal separator as comma.
+    Format a number with thousands separators as commas and decimal separator as dot.
 
     Args:
         value (float): The number to format.
@@ -117,4 +117,4 @@ def format_number(value, precision=0):
     Returns:
         str: The formatted number string.
     """
-    return f"{value:,.{precision}f}".replace(",", " ").replace(".", ",")
+    return f"{value:,.{precision}f}"

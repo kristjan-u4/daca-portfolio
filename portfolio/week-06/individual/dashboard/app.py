@@ -110,7 +110,7 @@ def add_date_range_filter(filters, container, default_filter_settings):
     
     date_range = container.date_input(
         "Date Range",
-        format="DD.MM.YYYY",
+        format="DD/MM/YYYY",
         value=default_filter_settings["date_range"],
         min_value=min_date,
         max_value=max_date,

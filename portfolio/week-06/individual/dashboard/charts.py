@@ -104,7 +104,7 @@ def create_revenue_trend(data):
         hovermode="x unified",
         yaxis_tickformat=",.0f",
         yaxis_tickprefix="€",
-        separators=", "
+        separators=".,"
     )
 
     # Step 3: Change line color and width
@@ -166,7 +166,7 @@ def create_top_products(df, top_n=5):
         xaxis_tickformat=",.0f",
         xaxis_tickprefix="€",
         coloraxis_showscale=False,
-        separators=", ",
+        separators=".,",
         yaxis={"categoryorder": "total ascending"}
     )
  
@@ -206,7 +206,7 @@ def create_sales_by_customer_city(df):
     fig.update_layout(
         font_family="Arial",
         title_font_size=16,
-        separators=", "
+        separators=".,"
     )
  
     return fig

@@ -8,13 +8,13 @@ import os
 import sqlalchemy as sa
 import pandas as pd
 from pathlib import Path
+import streamlit as st
 
 from sql_filter_builder import SqlFilterBuilder
 
 CACHE_TTL = 300
 
 try:
-    import streamlit as st
     # Streamlit Cloud environment - no .env file available, uses secrets instead.
     supabase_connection_string = st.secrets["supabase"]["connection_string"]
 except Exception:
@@ -121,7 +121,7 @@ def _fetch_filtered_data(template_file_name, filters):
     where_clause, sql_params = builder.build()
     sql_params["interval"] = filters["interval"]
     
-    # Load your SQL template
+    # Load the SQL template
     sql_template = _load_query_template(template_file_name)
     
     # Inject the generated WHERE clause into the template
@@ -129,7 +129,7 @@ def _fetch_filtered_data(template_file_name, filters):
         sql_template.replace("{{filters_section}}", where_clause)
     )
     
-    # Execute query using your database utility
+    # Execute query
     return pd.read_sql(query, supabase, params=sql_params)
 
 def _load_query_template(filename):
