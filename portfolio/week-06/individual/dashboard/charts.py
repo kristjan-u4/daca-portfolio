@@ -50,6 +50,7 @@ def create_revenue_trend(data, filters):
         x="interval_start",
         y="total_revenue",
         title="Total Revenue Trend",
+        markers=True, # Visualize data points as bold dots on the chart.
         labels={
             "interval_start": config["label"],
             "total_revenue": "Revenue (EUR)"

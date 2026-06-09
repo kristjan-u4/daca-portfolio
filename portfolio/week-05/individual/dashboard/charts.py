@@ -5,31 +5,53 @@ UrbanStyle Dashboard — Chart Creation
 import plotly.express as px
 import utils
 
-def create_revenue_trend(df):
+INTERVAL_CONFIGS = {
+    "day": {
+        "label": "Day",
+        "tickformat": "%d %b %Y"
+    },
+    "week": {
+        "label": "Week Starting",
+        "tickformat": "%d %b %Y"
+    },
+    "month": {
+        "label": "Month",
+        "tickformat": "%b %Y"
+    }
+}
+
+def create_revenue_trend(df, filters):
     """
-    Creates a line chart displaying the monthly revenue trend for UrbanStyle.
+    Creates a line chart displaying the revenue trend for UrbanStyle.
 
     Args:
-        df (pd.DataFrame): Aggregated data containing "interval_start" (month)
+        df (pd.DataFrame): Aggregated data containing "interval_start"
                            and "total_revenue" columns.
+        filters (dict): Dictionary containing active filter values.
 
     Returns:
         plotly.graph_objects.Figure: A Plotly line chart figure.
     """
+    interval = filters["interval"]
+    config = INTERVAL_CONFIGS[interval]
+    interval_label = config["label"]
+    tick_format = config["tickformat"]
+
     fig = px.line(
         df,
         x="interval_start",
         y="total_revenue",
         title="UrbanStyle Revenue Trend",
+        markers=True, # Visualize data points as bold dots on the chart.
         labels={
-            "interval_start": "Month",
+            "interval_start": interval_label,
             "total_revenue": "Revenue (EUR)"
         }
     )
 
     fig.update_xaxes(
         title_text=None,
-        tickformat="%b %Y",
+        tickformat=tick_format,
         dtick=None,
         tickfont_size=12,
         tickfont_color="#1A1A2E"

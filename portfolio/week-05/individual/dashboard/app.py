@@ -25,7 +25,7 @@ def main():
     params = compose_sql_params(filters, default_filter_settings)
     data = get_data(params)
     fill_kpis_section(kpis_section, filters)
-    fill_main_chart_section(main_chart_section, data)
+    fill_main_chart_section(main_chart_section, data, filters)
     render_footer(data)
 
 def setup_page():
@@ -85,6 +85,7 @@ def prepare_filters(default_filter_settings):
     col1, _, _, _ = st.columns(4)
     filters = {}
     add_date_range_filter(filters, col1, default_filter_settings)
+    _add_derived_filters(filters, default_filter_settings)
     st.divider()
     return filters
 
@@ -103,7 +104,7 @@ def add_date_range_filter(filters, container, default_filter_settings):
 
     date_range = container.date_input(
         "Date Range",
-        format="YYYY-MM-DD", # Streamlit's date input format, not display format
+        format="DD/MM/YYYY", # Streamlit's date input format, not display format
         value=(min_date, max_date),
         min_value=min_date,
         max_value=max_date,
@@ -121,6 +122,23 @@ def add_date_range_filter(filters, container, default_filter_settings):
     # Define an open-ended date range for SQL queries
     filters["open_date_range"] = (date_from, date_to + datetime.timedelta(days=1))
 
+def _add_derived_filters(filters, default_filter_settings):
+    """
+    Calculates and adds derived filters such as the aggregation interval.
+
+    Args:
+        filters (dict): Dictionary containing active filter values.
+        default_filter_settings (dict): Default filter settings.
+    """
+    date_from, date_to = filters["open_date_range"]
+    delta = date_to - date_from
+    if delta.days <= 45:
+        filters["interval"] = "day"
+    elif delta.days <= 180:
+        filters["interval"] = "week"
+    else:
+        filters["interval"] = default_filter_settings["interval"]
+
 def compose_sql_params(filters, default_filter_settings):
     """
     Composes SQL query parameters based on active filters and default settings.
@@ -134,7 +152,7 @@ def compose_sql_params(filters, default_filter_settings):
     """
     params = {}
     add_date_range_sql_params(params, filters, default_filter_settings)
-    add_interval_sql_params(params, default_filter_settings)
+    params["interval"] = filters["interval"]
     return params
 
 def add_date_range_sql_params(params, filters, default_filter_settings):
@@ -149,20 +167,6 @@ def add_date_range_sql_params(params, filters, default_filter_settings):
     date_range = filters["open_date_range"]
     params["time_from"] = date_range[0]
     params["time_to"] = date_range[1]
-
-def add_interval_sql_params(params, default_filter_settings):
-    """
-    Adds the aggregation interval parameter to the SQL parameters dictionary.
-
-    Args:
-        params (dict): The dictionary to store SQL parameters.
-        default_filter_settings (dict): Default filter settings.
-    """
-    delta = params["time_to"] - params["time_from"]
-    if delta.days < 60:
-        params["interval"] = "day"
-    else:
-        params["interval"] = default_filter_settings["interval"]
 
 def get_data(params):
     """
@@ -246,7 +250,7 @@ def fill_kpis_section(kpis_section, filters):
                 help=f"Comparison of {kpi3_year} with {kpi3_comparison_year}"
             )
 
-def fill_main_chart_section(main_chart_section, data):
+def fill_main_chart_section(main_chart_section, data, filters):
     """
     Fills the main chart section with the revenue trend chart.
 
@@ -254,11 +258,12 @@ def fill_main_chart_section(main_chart_section, data):
         main_chart_section (streamlit.delta_generator.DeltaGenerator): The Streamlit container
                                                                       for the main chart.
         data (dict): Dictionary containing all fetched data.
+        filters (dict): Dictionary containing active filter values.
     """
     with main_chart_section.container():
         df = data["aggregated_sales"]
         st.header("Sales Trends")
-        fig_trend = charts.create_revenue_trend(df)
+        fig_trend = charts.create_revenue_trend(df, filters)
         st.plotly_chart(fig_trend, use_container_width=True)
 
 def render_footer(data):
