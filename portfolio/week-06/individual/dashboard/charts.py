@@ -64,6 +64,7 @@ def create_revenue_trend(data, filters):
     fig.update_xaxes(
         title_text=None,
         tickformat=config["tickformat"],
+        hoverformat=config["hoverformat"],
         dtick=None,
         tickfont_size=12,
         tickfont_color="#1A1A2E"
@@ -136,7 +137,12 @@ def create_revenue_trend(data, filters):
     )
 
     # Step 3: Change line color and width
-    fig.update_traces(line_color="#009B8D", line_width=3, xhoverformat=config["hoverformat"])
+    fig.update_traces(
+        line_color="#009B8D",
+        line_width=3,
+        xhoverformat=config["tickformat"],
+        hovertemplate=f"{config['label']}=%{{x|{config['hoverformat']}}}<br>Revenue (EUR) = €%{{y:,.0f}}<extra></extra>"
+    )
  
     # Step 4: Add horizontal line for average revenue
     avg_revenue = df["total_revenue"].mean()

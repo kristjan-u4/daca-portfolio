@@ -55,6 +55,7 @@ def create_revenue_trend(df, filters):
     fig.update_xaxes(
         title_text=None,
         tickformat=tick_format,
+        hoverformat=config["hoverformat"],
         dtick=None,
         tickfont_size=12,
         tickfont_color="#1A1A2E"
@@ -76,7 +77,12 @@ def create_revenue_trend(df, filters):
         separators=".," # Thousands separator is comma, decimal separator is dot
     )
 
-    fig.update_traces(line_color="#009B8D", line_width=3, xhoverformat=config["hoverformat"])
+    fig.update_traces(
+        line_color="#009B8D",
+        line_width=3,
+        xhoverformat=config["tickformat"],
+        hovertemplate=f"{config['label']}=%{{x|{config['hoverformat']}}}<br>Revenue (EUR) = €%{{y:,.0f}}<extra></extra>"
+    )
 
     avg_revenue = df["total_revenue"].mean()
     fig.add_hline(
