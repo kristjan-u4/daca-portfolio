@@ -1,68 +1,96 @@
 """
-UrbanStyle Dashboard — Diagrammide Loomine
-============================================
-Kolm põhidiagrammi: müügitrend, top tooted, müük linnade kaupa.
+UrbanStyle Dashboard — Chart Creation
 """
 
-import pandas as pd
 import plotly.express as px
+import utils
 
-def create_revenue_trend(df):
+INTERVAL_CONFIGS = {
+    "day": {
+        "label": "Day",
+        "tickformat": "%d %b %Y",
+        "hoverformat": "%d %b %Y"
+    },
+    "week": {
+        "label": "Week Starting",
+        "tickformat": "Week %W, %Y",
+        "hoverformat": "%d %b %Y"
+    },
+    "month": {
+        "label": "Month",
+        "tickformat": "%b %Y",
+        "hoverformat": "%b %Y"
+    }
+}
+
+def create_revenue_trend(df, filters):
     """
-    Joondiagramm: igakuine müügitulu.
-    Näitab UrbanStyle müügitrendi ajas.
+    Creates a line chart displaying the revenue trend for UrbanStyle.
+
+    Args:
+        df (pd.DataFrame): Aggregated data containing "interval_start"
+                           and "total_revenue" columns.
+        filters (dict): Dictionary containing active filter values.
+
+    Returns:
+        plotly.graph_objects.Figure: A Plotly line chart figure.
     """
- 
-    # Samm 1: Loo joondiagramm
+    interval = filters["interval"]
+    config = INTERVAL_CONFIGS[interval]
+    interval_label = config["label"]
+    tick_format = config["tickformat"]
+
     fig = px.line(
-        df, # agregeeritud andmed
-        x="interval_start", # x-telg: Kuu
-        y="total_revenue", # y-telg: müügitulu
-        title="UrbanStyle müügitulu trend", # diagrammi pealkiri
-        labels={ # telgede sildid
-            "interval_start": "Kuu",
-            "total_revenue": "Müügitulu (EUR)"
+        df,
+        x="interval_start",
+        y="total_revenue",
+        title="UrbanStyle Revenue Trend",
+        markers=True, # Visualize data points as bold dots on the chart.
+        labels={
+            "interval_start": interval_label,
+            "total_revenue": "Revenue (EUR)"
         }
     )
 
-    # X-telje seaded.
     fig.update_xaxes(
         title_text=None,
-        tickformat="%b %Y",
-        dtick=None, # punktide intervall (nt."M1" tähendab 1 kuu)
+        tickformat=tick_format,
+        hoverformat=config["hoverformat"],
+        dtick=None,
         tickfont_size=12,
         tickfont_color="#1A1A2E"
     )
 
-    # Y-telje seaded.
     fig.update_yaxes(
         title_text=None,
         tickfont_size=12,
         tickfont_color="#1A1A2E"
     )
- 
-    # Samm 2: Kohanda välimust
+
     fig.update_layout(
-        font_family="Arial",         # font
-        title_font_size=16,          # pealkirja suurus
-        title_font_color="#1A1A2E", # pealkirja värv
-        hovermode="x unified",       # hover näitab kõiki punkte samal x-väärtusel
-        yaxis_tickformat=",.0f",     # y-telg: tuhandete eraldaja, 0 kohta peale koma
-        yaxis_tickprefix="€",        # y-telg: euro sümbol ette
-        separators=", "              # Kümnendkohad eraldatud komaga, tuhandelised tühikuga
+        font_family="Arial",
+        title_font_size=16,
+        title_font_color="#1A1A2E",
+        hovermode="x unified",
+        yaxis_tickformat=",.0f",
+        yaxis_tickprefix="€",
+        separators=".," # Thousands separator is comma, decimal separator is dot
     )
 
-    # Samm 3: Muudame joone värvi ja  paksust
-    fig.update_traces(line_color="#009B8D", line_width=3)
- 
-    # Samm 4: Lisa joon, mis näitab keskmist
+    fig.update_traces(
+        line_color="#009B8D",
+        line_width=3,
+        xhoverformat=config["tickformat"],
+        hovertemplate=f"{config['label']}=%{{x|{config['hoverformat']}}}<br>Revenue (EUR) = €%{{y:,.0f}}<extra></extra>"
+    )
+
     avg_revenue = df["total_revenue"].mean()
     fig.add_hline(
         y=avg_revenue,
         line_dash="dash",
         line_color="gray",
-        annotation_text=f"Keskmine: €{avg_revenue:,.0f}".replace(",", " "),
+        annotation_text=f"Average: {utils.format_eur_amount(avg_revenue, 0)}",
         annotation_position="top right"
     )
- 
+
     return fig

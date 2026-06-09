@@ -1,23 +1,23 @@
-# Nädal 2: SQL-andmete puhastamine (UrbanStyle.ltd)
+# Week 2: SQL Data Cleaning
 
-## Ülevaade
-Sel nädalal keskendusin UrbanStyle'i andmebaasi puhastamisele, et valmistada andmed ette eelseisvaks juhatuse koosolekuks. Minu roll oli **Kliendiandmete puhastaja (Roll B)**, kus minu ülesandeks oli analüüsida ja korrastada tabelit `customers`.
+## Overview
+This week, I focused on cleaning UrbanStyle's database to prepare the data for the upcoming board meeting. My role was **Customer Data Cleaner (Role B)**, where my task was to analyze and organize the `customers` table.
 
-## Tehtud tööd
-Töötasin vastavalt Toomas Kase juhistele "Test, Verify, Log, Commit" metoodika alusel:
-1. **Testkeskkonna loomine:** Tegin tabelist `customers` koopia `customers_test`, et tagada turvaline andmetöötlus.
-2. **Diagnostika:** Tuvastasin duplikaatsed e-mailid, puuduvad kliendinimed ja ebajärjekindlad linnanimed.
-3. **Puhastamine (Edasijõudnute tase):** Ühtlustasin linnanimed (`INITCAP`, `TRIM`), normaliseerisin e-mailid ja täitsin puuduvad nimeväljad väärtusega 'Tundmatu'.
+## Work Done
+I used the "Test, Verify, Log, Commit" methodology:
+1.  **Test Environment Creation:** I made a copy of the `customers` table, `customers_test`, to ensure safe data processing.
+2.  **Diagnostics:** I identified duplicate emails, missing customer names, and inconsistent city names.
+3.  **Cleaning (Advanced Level):** I standardized city names (`INITCAP`, `TRIM`), normalized emails, and filled in missing name fields with the value 'Unknown'.
 
-## Peamised järeldused
-* **Kriitilisim leid:** Puuduvad emailid, kuna see takistab UrbanStyle’il oma klientidega suhelda ja neile kampaaniapakkumisi saata. Samuti pole anonüümsete klientide puhul selgust, kui paljud neist on samad ja kui paljud erinevad inimesed, mistõttu tekib klientide arvust moonutatud pilt.
-* **Andmete seisukord:** Kliendibaas on suures osas korrektne, kuid nõuab paremat valideerimist sisestusetapis, eriti e-mailide ja asukohtade osas.
-* **Soovitus:** Juurutada e-maili välja kohustuslik täitmine registreerimisel, et vältida anonüümsete kirjete teket. Linnanimede sisestamisel kasutada tekstivälja asemel rippmenüüd, et vältida erinevate nimekujude salvestamist andmebaasi.
+## Key Findings
+*   **Most Critical Finding:** Missing emails, as this prevents UrbanStyle from communicating with its customers and sending them campaign offers. Also, for anonymous customers, it is unclear how many of them are the same and how many are different people, leading to a distorted picture of customer count.
+*   **Data Condition:** The customer base is largely correct but requires better validation at the input stage, especially for emails and locations.
+*   **Recommendation:** Implement mandatory email field completion upon registration to prevent the creation of anonymous entries. When entering city names, use a dropdown menu instead of a text field to prevent different name forms from being saved in the database.
 
-## Failid portfoolios
-* [SQL puhastamisskript](./individual/week2_customers_cleaning.sql)
-* [Individuaalne puhastamisraport](./individual/week2_customers_report.md)
-* [Meeskonna koondraport](./team/week2_team_cleaning_report.md)
+## Files in Portfolio
+*   [SQL Cleaning Script](./individual/week2_customers_cleaning.sql)
+*   [Individual Cleaning Report](./individual/week2_customers_report.md)
+*   [Team Consolidated Report](./team/week2_team_cleaning_report.md)
 
-## Enesereflektsioon (Shu-faas)
-Järgisin sel nädalal täpselt etteantud juhiseid. Õppisin, kui oluline on transaktsioonide või testkoopiate kasutamine enne andmete muutmist. Suurimaks väljakutseks oli duplikaatide korrektne loendamine normaliseeritud kujul.
+## Self-Reflection (Shu-Phase)
+This week, I precisely followed the given instructions. I learned the importance of using transactions or test copies before modifying data. The biggest challenge was correctly counting duplicates in a normalized form.

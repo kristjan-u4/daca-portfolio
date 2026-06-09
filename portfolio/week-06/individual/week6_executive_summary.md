@@ -1,7 +1,7 @@
-# Juhtide kokkuvõte
+# Executive Summary
 
-* ✅ **Jätkusuutlik kasv:** Tartu tulu on kasvanud **13%** YoY, kinnitades brändi regionaalset elujõulisust.
-* ⚠️ **Septembri paradoks:** **36%** langus tudengite saabumise ajal viitab suunatud turunduse puudumisele või tootevaliku sobimatusele tudengite eelarvega.
-* 🎓 **Tudengite segment:** Suur Tallinna ja teiste linnade klientide osakaal viitab tudengitele; segment on hetkel UrbanStyle'i jaoks alakasutatud potentsiaal.
-* 🎯 **Soovitus Anna Metsale:** Käivitada tudengitele suunatud sooduskampaania ja testida taskukohasemat "Campus-look" tootesarja.
-* 🔍 **Soovitus Liis Koppelile:** Viia läbi Tartu poe hinnatundlikkuse audit, et selgitada septembri languse ja toote hinna seost.
+* ✅ **Sustainable Growth:** Tartu revenue has grown **13%** YoY, confirming the brand's regional viability.
+* ⚠️ **September Paradox:** A **36%** drop during the arrival of students suggests a lack of targeted marketing or product assortment mismatch with student budgets.
+* 🎓 **Student Segment:** The high share of customers from Tallinn and other cities points to students; this segment is currently an underutilized potential for UrbanStyle.
+* 🎯 **Recommendation for Anna Mets:** Launch a student-targeted discount campaign and test a more affordable "Campus-look" product line.
+* 🔍 **Recommendation for Liis Koppel:** Conduct a price sensitivity audit for the Tartu store to clarify the relationship between the September drop and product pricing.

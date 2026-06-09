@@ -1,5 +1,5 @@
--- Test: kas ühendus töötab?
-SELECT 'VS Code ühendus töötab!' AS staatus, NOW() AS aeg;
+-- Test: is the connection working?
+SELECT 'VS Code connection is working!' AS status, NOW() AS time;
 
--- Vaata oma team_members tabelit
+-- View your team_members table
 SELECT * FROM team_members;

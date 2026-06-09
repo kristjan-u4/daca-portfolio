@@ -3,24 +3,33 @@ from datetime import date
 from typing import Dict, Any, Tuple, List
 
 class SqlFilterBuilder:
+    """
+    A builder class to construct SQL WHERE clauses and parameters from filters.
+    """
+
     def __init__(self, filters: Dict[str, Any]):
         """
         Initialize the builder with user-selected filters.
         
-        :param filters: Dictionary containing active filter values (e.g., from Streamlit)
+        Args:
+            filters (Dict[str, Any]): Dictionary containing active filter values.
         """
         self.filters = filters
+        self.sql_parts = []
+        self.params = {}
 
     def build(self) -> Tuple[str, Dict[str, Any]]:
         """
-        Main orchestration method. Resets state at the beginning.
+        Build the SQL WHERE clause and parameters.
+
+        Returns:
+            Tuple[str, Dict[str, Any]]: A tuple containing the SQL WHERE clause string
+                                       and the dictionary of query parameters.
         """
         # Reset the state every time build() is called
         self.sql_parts = []
         self.params = {}
 
-        # Now internal methods can use 'self.sql_parts' directly 
-        # without needing them as arguments
         self._build_date_range_filter()
         self._build_store_location_filter()
 
@@ -28,7 +37,9 @@ class SqlFilterBuilder:
         return additional_filters_sql, self.params
 
     def _build_date_range_filter(self):
-        """Internal method to handle user-provided date range filter."""
+        """
+        Build the date range filter SQL parts and parameters.
+        """
         date_range = self.filters.get("open_date_range")
         if date_range and len(date_range) == 2:
             self.sql_parts.append("AND s.sale_date >= :time_from")
@@ -39,7 +50,9 @@ class SqlFilterBuilder:
                 self.params["time_to"] = date_range[1]
 
     def _build_store_location_filter(self):
-        """Internal method to handle store_location filter where NULL equals 'Online'."""
+        """
+        Build the store location filter SQL parts and parameters.
+        """
         store_locations = self.filters.get("store_location")
         
         # Check if we have any selections at all
@@ -50,7 +63,7 @@ class SqlFilterBuilder:
         # Using a list comprehension first for clarity, then converting to tuple
         physical_stores = tuple(
             x for x in store_locations 
-            if x is not None and str(x).lower() != 'online'
+            if x is not None and str(x).lower() != "online"
         )
         
         # Determine if 'Online' (NULL in DB) was part of the user's selection

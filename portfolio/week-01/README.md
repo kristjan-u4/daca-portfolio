@@ -1,29 +1,29 @@
-# Nädal 1: SQL Basics -- UrbanStyle'i andmete uurimine
+# Week 1: SQL Basics
 
-## Mida ma tegin
+## What I Did
 
-Uurisin sales tabelit SQL päringutega, keskendudes müügiandmetele. Uurimise käigus ilmnesid järgmised detailid:
+I explored the `sales` table with SQL queries, focusing on sales data. During the exploration, the following details emerged:
 
-* Tabelis on kokku 15234 rida ja 12 veergu.
-* Veergude nimetused on: `id`, `sale_id`, `invoice_id`, `sale_date`, `customer_id`, `product_id`, `quantity`, `unit_price`, `total_price`, `channel`, `store_location`, `payment_method`.
-* Tabelis on vähemalt 15 Tallinna kaupluse tehingut, millest uusim on tulevikus aset leidev tehing, mis on ajastatud 28.06.2026 peale.
-* Suurim tehingusumma kõikide andmete peale kokku on 2170.40 €
-* Väikseim tehingusumma kõikide andmete peale kokku on -1405.32 € ehk negatiivne.
-* Tabelis sales on 1487 rida, kus puudub kliendi info ehk kus `customer_id` väli on tühi.
+*   The table contains a total of 15,234 rows and 12 columns.
+*   Column names are: `id`, `sale_id`, `invoice_id`, `sale_date`, `customer_id`, `product_id`, `quantity`, `unit_price`, `total_price`, `channel`, `store_location`, `payment_method`.
+*   The table contains at least 15 transactions for the Tallinn store, the newest of which is a future transaction scheduled for 28.06.2026.
+*   The largest transaction amount across all data is €2170.40.
+*   The smallest transaction amount across all data is -€1405.32, which is negative.
+*   The `sales` table has 1487 rows where customer information is missing, i.e., where the `customer_id` field is empty.
 
-Pärast sales tabeli uurimist, osalesin meeskonna andmemaastiku koostamisel, kus kirjeldasin kokkuvõtlikult enda leitud olulisemaid detaile. Lisaks panustasin omalt poolt 2 tehnilist laadi soovitusega IT-direktor Toomasele:
+After examining the `sales` table, I participated in compiling the team's data landscape, where I briefly described the most important details I found. Additionally, I contributed 2 technical recommendations to UrbanStyle's IT Director:
 
-* Kui veerus ei tohi NULL väärtusi olla, siis sellele veerule NOT NULL piirangu lisamise teel saab seda ennetada.
-* Kui veerus ei tohi olla duplikaate, siis unikaalse indeksi (UNIQUE INDEX) lisamise teel sellele veerule saab duplikaatide teket ennetada.
+*   If a column should not contain NULL values, this can be prevented by adding a NOT NULL constraint to that column.
+*   If a column should not contain duplicates, the creation of duplicates can be prevented by adding a unique index (UNIQUE INDEX) to that column.
 
-## Peamised õppetunnid
+## Key Lessons Learned
 
-* Puuduva väärtusega väljade ja duplikaatide teket oleks võimalik andmebaasi tasandil ennetada.
+*   The creation of missing value fields and duplicates could be prevented at the database level.
 
-## Failid
-* [Minu SQL päringud](./individual/week1_sales_exploration.sql)
-* [Ekraanipilt päringute tulemustest](./individual/week1_results_screenshot.png)
+## Files
+*   [My SQL Queries](./individual/week1_sales_exploration.sql)
+*   [Screenshot of Query Results](./individual/week1_results_screenshot.png)
 
-## Meeskonna töö
+## Team Work
 
 https://github.com/sillepragi/urbanstyle-marketing-data/blob/main/week_1/README.md
