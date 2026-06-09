@@ -12,16 +12,19 @@ INTERVAL_CONFIGS = {
     "day": {
         "label": "Date",
         "tickformat": "%d %b %Y",
+        "hoverformat": "%d %b %Y",
         "format_fn": utils.format_date
     },
     "week": {
         "label": "Week Starting",
-        "tickformat": "%d %b %Y",
-        "format_fn": utils.format_date
+        "tickformat": "Week %W, %Y",
+        "hoverformat": "%d %b %Y",
+        "format_fn": lambda d: d.strftime("Week %W, %Y")
     },
     "month": {
         "label": "Month",
         "tickformat": "%b %Y",
+        "hoverformat": "%b %Y",
         "format_fn": utils.format_date_as_text
     }
 }
@@ -133,7 +136,7 @@ def create_revenue_trend(data, filters):
     )
 
     # Step 3: Change line color and width
-    fig.update_traces(line_color="#009B8D", line_width=3)
+    fig.update_traces(line_color="#009B8D", line_width=3, xhoverformat=config["hoverformat"])
  
     # Step 4: Add horizontal line for average revenue
     avg_revenue = df["total_revenue"].mean()

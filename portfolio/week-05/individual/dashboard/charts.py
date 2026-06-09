@@ -8,15 +8,18 @@ import utils
 INTERVAL_CONFIGS = {
     "day": {
         "label": "Day",
-        "tickformat": "%d %b %Y"
+        "tickformat": "%d %b %Y",
+        "hoverformat": "%d %b %Y"
     },
     "week": {
         "label": "Week Starting",
-        "tickformat": "%d %b %Y"
+        "tickformat": "Week %W, %Y",
+        "hoverformat": "%d %b %Y"
     },
     "month": {
         "label": "Month",
-        "tickformat": "%b %Y"
+        "tickformat": "%b %Y",
+        "hoverformat": "%b %Y"
     }
 }
 
@@ -73,7 +76,7 @@ def create_revenue_trend(df, filters):
         separators=".," # Thousands separator is comma, decimal separator is dot
     )
 
-    fig.update_traces(line_color="#009B8D", line_width=3)
+    fig.update_traces(line_color="#009B8D", line_width=3, xhoverformat=config["hoverformat"])
 
     avg_revenue = df["total_revenue"].mean()
     fig.add_hline(
