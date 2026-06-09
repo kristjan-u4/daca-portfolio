@@ -1,49 +1,49 @@
-# Peer Review: Palkamisjuhi vaade (HR / Hiring Manager)
+# Peer Review: The Hiring Manager's Perspective (HR / Hiring Manager)
 
-**Kandidaat:** Sille
+**Candidate:** Sille
 
-**Hinnatav materjal:** [GitHub Portfoolio – Sille Pragi](https://github.com/sille-pragi/daca-portfolio)
-
----
-
-### 1. CV perspektiiv: Kas portfoolio toetab tugevat CV-d?
-
-Sille portfoolio on eeskujulik näide sellest, kuidas tehnilised oskused ja äriline mõtlemine ühendada tugevaks kanditatuuriks. Tema tööd toetavad andmeanalüütiku CV-d mitmel olulisel tasandil:
-
-*   **Tulemuste kvantifitseerimine:** Sille ei piirdu vaid tegevuste kirjeldusega, vaid toob järjepidevalt välja numbrilise mõju. Näited nagu 5116 duplikaadi tuvastamine (33,6% müügitabelist) või fakt, et 453 VIP-klienti loovad 43% ettevõtte käibest, on täpselt need "saavutuste märksõnad", mida värbajad otsivad.
-*   **Efektiivsuse rõhutamine:** 8. nädala projektis välja toodud muutus – 4-tunnise manuaalse töö asendamine sekunditega mõõdetava automatiseeritud protsessiga – on võimas argument mistahes ettevõtte tootlikkuse tõstmiseks.
-*   **Selge arengulugu:** Portfoolio peegeldab teadlikku karjääripööret, kus varasem kogemus on kombineeritud uute tehniliste oskustega (SQL, Python, Power BI). See näitab õppimisvõimet ja sihikindlust.
-
-**Hinnang:** Portfoolio on CV-ks konverteerimiseks väga tugevas seisus. Sille suudab näidata, et ta ei oska ainult koodi kirjutada, vaid mõistab andmete taga peituvat äriväärtust.
+**Material under review:** [GitHub Portfolio](https://github.com/sille-pragi/daca-portfolio)
 
 ---
 
-### 2. LinkedIn perspektiiv: Kas projektid on "pin-worthy"?
+### 1. CV Perspective: Does the portfolio support a strong resume?
 
-Sille projektid on visuaalselt ja sisuliselt piisavalt küpsed, et olla "Featured" sektsioonis esindatud.
+Sille’s portfolio is an exemplary demonstration of how to combine technical skills and a business-driven mindset into a compelling candidacy. Her work reinforces a data analyst's resume on multiple critical levels:
 
-*   **Narratiivne lähenemine:** Eriti silmapaistev on 6. nädala Pärnu kaupluse lugu. See ei ole lihtsalt tehniline harjutus, vaid andmepõhine narratiiv hooajalisusest, kus on kasutatud nii annotatsioone kui ka viitejooni, et lugu vaatajale kohale viia.
-*   **Kaasaegne töövoog:** Sille dokumenteerib ausalt AI-tööriistade (NotebookLM, Plotly debugimine) kasutamist. See näitab teda kui kaasaegset ja efektiivset spetsialisti, kes oskab tehnoloogiat oma töö hüvanguks tööle panna.
-*   **Interaktiivsus:** Pythoni notebook'id ja viited Power BI dashboardidele loovad dünaamilise mulje, mis kutsub potentsiaalset tööandjat tema töid lähemalt uurima.
+* **Quantifying Results:** Sille doesn't just describe activities; she consistently highlights numerical impact. Examples such as identifying 5,116 duplicates (33.6% of the sales table) or the fact that 453 VIP customers generate 43% of the company’s revenue are exactly the "achievement-oriented keywords" recruiters look for.
+* **Emphasizing Efficiency:** The shift highlighted in the Week 8 project—replacing a 4-hour manual task with an automated process measured in seconds—presents a powerful argument for increasing productivity in any organization.
+* **A Clear Growth Narrative:** The portfolio reflects an intentional career pivot, where past professional experience is successfully combined with new technical capabilities (SQL, Python, Power BI). This demonstrates a strong capacity for learning and determination.
 
----
-
-### 3. Tugevused ja parandusettepanekud
-
-**Tugevused:**
-1.  **Süsteemne ja professionaalne töövoog:** Sille järgib järjekindlalt "Test, Verify, Log, Commit" protsessi. Tema SQL-skriptid on eeskujulikult kommenteeritud, sisaldades mitte ainult tehnilist selgitust, vaid ka ärilisi järeldusi.
-2.  **Keskendumine "kadunud väärtusele":** Tema analüüsid (nt vaimkliendid, At-Risk segment, müümata tooted) näitavad proaktiivset hoiakut – ta otsib kohti, kus ettevõte saaks raha säästa või tulu suurendada.
-3.  **Tugev dokumenteerimisoskus:** Iga nädala README fail on struktureeritud, loetav ja toob selgelt välja peamised õppetunnid. See on märk heast kommunikatsioonivõimest, mis on analüütiku rollis kriitiline.
-
-**Parandusettepanekud:**
-1.  **Peamise README fookus:** Soovitan peamises portfoolio README-s tuua veelgi selgemalt esile 2-3 kõige suurema mõjuga leidu (nt VIP-klientide osakaal või automatiseerimisega saavutatud ajasääst), et külastaja saaks kohese ülevaate Sille võimekusest ilma sügavale kaustadesse minemata.
-2.  **Soovituste tegevuspõhisus:** Kuigi Sille pakub häid ärilisi tõlgendusi, võiksid soovitused (eriti SQL raportite lõpus) olla veelgi julgemad ja konkreetsemad (nt "Soovitus: käivitada win-back kampaania järgmise 7 päeva jooksul"), rõhutades tema rolli strateegilise partnerina.
+**Assessment:** The portfolio is in an excellent position to be converted into a standout resume. Sille proves that she doesn't just write code; she thoroughly understands the business value hidden behind the data.
 
 ---
 
-### 4. Värbamissoovitus
+### 2. LinkedIn Perspective: Are the projects "pin-worthy"?
 
-**Otsus: JAH / Kutsu kohe vestlusele**
+Sille's projects are sufficiently mature, both visually and contextually, to be featured prominently in the "Featured" section of a LinkedIn profile.
 
-**Põhjendus:**
-Sille on näidanud silmapaistvat arengut 9 nädala jooksul, liikudes fundamentaalsetest SQL päringutest kuni automatiseeritud ETL-pipeline'ide ehitamiseni. Tema portfoolio tõestab, et ta valdab kogu andmete elutsüklit alates pärimisest ja puhastamisest kuni visualiseerimise ja ärilise tõlgendamiseni. Tema süsteemne lähenemine, täpsus ja võime andmeid "jutustama" panna muudavad ta väärtuslikuks täienduseks igasse andmemeeskonda. Sille on "Ri" taseme analüütik, kes on valmis iseseisvalt probleeme lahendama ja UrbanStyle-i sarnastes ettevõtetes väärtust looma.
+* **Narrative-Driven Approach:** The Week 6 story about the Parnu store is particularly outstanding. It is not merely a technical exercise, but a data-driven narrative on seasonality, utilizing annotations and reference lines effectively to convey the story to the viewer.
+* **Modern Workflow:** Sille honestly documents her use of AI tools (NotebookLM, Plotly debugging). This portrays her as a modern, efficient specialist who knows how to leverage technology to optimize her output.
+* **Interactivity:** The Python notebooks and links to Power BI dashboards create a dynamic impression that invites potential employers to explore her work more closely.
+
+---
+
+### 3. Strengths and Areas for Improvement
+
+**Strengths:**
+1.  **Systematic and Professional Workflow:** Sille consistently adheres to a "Test, Verify, Log, Commit" process. Her SQL scripts are exceptionally well-commented, containing not only technical explanations but also business insights.
+2.  **Focus on "Lost Value":** Her analyses (e.g., ghost customers, At-Risk segments, unsold products) demonstrate a proactive attitude—she actively searches for areas where the company can save money or boost revenue.
+3.  **Strong Documentation Skills:** The README file for each week is structured, highly readable, and clearly outlines key takeaways. This indicates excellent communication skills, which are critical for any analytical role.
+
+**Areas for Improvement:**
+1.  **Main README Focus:** I recommend highlighting 2–3 of the highest-impact findings (e.g., the proportion of revenue from VIP customers or time saved through automation) even more prominently in the main portfolio README. This will give visitors an immediate overview of Sille's capabilities without needing to dig deep into subdirectories.
+2.  **Action-Oriented Recommendations:** While Sille provides solid business interpretations, her recommendations (especially at the end of SQL reports) could be even bolder and more actionable (e.g., "Recommendation: Launch a win-back campaign within the next 7 days"), further emphasizing her role as a strategic business partner.
+
+---
+
+### 4. Hiring Recommendation
+
+**Decision: YES / Invite to interview immediately**
+
+**Justification:**
+Sille has demonstrated outstanding growth over the 9-week period, progressing from foundational SQL queries to building automated ETL pipelines. Her portfolio proves her proficiency across the entire data lifecycle, from querying and cleaning to visualization and business interpretation. Her systematic approach, attention to detail, and ability to make data "talk" make her a valuable asset to any data team. Sille is a "Ri-level" analyst who is ready to solve problems independently and drive value in companies like UrbanStyle.
