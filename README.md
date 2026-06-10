@@ -1,27 +1,27 @@
-# DACA Portfoolio -- Kristjan
+# DACA Portfolio -- Kristjan
 
-## Minust
-Olen aastaid töötanud tarkvaraarendajana (Ruby, Java), kuid nüüd soovin teha karjääripööret andmeanalüüsi valdkonda
+## About Me
+I have worked as a software developer (Ruby, Java) for many years, but now I am looking to make a career pivot into the field of data analytics.
 
-## Eesmärk
-Õppida andmeanalüüsi -- SQL, Python, visualiseerimine -- ja ehitada professionaalne portfoolio.
+## Goal
+To learn data analytics -- SQL, Python, visualization -- and build a professional portfolio.
 
-## Portfoolio
+## Portfolio
 
-Nädalapõhised projektid asuvad kataloogis [portfolio](./portfolio).
+Weekly projects are located in the [portfolio](./portfolio) directory.
 
-### Nädala kaupa
+### Week by Week
 
-| Nädal | Algus | Lõpp | Teema | Staatus |
-|-------|-------|------|-------|---------|
-| 0 | 23 Mar 2026 | 29 Mar 2026 | [Onboarding](./portfolio/week-00) | Lõpetatud |
-| 1 | 30 Mar 2026 | 05 Apr 2026 | [SQL Basics](./portfolio/week-01) | Lõpetatud |
-| 2 | 06 Apr 2026 | 12 Apr 2026 | [SQL Cleaning](./portfolio/week-02) | Lõpetatud |
-| 3 | 13 Apr 2026 | 19 Apr 2026 | [SQL JOINs](./portfolio/week-03) | Lõpetatud |
-| 4 | 20 Apr 2026 | 26 Apr 2026 | [SQL Aggregation](./portfolio/week-04) | Lõpetatud |
-| 5 | 27 Apr 2026 | 03 May 2026 | [Visualiseerimine - Disain](./portfolio/week-05) | Lõpetatud |
-| 6 | 04 May 2026 | 10 May 2026 | [Visualiseerimine - Andmed](./portfolio/week-06) | Lõpetatud |
-| 7 | 11 May 2026 | 17 May 2026 | [Python - Pandas](./portfolio/week-07) | Lõpetatud |
-| 8 | 18 May 2026 | 24 May 2026 | [Python - APIs](./portfolio/week-08) | Lõpetatud |
-| 9 | 25 May 2026 | 31 May 2026 | [Karjääri ettevalmistus](./portfolio/week-09) | Lõpetatud |
-| 10 | 01 Jun 2026 | 10 Jun 2026 | [Portfoolio Kaitsmine](./portfolio/week-10) | Käimasolev |
+| Week | Start | End | Topic | Summary | Status |
+|------|-------|-----|-------|---------|--------|
+| 0 | 23 Mar 2026 | 29 Mar 2026 | [Onboarding](./portfolio/week-00) | Setting up software (VS Code, Python & packages) and services (GitHub repository, Supabase, NotebookLM) needed for work | Completed |
+| 1 | 30 Mar 2026 | 05 Apr 2026 | [SQL Basics](./portfolio/week-01) | | Completed |
+| 2 | 06 Apr 2026 | 12 Apr 2026 | [SQL Cleaning](./portfolio/week-02) | | Completed |
+| 3 | 13 Apr 2026 | 19 Apr 2026 | [SQL JOINs](./portfolio/week-03) | | Completed |
+| 4 | 20 Apr 2026 | 26 Apr 2026 | [SQL Aggregation](./portfolio/week-04) | | Completed |
+| 5 | 27 Apr 2026 | 03 May 2026 | [Visualization - Design](./portfolio/week-05) | | Completed |
+| 6 | 04 May 2026 | 10 May 2026 | [Visualization - Data](./portfolio/week-06) | | Completed |
+| 7 | 11 May 2026 | 17 May 2026 | [Python - Pandas](./portfolio/week-07) | | Completed |
+| 8 | 18 May 2026 | 24 May 2026 | [Python - APIs](./portfolio/week-08) | | Completed |
+| 9 | 25 May 2026 | 31 May 2026 | [Career Preparation](./portfolio/week-09) | | Completed |
+| 10 | 01 Jun 2026 | 10 Jun 2026 | [Portfolio Defense](./portfolio/week-10) | | In Progress |
