@@ -14,8 +14,8 @@ Weekly projects are located in the [portfolio](./portfolio) directory.
 
 | Week | Start | End | Topic | Summary | Status |
 |------|-------|-----|-------|---------|--------|
-| 0 | 23 Mar 2026 | 29 Mar 2026 | [Onboarding](./portfolio/week-00) | Setting up software (VS Code, Python & packages) and services (GitHub repository, Supabase, NotebookLM) needed for work | Completed |
-| 1 | 30 Mar 2026 | 05 Apr 2026 | [SQL Basics](./portfolio/week-01) | | Completed |
+| 0 | 23 Mar 2026 | 29 Mar 2026 | [Onboarding](./portfolio/week-00) | Setting up software (VS Code, Python & packages) and services (GitHub repository, Supabase, NotebookLM) needed for work. | Completed |
+| 1 | 30 Mar 2026 | 05 Apr 2026 | [SQL Basics](./portfolio/week-01) | Reading data (`SELECT`), filtering (`WHERE`, `AND`, `OR`), sorting (`ORDER BY`), `NULL` keyword, counting(`count(*)`, `count(column_name)`, `count(DISTINCT column_name)`). Explored `sales` table (**15,234** rows x **12** columns). | Completed |
 | 2 | 06 Apr 2026 | 12 Apr 2026 | [SQL Cleaning](./portfolio/week-02) | | Completed |
 | 3 | 13 Apr 2026 | 19 Apr 2026 | [SQL JOINs](./portfolio/week-03) | | Completed |
 | 4 | 20 Apr 2026 | 26 Apr 2026 | [SQL Aggregation](./portfolio/week-04) | | Completed |
