@@ -8,7 +8,7 @@ This repository contains my portfolio, which documents my 11-week journey throug
 
 As a software developer, I frequently utilized **Object-Relational Mapping (ORM)** frameworks to interact with databases and execute queries from application code, translating **PostgreSQL** tables into **Ruby** or **Java** classes. I was also often tasked with writing SQL queries to generate reports in CSV and Excel formats, so I already had a quite solid foundation in working with data. In fact, I have always genuinely enjoyed working with databases and SQL.
 
-Reflecting on my career as a developer, I've realized that I felt most fulfilled by analytical tasks. I loved delving into application code to troubleshoot errors and tracking down their root causes—sometimes digging into the core Ruby code itself.
+Reflecting on my career as a developer, I've realized that I felt most fulfilled by analytical tasks. I loved delving into application code to troubleshoot problems and tracking down their root causes—sometimes digging into the core Ruby code itself.
 
 Because of my background, the words **"data"** and **"analysis"** strongly resonate with me.
 
