@@ -12,7 +12,7 @@ Reflecting on my career as a developer, I've realized that I felt most fulfilled
 
 Because of my background, the words **"data"** and **"analysis"** strongly resonate with me.
 
-Although I was already quite comfortable with SQL, I knew there was still a lot to learn. Beyond databases, I had almost no experience with Python—and "data analysis" as a discipline was completely new territory for me. I decided to enroll in the DACA program to truly understand what data analysis entails, discover how SQL and **Python** are used in this context, gain hands-on experience with Python, and see how **AI** can be integrated into the data analysis workflow.
+Although I was already quite comfortable with SQL, I knew there was still a lot to learn. Beyond databases, I had almost no experience with **Python**—and "data analysis" as a discipline was completely new territory for me. I decided to enroll in the DACA program to truly understand what data analysis entails, discover how SQL and Python are used in this context, gain hands-on experience with Python, and see how **AI** can be integrated into the data analysis workflow.
 
 ## What I Learned
 
