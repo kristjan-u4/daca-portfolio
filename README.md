@@ -1,10 +1,12 @@
 # DACA Portfolio -- Kristjan
 
-## About Me
-I have worked as a software developer (Ruby, Java) for many years, but now I am looking to make a career pivot into the field of data analytics.
+## About This Repository
 
-## Goal
-To learn data analytics -- SQL, Python, visualization -- and build a professional portfolio.
+This repository contains my portfolio, which documents my 11-week journey through **the DACA program** - a **Junior Data Analyst training program** organized by [Ettevõtluskeskus](https://www.ettevotluskeskus.ee/). The program started on March 23rd, and I graduated on June 10th, 2026. **DACA** stands for **D**ata **A**nalyst **C**areer **A**ccelerator.
+
+## What I Learned
+
+During the program, I learned how to use **SQL (PostgreSQL)** for filtering, cleaning, joining, and aggregating data. I also visualized data using **Plotly charts** on **Streamlit dashboards** built with **Python**. Additionally, I used Python and the **Pandas** library to perform an **RFM analysis**. To integrate data fetching, cleaning, aggregation, and visualization into a seamless workflow, I built an **automated ETL pipeline**, leveraging Python once again. Most importantly, I gained hands-on experience in drawing **business conclusions** based on transformed and visualized data. Throughout the program, I utilized **AI** extensively to solve problems more efficiently.
 
 ## Portfolio
 
