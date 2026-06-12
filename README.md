@@ -2,11 +2,23 @@
 
 ## About This Repository
 
-This repository contains my portfolio, which documents my 11-week journey through **the DACA program** - a **Junior Data Analyst training program** organized by [Ettevõtluskeskus](https://www.ettevotluskeskus.ee/). The program started on March 23rd, and I graduated on June 10th, 2026. **DACA** stands for **D**ata **A**nalyst **C**areer **A**ccelerator.
+This repository contains my portfolio, which documents my 11-week journey through **the DACA program** - a **Junior Data Analyst mentorship program** organized by [Ettevõtluskeskus](https://www.ettevotluskeskus.ee/). The program started on March 23rd, and I graduated on June 10th, 2026. **DACA** stands for **D**ata **A**nalyst **C**areer **A**ccelerator.
+
+## Why I Enrolled in the DACA Program
+
+As a software developer, I frequently utilized **Object-Relational Mapping (ORM)** frameworks to interact with databases and execute queries from application code, translating **PostgreSQL** tables into **Ruby** or **Java** classes. I was also often tasked with writing SQL queries to generate reports in CSV and Excel formats, so I already had a quite solid foundation in working with data. In fact, I have always genuinely enjoyed working with databases and SQL.
+
+Reflecting on my career as a developer, I've realized that I felt most fulfilled by analytical tasks. I loved delving into application code to troubleshoot errors and tracking down their root causes—sometimes digging into the core Ruby code itself.
+
+Because of my background, the words **"data"** and **"analysis"** strongly resonate with me.
+
+Although I was already quite comfortable with SQL, I knew there was still a lot to learn. Beyond databases, I had almost no experience with Python—and "data analysis" as a discipline was completely new territory for me. I decided to enroll in the DACA program to truly understand what data analysis entails, discover how SQL and **Python** are used in this context, gain hands-on experience with Python, and see how **AI** can be integrated into the data analysis workflow.
 
 ## What I Learned
 
-During the program, I learned how to use **SQL (PostgreSQL)** for filtering, cleaning, joining, and aggregating data. I also visualized data using **Plotly charts** on **Streamlit dashboards** built with **Python**. Additionally, I used Python and the **Pandas** library to perform an **RFM analysis**. To integrate data fetching, cleaning, aggregation, and visualization into a seamless workflow, I built an **automated ETL pipeline**, leveraging Python once again. Most importantly, I gained hands-on experience in drawing **business conclusions** based on transformed and visualized data. Throughout the program, I utilized **AI** extensively to solve problems more efficiently.
+During the program, I advanced my SQL skills by learning how to leverage **SQL (PostgreSQL)** specifically for data cleaning and transformation. To my surprise, despite my prior database experience, I discovered powerful features I hadn't used before, such as **CTEs (Common Table Expressions)** and **window functions**.
+
+I also visualized data using **Plotly charts** on **Streamlit dashboards** built with Python. Additionally, I used Python and the **Pandas** library to perform an **RFM analysis**. To integrate data fetching, cleaning, aggregation, and visualization into a seamless workflow, I built an **automated ETL pipeline**, leveraging Python once again. Most importantly, I gained hands-on experience in drawing **business conclusions** based on transformed and visualized data. Throughout the program, I utilized AI extensively to solve problems more efficiently.
 
 ## Portfolio
 
