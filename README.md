@@ -22,9 +22,7 @@ I also visualized data using **Plotly charts** on **Streamlit dashboards** built
 
 ## Portfolio
 
-Weekly projects are located in the [portfolio](./portfolio) directory.
-
-### Week by Week
+Each week the program concentrated on a different topic. The work done during each week ended up as a documented weekly **project**. The weekly projects together form a **portfolio** and are located in [portfolio](./portfolio) directory. Here's a brief overview of the projects.
 
 | Week | Start | End | Topic | Summary | Status |
 |------|-------|-----|-------|---------|--------|
