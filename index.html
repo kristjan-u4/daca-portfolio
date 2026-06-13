@@ -1,42 +1,303 @@
 <!DOCTYPE html>
-<html lang="et">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tere, UrbanStyle!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DACA portfolio - Kristjan</title>
     <style>
+        :root {
+            --bg-color: #121214;
+            --card-bg: #1a1a1e;
+            --teal-primary: #009B8D;
+            --teal-hover: #00bfa5;
+            --text-main: #ffffff;
+            --text-muted: #a0a0ab;
+            --border-color: #2a2a30;
+        }
+
         body {
-            font-family: 'Segoe UI', sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 20px;
             text-align: center;
-            background-color: #f5f5f5;
-            color: #1A1A2E;
         }
-        h1 { color: #009B8D; }
-        .card {
-            background: white;
-            padding: 30px;
+
+        h1 {
+            color: var(--teal-primary);
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            color: var(--teal-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--text-main);
+            margin-top: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-top: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        .badge {
-            display: inline-block;
-            background: #009B8D;
-            color: white;
-            padding: 5px 15px;
+
+        .about-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text strong {
+            color: var(--text-main);
+        }
+
+        .project-card {
+            background-color: #222226;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--teal-primary);
+            margin: 0;
+        }
+
+        .project-tag {
+            background-color: rgba(0, 155, 141, 0.15);
+            color: var(--teal-primary);
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .project-description {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .project-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            background-color: #121214;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--teal-primary);
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--teal-hover);
+        }
+
+        .kpi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        .kpi-card {
+            background-color: #1a1a1e;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--teal-primary);
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+
+        .footer-link {
+            color: var(--teal-primary);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+            color: var(--teal-hover);
         }
     </style>
 </head>
 <body>
-    <h1>Tere, UrbanStyle!</h1>
-    <div class="card">
-        <h2>Kristjan</h2>
-        <p class="badge">Andmeanalüütik -- Nädal 0</p>
-        <p>Minu esimene samm DACA programmis.</p>
-        <p>Tööriistad seadistatud. Vercel deploy samuti järgi proovitud. Valmis alustama!</p>
+
+    <header>
+        <h1>DACA Portfolio</h1>
+        <p style="color: var(--text-muted); margin: 0; font-size: 1.2rem;">Kristjan &mdash; Junior Data Analyst Journey</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- About Section -->
+        <div class="section about-text">
+            <h2>About Me &amp; DACA</h2>
+            <p>Hi! My name is Kristjan.</p>
+            <p>
+                I recently completed the <strong>Data Analyst Career Accelerator (DACA)</strong> program, an intensive 11-week mentorship journey organized by <strong>Ettevõtluskeskus</strong>. Running from March 23rd to June 10th, 2026, the program simulated real-world data challenges using a fictional retail company named <strong>UrbanStyle Ltd.</strong>
+            </p>
+            <p>
+                As a software developer, I was already comfortable writing SQL queries for reports and using ORMs. However, I realized that I felt most fulfilled by analytical tasks and troubleshooting root causes. I joined the DACA program to transition into data analysis, learn how Python and Pandas are leveraged in this context, and discover how to integrate AI into modern analytical workflows.
+            </p>
+            <p>
+                Throughout this journey, I mastered advanced SQL techniques (such as CTEs and window functions), built interactive <strong>Streamlit</strong> dashboards with <strong>Plotly</strong>, performed customer segmentation using <strong>Pandas RFM analysis</strong>, and automated the entire workflow into a robust <strong>ETL pipeline</strong>.
+            </p>
+        </div>
+
+        <!-- Best Projects Section -->
+        <div class="section">
+            <h2>Featured Projects</h2>
+
+            <!-- Week 6 Project -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Interactive Executive Dashboard</h3>
+                    <span class="project-tag">Week 6</span>
+                </div>
+                <p class="project-description">
+                    Built an interactive Streamlit dashboard deployed to the Streamlit Community Cloud. It features high-level KPI cards, dynamic trendlines, and secondary charts with custom annotations highlighting minimum/maximum revenues and significant drops to support data storytelling.
+                </p>
+                <img src="https://github.com/kristjan-u4/daca-portfolio/blob/main/portfolio/week-06/individual/week6_tartu_dashboard_screenshot.png?raw=true" alt="Week 6 Dashboard Screenshot" class="project-image">
+                <div>
+                    <a href="https://daca-portfolio-3hkfvtlw9ikvnhidkd5cw3.streamlit.app/" target="_blank" class="btn">View Live Dashboard</a>
+                </div>
+            </div>
+
+            <!-- Week 8 Project -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Automated ETL Pipeline</h3>
+                    <span class="project-tag">Week 8</span>
+                </div>
+                <p class="project-description">
+                    Engineered a Python-based automated ETL pipeline that orchestrates data extraction from Supabase, applies cleaning and aggregation rules, and exports results as CSVs and interactive HTML charts. This pipeline reduced a manual weekly task taking 4 hours down to a 3-second automated run.
+                </p>
+                <img src="https://github.com/kristjan-u4/daca-portfolio/blob/main/portfolio/week-08/individual/week_8_etl_pipeline_execution_screenshot.png?raw=true" alt="Week 8 ETL Pipeline Screenshot" class="project-image">
+            </div>
+
+            <!-- Week 7 Project -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Customer RFM Segmentation</h3>
+                    <span class="project-tag">Week 7</span>
+                </div>
+                <p class="project-description">
+                    Performed a Recency, Frequency, and Monetary (RFM) analysis using Python and Pandas to segment the customer base as of the February 28, 2025 reference date. This analysis successfully identified high-value customer groups to optimize targeted marketing campaigns.
+                </p>
+                <div class="kpi-container">
+                    <div class="kpi-card">
+                        <div class="kpi-value">5</div>
+                        <div class="kpi-label">Customer Segments</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value">453</div>
+                        <div class="kpi-label">VIP Champions</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value">43%</div>
+                        <div class="kpi-label">Revenue from VIPs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 4 Project -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Marketing Channel ROI Analysis</h3>
+                    <span class="project-tag">Week 4</span>
+                </div>
+                <p class="project-description">
+                    Analyzed customer acquisition sources from 50,000 web log records. After unifying and cleaning the marketing source data using SQL CTEs, Facebook Ads was identified as the most lucrative acquisition channel.
+                </p>
+                <div class="kpi-container">
+                    <div class="kpi-card">
+                        <div class="kpi-value">€944</div>
+                        <div class="kpi-label">Avg Revenue / Customer</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-value">Facebook Ads</div>
+                        <div class="kpi-label">Top Performing Channel</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
+    <!-- Footer Section -->
+    <div class="footer-section">
+        <p style="margin-bottom: 15px; color: var(--text-muted);">Want to see the complete codebase, SQL scripts, and weekly documentation?</p>
+        <a href="https://github.com/kristjan-u4/daca-portfolio" target="_blank" class="footer-link">Explore My Full GitHub Portfolio &rarr;</a>
+    </div>
+
 </body>
 </html>
