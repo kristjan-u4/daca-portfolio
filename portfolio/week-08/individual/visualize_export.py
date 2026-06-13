@@ -15,7 +15,7 @@ pio.templates.default = "plotly_white" # Use a white background template as a ba
 
 def create_weekly_chart(df_weekly):
     """
-    Creates a Plotly line chart of total revenue per week, formatted for Estonian locale.
+    Creates a Plotly line chart of total revenue per week, formatted for English locale.
 
     Args:
         df_weekly (pd.DataFrame): DataFrame from transform.calculate_weekly_aggregates
@@ -27,50 +27,49 @@ def create_weekly_chart(df_weekly):
     if df_weekly.empty:
         logger.warning("df_weekly is empty, returning an empty Plotly figure.")
         fig = go.Figure()
-        fig.update_layout(title_text="Nädala tulu (andmed puuduvad)", title_x=0.5)
+        fig.update_layout(title_text="Weekly Revenue (no data)", title_x=0.5)
         return fig
 
     df_plot = df_weekly.copy()
-    # Create the week label for the x-axis from the 'week' Period objects
     df_plot["week_label"] = df_plot["week"].apply(
-        lambda p: f"Nädal {p.week}: {p.start_time.strftime('%d.%m.%Y')} - {p.end_time.strftime('%d.%m.%Y')}"
+        lambda p: f"Week {p.week}: {p.start_time.strftime('%Y-%m-%d')} - {p.end_time.strftime('%Y-%m-%d')}"
     )
 
     fig = px.line(
         df_plot,
-        x="week_label", # Use the newly created week_label for x-axis
+        x="week_label",
         y="total_revenue",
-        title="Kogutulu nädala kaupa",
-        line_shape="linear", # Default, but explicitly set for clarity
-        color_discrete_sequence=["#009B8D"] # Set line color
+        title="Total Revenue by Week",
+        line_shape="linear",
+        color_discrete_sequence=["#009B8D"]
     )
 
     fig.update_traces(
-        mode="lines+markers", # Show points on the line
+        mode="lines+markers",
         marker=dict(size=6, color="#009B8D"),
         hovertemplate=(
-            "<b>%{x}</b><br>" + # Week label
-            "<b>Kogutulu:</b> € %{y:,.0f}<extra></extra>" # Moved € prefix for Estonian format
+            "<b>%{x}</b><br>" +
+            "<b>Total Revenue:</b> €%{y:,.0f}<extra></extra>"
         )
     )
 
     fig.update_layout(
         title_x=0.5,
-        title_font=dict(size=16), # Set main title font size to 16px
+        title_font=dict(size=16),
         plot_bgcolor="white",
         paper_bgcolor="white",
         font=dict(family="sans-serif", color="#1A1A2E"),
-        separators=", ", # Format: "[decimal part separator][thousands separator]"
+        separators=".,",
         xaxis=dict(
-            title="Nädal", # X-axis title
+            title="Week",
             showgrid=False,
-            tickangle=45 # 45-degree angle
+            tickangle=45
         ),
         yaxis=dict(
-            title="Kogutulu (€)",
+            title="Total Revenue (€)",
             showgrid=False,
-            tickformat=",.0f", # If present, separate decimal part with comma
-            tickprefix="€ "
+            tickformat=",.0f",
+            tickprefix="€"
         )
     )
     logger.info("Created weekly revenue chart using Plotly Express.")
@@ -90,61 +89,61 @@ def create_kpi_summary(kpis):
     if not kpis:
         logger.warning("KPIs dictionary is empty, returning an empty Plotly figure.")
         fig = go.Figure()
-        fig.update_layout(title_text="KPI kokkuvõte (andmed puuduvad)", title_x=0.5)
+        fig.update_layout(title_text="KPI Summary (no data)", title_x=0.5)
         return fig
         
     fig = make_subplots(
         rows=1, 
         cols=3, 
         specs=[[{"type":"domain"}, {"type":"domain"}, {"type":"domain"}]],
-        subplot_titles=("Kogutulu", "Unikaalsed kliendid", "Keskmine tellimuse väärtus")
+        subplot_titles=("Total Revenue", "Unique Customers", "Average Order Value")
     )
 
-    # Kogutulu
+    # Total Revenue
     fig.add_trace(go.Indicator(
         mode="number",
         value=kpis.get("total_revenue", 0.0),
         number={
-            "valueformat": ",.0f", # Changed to use thousands separator for Estonian format
-            "prefix": "€ ",
+            "valueformat": ",.0f",
+            "prefix": "€",
             "font": {"size": 36, "color": "#009B8D"}
         },
-        domain={"x": [0, 1], "y": [0, 1]} # Use full domain within subplot
+        domain={"x": [0, 1], "y": [0, 1]}
     ), row=1, col=1)
 
-    # Unikaalsed kliendid
+    # Unique Customers
     fig.add_trace(go.Indicator(
         mode="number",
         value=kpis.get("unique_customers", 0),
         number={
-            "valueformat": ",.0f", # Changed to use thousands separator for Estonian format
+            "valueformat": ",.0f",
             "font": {"size": 36, "color": "#009B8D"}
         },
         domain={"x": [0, 1], "y": [0, 1]}
     ), row=1, col=2)
 
-    # Keskmine tellimuse väärtus
+    # Average Order Value
     fig.add_trace(go.Indicator(
         mode="number",
         value=kpis.get("avg_order_value", 0.0),
         number={
-            "valueformat": ",.0f", # Changed to use thousands separator for Estonian format
-            "prefix": "€ ",
+            "valueformat": ",.0f",
+            "prefix": "€",
             "font": {"size": 36, "color": "#009B8D"}
         },
         domain={"x": [0, 1], "y": [0, 1]}
     ), row=1, col=3)
 
     fig.update_layout(
-        title_text="Müügi KPI kokkuvõte",
+        title_text="Sales KPI Summary",
         title_x=0.5,
-        title_font=dict(size=16), # Set main title font size to 16px
+        title_font=dict(size=16),
         plot_bgcolor="white",
         paper_bgcolor="white",
         font=dict(family="sans-serif", color="#1A1A2E"),
-        margin=dict(l=20, r=20, t=80, b=20), # Adjust margins
-        height=250, # Adjust height for better visualization of indicators
-        separators=", " # Format: "[decimal part separator][thousands separator]"
+        margin=dict(l=20, r=20, t=80, b=20),
+        height=250,
+        separators=".,"
     )
     # Update subplot titles font
     for i in range(1, 4):
@@ -210,13 +209,13 @@ def send_success_notification(kpis: dict, saved_files: dict):
         logger.info(f"  {file_type}: {filepath}")
 
 def _format_eur_amount_str(value, precision=0):
-    """Formats a float as an EUR amount string (e.g., '€ 1 234')."""
+    """Formats a float as an EUR amount string (e.g., '€1,234')."""
     if pd.isna(value):
-        return "€ -"
-    return f"€ {value:,.{precision}f}".replace(",", " ").replace(".", ",")
+        return "€-"
+    return f"€{value:,.{precision}f}"
 
 def _format_number_str(value):
-    """Formats an integer with space as thousands separator (e.g., '1 234')."""
+    """Formats an integer with comma as thousands separator (e.g., '1,234')."""
     if pd.isna(value):
         return "-"
-    return f"{int(value):,}".replace(",", " ")
+    return f"{int(value):,}"
