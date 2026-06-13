@@ -19,6 +19,9 @@ My task was to write the Python script `pipeline.py`, which combines the modules
 *   `pipeline.py` measures the time taken in seconds to complete the entire ETL Pipeline and logs the result.
 *   If an error occurs during the completion of any stage, `pipeline.py` catches it and logs the details of the cause of the error.
 
+![ETL Pipeline execution screenshot](./individual/week_8_etl_pipeline_execution_screenshot.png)
+*Note: the pipeline execution depicted on the screenshot uses E, T and L stage scripts simulated by me.*
+
 ### Automation
 
 To explore further automation possibilities for the ETL Pipeline, I wrote the shell script `bin/weekly_demo.sh`, which demonstrates how to provide the previous week's date range as input to the `pipeline.py` script. During the team presentation, I also showed how this shell script can be configured with `crontab` to run automatically once a week at a specified time.
