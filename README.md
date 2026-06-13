@@ -126,5 +126,6 @@ Finished reorganizing files in the current repository. Translated all individual
 ## After the official end of the program
 
 * Updating this README.
+* Built Vercel page with the help of Aider + Gemini 3.5 Flash.
 * Translating Week 8 ETL Pipeline outputs.
 * Adding/updating screenshots.
