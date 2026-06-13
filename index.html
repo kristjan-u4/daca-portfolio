@@ -186,6 +186,14 @@
             margin-top: 60px;
         }
 
+        .footer-links-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
         .footer-link {
             color: var(--teal-primary);
             text-decoration: none;
@@ -307,7 +315,10 @@
     <!-- Footer Section -->
     <div class="footer-section">
         <p style="margin-bottom: 15px; color: var(--text-muted);">Want to see the complete codebase, SQL scripts, and weekly documentation?</p>
-        <a href="https://github.com/kristjan-u4/daca-portfolio" target="_blank" class="footer-link">Explore My Full GitHub Portfolio &rarr;</a>
+        <div class="footer-links-container">
+            <a href="https://github.com/kristjan-u4/daca-portfolio" target="_blank" class="footer-link">Explore My Full GitHub Portfolio &rarr;</a>
+            <a href="https://www.linkedin.com/in/kristjan-u4" target="_blank" class="footer-link">Connect on LinkedIn &rarr;</a>
+        </div>
     </div>
 
 </body>
