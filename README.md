@@ -2,7 +2,7 @@
 
 ## About This Repository
 
-This repository contains my portfolio, which documents my 11-week journey through **the DACA program** - a **Junior Data Analyst mentorship program** organized by [Ettevõtluskeskus](https://www.ettevotluskeskus.ee/). The program started on March 23rd, and I graduated on June 10th, 2026. **DACA** stands for **D**ata **A**nalyst **C**areer **A**ccelerator.
+This repository contains my portfolio, which documents my 11-week journey through **the DACA program** - a **Junior Data Analyst mentorship program** organized by [Ettevõtluskeskus](https://www.ettevotluskeskus.ee/). The program started on March 23rd, and I graduated on June 10th, 2026. **DACA** stands for **D**ata **A**nalyst **C**areer **A**ccelerator. During the program, a fictional company named **UrbanStyle Ltd.** was used as a simulation.
 
 ## Why I Enrolled in the DACA Program
 
@@ -122,3 +122,9 @@ Started reorganizing files in my own DACA portfolio. Used **Aider** to automate 
 Talked about **automatization via ETL Pipeline** during team presentation.
 
 Finished reorganizing files in the current repository. Translated all individual markdowns, SQL files and Python scripts into English. Leveraged AI to automate that. With the help of **Aider + Gemini 3.5 Flash**, fixed some bugs and added improvements to my Week 5-6 dashboards.
+
+## After the official end of the program
+
+* Updating this README.
+* Translating Week 8 ETL Pipeline outputs.
+* Adding/updating screenshots.
